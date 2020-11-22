@@ -14,6 +14,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 	private BorderPane mainPane;
 	private final MainView mainView = new MainView();
 	private final ReservasView reservasview = new ReservasView();
+	private final CadastroView cadastroview = new CadastroView();
 	private StrategyPane targetPane = mainView;
 	
 	
@@ -24,11 +25,12 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		
 		mainView.setAssistence(this);
 		reservasview.setAssistence(this);
+		cadastroview.setAssistence(this);
 		
 		context();
 		
 		stage.setScene(scn);
-		stage.setTitle("Clube da bolinha");
+		stage.setTitle("Clube da Bolinha");
 		stage.show();
 	}
 	
@@ -47,6 +49,8 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 			System.out.println("Entrou");
 		}else if (cmd.equals("Reservar")) {
 			System.out.println("Reservou");
+		}else if (cmd.equals("Cadastrar")) {
+			System.out.println("Cadastrou");
 		}
 		this.context();
 	}
