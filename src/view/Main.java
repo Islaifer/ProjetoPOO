@@ -13,7 +13,9 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 													ComandAssistence{
 	private BorderPane mainPane;
 	private final MainView mainView = new MainView();
+	private final ReservasView reservasview = new ReservasView();
 	private StrategyPane targetPane = mainView;
+	
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -21,6 +23,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		Scene scn = new Scene(mainPane, 800, 600);
 		
 		mainView.setAssistence(this);
+		reservasview.setAssistence(this);
 		
 		context();
 		
@@ -42,6 +45,8 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 	public void executeCommand(String cmd) {
 		if(cmd.equals("Enter")) {
 			System.out.println("Entrou");
+		}else if (cmd.equals("Reservar")) {
+			System.out.println("Reservou");
 		}
 		this.context();
 	}
