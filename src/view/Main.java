@@ -6,26 +6,28 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Main extends Application implements EventHandler<ActionEvent>,
 													ComandAssistence{
-	private BorderPane mainPane;
+	private Pane mainPane;
 	private final MainView mainView = new MainView();
 	private final ReservasView reservasview = new ReservasView();
 	private final CadastroView cadastroview = new CadastroView();
+	private final Menu menu = new Menu();
 	private StrategyPane targetPane = mainView;
 	
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		mainPane = new BorderPane();
+		mainPane = new Pane();
 		Scene scn = new Scene(mainPane, 800, 600);
 		
 		mainView.setAssistence(this);
 		reservasview.setAssistence(this);
 		cadastroview.setAssistence(this);
+		menu.setAssistence(this);
 		
 		context();
 		
@@ -35,7 +37,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 	}
 	
 	private void context() {
-		mainPane.setCenter(targetPane.getPane());
+		mainPane.getChildren().add(targetPane.getPane());
 	}
 	
 	@Override
@@ -51,14 +53,18 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 			System.out.println("Reservou");
 		}else if (cmd.equals("Cadastrar")) {
 			System.out.println("Cadastrou");
+		}else if(cmd.equals("dashboard")) {
+			System.out.println("Dashboard");
+		}else if(cmd.equals("reservation")) {
+			System.out.println("reservation");
+		}else if(cmd.equals("associated")) {
+			System.out.println("associated");
+		}else if(cmd.equals("tuition")) {
+			System.out.println("tuition");
 		}
-		this.context();
 	}
 	
 	public static void main(String[] args) {
 		Application.launch(Main.class, args);
 	}
-
-	
-
 }
