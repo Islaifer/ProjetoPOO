@@ -1,0 +1,32 @@
+package config;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+import daos.PlanDao;
+import daos.UserDao;
+
+public class DatabaseConnection {
+	public static Connection getConnection() throws Exception {
+		try {
+			String driver = "com.mysql.cj.jdbc.Driver";
+			String url = "jdbc:mysql://localhost:3306/clubebolinha?useTimezone=true&serverTimezone=UTC";
+			String username = "fallguys";
+			String password = "1234@qwer";
+			Class.forName(driver);
+			Connection connection = DriverManager.getConnection(url,username,password);
+			return connection;
+		}catch (Exception error) {
+			System.out.println(error);
+	
+		}
+	
+		return null;
+		
+	}
+	
+	public static void createTables() throws Exception {
+		PlanDao.createTablePlans();
+		UserDao.createTableUser();
+	}
+}
