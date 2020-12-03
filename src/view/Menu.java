@@ -1,9 +1,15 @@
 package view;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
 import interfaces.StrategyPane;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -11,9 +17,18 @@ import javafx.scene.text.Font;
 
 public class Menu implements StrategyPane, ComandProductor {
 	private Pane pane;
+	private Image logo;
+	private ImageView lv;
 	private ComandAssistence a;
 	public Menu() {
 		pane = new Pane();
+		try {
+			logo = new Image(new FileInputStream(new File("").getAbsolutePath() + "/images/logo.png"), 160, 100, false, false);
+		} catch (FileNotFoundException e) {
+			System.err.println(new File("").getAbsolutePath() + "/images/logo.png not found");
+		}
+		lv = new ImageView(logo);
+		lv.relocate(20, 25);
 		// Menu
 		Rectangle bckgMenu = new Rectangle();
 		bckgMenu.setWidth(200);
@@ -72,7 +87,7 @@ public class Menu implements StrategyPane, ComandProductor {
 			exeComand("tuition");
 		});
 		
-		pane.getChildren().addAll(bckgMenu, reservation, dashboard, tuition, associated);
+		pane.getChildren().addAll(bckgMenu, reservation, dashboard, tuition, associated, lv);
 	}
 
 	@Override
