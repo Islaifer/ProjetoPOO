@@ -1,5 +1,6 @@
 package view;
 
+import config.DatabaseConnection;
 import interfaces.ComandAssistence;
 import interfaces.StrategyPane;
 import javafx.application.Application;
@@ -16,7 +17,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 	private final ReservasView reservasview = new ReservasView();
 	private final CadastroView cadastroview = new CadastroView();
 	private final Menu menu = new Menu();
-	private StrategyPane targetPane = mainView;
+	private StrategyPane targetPane = cadastroview;
 	
 	
 	@Override
@@ -37,7 +38,11 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 	}
 	
 	private void context() {
-		mainPane.getChildren().add(targetPane.getPane());
+		if (targetPane == mainView) {
+			mainPane.getChildren().addAll(targetPane.getPane());
+		} else {
+			mainPane.getChildren().addAll(targetPane.getPane(),menu.getPane());
+		}
 	}
 	
 	@Override
@@ -62,9 +67,12 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		}else if(cmd.equals("tuition")) {
 			System.out.println("tuition");
 		}
+		context();
 	}
 	
 	public static void main(String[] args) {
 		Application.launch(Main.class, args);
+		 
+
 	}
 }
