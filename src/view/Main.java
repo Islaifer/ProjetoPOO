@@ -1,6 +1,5 @@
 package view;
 
-import config.DatabaseConnection;
 import interfaces.ComandAssistence;
 import interfaces.StrategyPane;
 import javafx.application.Application;
@@ -16,8 +15,9 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 	private final MainView mainView = new MainView();
 	private final ReservasView reservasview = new ReservasView();
 	private final CadastroView cadastroview = new CadastroView();
+	private final GerenciarAssocView associadoview = new GerenciarAssocView ();
 	private final Menu menu = new Menu();
-	private StrategyPane targetPane = cadastroview;
+	private StrategyPane targetPane = mainView;
 	
 	
 	@Override
@@ -28,6 +28,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		mainView.setAssistence(this);
 		reservasview.setAssistence(this);
 		cadastroview.setAssistence(this);
+		associadoview.setAssistence(this);
 		menu.setAssistence(this);
 		
 		context();
