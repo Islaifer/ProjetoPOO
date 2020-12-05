@@ -3,6 +3,7 @@ package models;
 import java.util.Date;
 
 public class Subscription {
+	private int id;
 	private Date valid;
 	private String status;
 	private User user;
@@ -10,7 +11,8 @@ public class Subscription {
 	private String userRg;
 	private double valor;
 	
-	public Subscription(Date valid, String status, User user, double valor) {
+	public Subscription(int id, Date valid, String status, User user, double valor) {
+		this.id = id;
 		this.valid = valid;
 		this.status = status;
 		this.user = user;
@@ -18,6 +20,18 @@ public class Subscription {
 		this.username = this.user.getFirstName() + " " + this.user.getLastName();
 		this.userRg = "" + this.user.getRg();
 	}
+
+	public int getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 
 	public Date getValid() {
 		return valid;
