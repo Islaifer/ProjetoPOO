@@ -11,6 +11,7 @@ public class Reservation {
 	private String datef;
 	private String hour;
 	private Space space;
+	private String spaceName;
 	private int peopleqnt;
 	
 	public Reservation(int id, User user, Date date, Space space, int peopleqnt) {
@@ -22,6 +23,7 @@ public class Reservation {
 		this.space = space;
 		this.peopleqnt = peopleqnt;
 		this.username = user.getFirstName() + " " + user.getLastName();
+		this.spaceName = this.space.getName();
 		this.datef = df.format(this.date);
 		this.hour = hf.format(this.date);
 	}
@@ -36,6 +38,10 @@ public class Reservation {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public String getSpaceName() {
+		return spaceName;
 	}
 	
 	public String getDatef() {
