@@ -8,12 +8,13 @@ import java.util.List;
 
 import config.DatabaseConnection;
 import models.Reservation;
+import models.Space;
 import models.User;
 
 public class ReservationDao {
 	private static String nameTable = "reservations";
 	
-	public static void createTableUser() throws Exception {
+	public static synchronized void createTableReservations() throws Exception {
 		try {
 			//pega conexão com o banco de dados
 			Connection connection = DatabaseConnection.getConnection();
@@ -31,6 +32,7 @@ public class ReservationDao {
 					);
 			// aqui ele executa o método o qual criei acima no banco de dados.
 			create.executeUpdate();
+			connection.close();
 		} catch (Exception error) {
 			System.out.println(error);
 		}
@@ -54,7 +56,7 @@ public class ReservationDao {
 			while(result.next()) {
 				//CADA GET DESSES AQUI EMBAIXO SÃO OS NOMES DA COLUNA QUE EU QUERO O RESULTADO
 				User user = UserDao.getById(result.getInt("id_user"));
-				String space = "" + result.getInt("id_space");
+				Space space = SpaceDao.getById(result.getInt("id_space"));
 				Reservation reservation = new Reservation(result.getInt("id"),
 						user,
 						result.getDate("date"),
@@ -83,7 +85,7 @@ public class ReservationDao {
 			
 			while(result.next()) {
 				User user = UserDao.getById(result.getInt("id_user"));
-				String space = "" + result.getInt("id_space");
+				Space space = SpaceDao.getById(result.getInt("id_space"));
 				Reservation reservation = new Reservation(result.getInt("id"),
 						user,
 						result.getDate("date"),
@@ -128,7 +130,7 @@ public class ReservationDao {
 					+ " VALUES (?,?,?,?)");
 			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
 			posted.setInt(1, reservation.getUser().getId());
-			posted.setInt(2, 1);
+			posted.setInt(2, reservation.getSpace().getId());
 			posted.setDate(3, java.sql.Date.valueOf(reservation.getDate().toString()));
 			posted.setInt(4, reservation.getPeopleqnt());
 			// aqui ele executa o método o qual criei acima no banco de dados.

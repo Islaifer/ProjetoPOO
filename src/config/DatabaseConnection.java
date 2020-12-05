@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import daos.PlanDao;
+import daos.ReservationDao;
+import daos.SpaceDao;
 import daos.UserDao;
 
 public class DatabaseConnection {
@@ -28,5 +30,7 @@ public class DatabaseConnection {
 	public static void createTables() throws Exception {
 		PlanDao.createTablePlans();
 		UserDao.createTableUser();
+		SpaceDao.createTableSpaces();
+		ReservationDao.createTableReservations();
 	}
 }

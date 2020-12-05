@@ -13,7 +13,7 @@ import models.User;
 public class UserDao {
 	private static String nameTable = "users";
 	
-	public static void createTableUser() throws Exception {
+	public static synchronized void createTableUser() throws Exception {
 		try {
 			//pega conexão com o banco de dados
 			Connection connection = DatabaseConnection.getConnection();
@@ -37,6 +37,7 @@ public class UserDao {
 					);
 			// aqui ele executa o método o qual criei acima no banco de dados.
 			create.executeUpdate();
+			connection.close();
 		} catch (Exception error) {
 			System.out.println(error);
 		}

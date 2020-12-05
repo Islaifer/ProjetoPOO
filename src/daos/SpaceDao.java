@@ -14,7 +14,7 @@ public class SpaceDao {
 	
 	private static String nameTable = "spaces";
 
-	public static void createTableSpaces() throws Exception {
+	public static synchronized void createTableSpaces() throws Exception {
 		try {
 			// pega conexão com o banco de dados
 			Connection connection = DatabaseConnection.getConnection();
@@ -22,10 +22,11 @@ public class SpaceDao {
 			// introduzida no SQL, no contexto é o método de criação de tabela.
 			PreparedStatement create = connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + nameTable
 					+ "(id INT NOT NULL AUTO_INCREMENT," + "name VARCHAR(255) NOT NULL,"
-					+ "capacity INT NOT NULL," + "PRIMARY KEY(id),");
+					+ "capacity INT NOT NULL," + "PRIMARY KEY(id))");
 			// aqui ele executa o método o qual criei acima no banco de dados.
 			create.executeUpdate();
 			seedTable();
+			connection.close();
 		} catch (Exception error) {
 			System.out.println(error);
 		} finally {
@@ -92,10 +93,10 @@ public class SpaceDao {
 	private static void insert(Space space) throws Exception {
 		try {
 			Connection connection = DatabaseConnection.getConnection();
-			PreparedStatement posted = connection.prepareStatement("INSERT INTO space(name, capacity)"
+			PreparedStatement posted = connection.prepareStatement("INSERT INTO " + nameTable + "(name, capacity)"
 					+ " VALUES (?,?)");
 			posted.setString(1, space.getName());
-			posted.setDouble(2, space.getCapacity());
+			posted.setInt(2, space.getCapacity());
 			posted.executeUpdate();
 			connection.close();
 			
