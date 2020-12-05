@@ -15,6 +15,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 	private final MainView mainView = new MainView();
 	private final ReservasView reservasview = new ReservasView();
 	private final CadastroView cadastroview = new CadastroView();
+	private final GerenciarAssocView associadoview = new GerenciarAssocView ();
 	private final ReservationDashboardView reservationdashboardview = new ReservationDashboardView();
 	private final Menu menu = new Menu();
 	private StrategyPane targetPane = mainView;
@@ -28,6 +29,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		mainView.setAssistence(this);
 		reservasview.setAssistence(this);
 		cadastroview.setAssistence(this);
+		associadoview.setAssistence(this);
 		reservationdashboardview.setAssistence(this);
 		menu.setAssistence(this);
 		
