@@ -10,12 +10,12 @@ public class Reservation {
 	private Date date;
 	private String datef;
 	private String hour;
-	private String space;
+	private Space space;
 	private int peopleqnt;
 	
-	@SuppressWarnings("deprecation")
-	public Reservation(int id, User user, Date date, String space, int peopleqnt) {
-		SimpleDateFormat df = new SimpleDateFormat("dd/mm/yyyy");
+	public Reservation(int id, User user, Date date, Space space, int peopleqnt) {
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat hf = new SimpleDateFormat("HH:mm");
 		this.id = id;
 		this.user = user;
 		this.date = date;
@@ -23,27 +23,21 @@ public class Reservation {
 		this.peopleqnt = peopleqnt;
 		this.username = user.getFirstName() + " " + user.getLastName();
 		this.datef = df.format(this.date);
-		this.hour = this.date.getHours() + ":" + this.date.getMinutes();
+		this.hour = hf.format(this.date);
+	}
+	
+	public Reservation() {
+		super();
 	}
 	
 	public int getId() {
 		return id;
 	}
 
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
-
-	public Reservation() {
-		super();
-	}
 	
-	
-
 	public String getDatef() {
 		return datef;
 	}
@@ -72,11 +66,11 @@ public class Reservation {
 		this.date = date;
 	}
 
-	public String getSpace() {
+	public Space getSpace() {
 		return space;
 	}
 
-	public void setSpace(String space) {
+	public void setSpace(Space space) {
 		this.space = space;
 	}
 
