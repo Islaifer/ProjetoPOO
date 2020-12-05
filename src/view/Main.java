@@ -17,8 +17,9 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 	private final CadastroView cadastroview = new CadastroView();
 	private final GerenciarAssocView associadoview = new GerenciarAssocView ();
 	private final ReservationDashboardView reservationdashboardview = new ReservationDashboardView();
+	private final SubscriptionDashboardView subscriptiondashboardview = new SubscriptionDashboardView();
 	private final Menu menu = new Menu();
-	private StrategyPane targetPane = mainView;
+	private StrategyPane targetPane = subscriptiondashboardview;
 	
 	
 	@Override
@@ -31,6 +32,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		cadastroview.setAssistence(this);
 		associadoview.setAssistence(this);
 		reservationdashboardview.setAssistence(this);
+		subscriptiondashboardview.setAssistence(this);
 		menu.setAssistence(this);
 		
 		context();
