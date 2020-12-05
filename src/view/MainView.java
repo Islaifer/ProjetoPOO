@@ -22,15 +22,15 @@ public class MainView implements StrategyPane, ComandProductor{
 	public MainView() {
 		pane = new Pane();
 		try {
-			logo = new Image(new FileInputStream(new File("").getAbsolutePath() + "/images/logo.png"), 630, 389, false, false);
+			logo = new Image(new FileInputStream(new File("").getAbsolutePath() + "/images/logo.png"), 630, 470, false, false);
 		} catch (FileNotFoundException e) {
 			System.err.println(new File("").getAbsolutePath() + "/images/logo.png not found");
 		}
 		lv = new ImageView(logo);
-		lv.relocate(90, 60);
+		lv.relocate(90, 5);
 		btnEnter = new Button("Entrar");
-		btnEnter.relocate(220, 500);
-		btnEnter.setMinWidth(361.5);
+		btnEnter.relocate(290, 440);
+		btnEnter.setMinWidth(200);
 		btnEnter.setMinHeight(71.25);
 		btnEnter.setOnAction((e) -> {
 			exeComand("Enter");
