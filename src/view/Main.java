@@ -19,7 +19,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 	private final ReservationDashboardView reservationdashboardview = new ReservationDashboardView();
 	private final SubscriptionDashboardView subscriptiondashboardview = new SubscriptionDashboardView();
 	private final Menu menu = new Menu();
-	private StrategyPane targetPane = mainView;
+	private StrategyPane targetPane = cadastroview;
 	
 	
 	@Override

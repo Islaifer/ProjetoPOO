@@ -3,6 +3,7 @@ package view;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
 import interfaces.StrategyPane;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -81,11 +82,21 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 		txtpesquisa.relocate(250, 60);
 		txtpesquisa.setMinHeight(30);
 		txtpesquisa.setMinWidth(300);
+		//botao
+		
+		Button btnAddAssociate = new Button("Adicionar Associado");
+		btnAddAssociate.relocate(650,40);
+		btnAddAssociate.setMinHeight(30);
+		btnAddAssociate.setMinWidth(40);
+		btnAddAssociate.setOnAction((e)->{
+			exeComand("AddAssociate");
+		});
 		
 		pane.getChildren().addAll(lblgerreserva,lblnome,inputNome,lbldatanasc,inputDatanasc,lblrg, inputRg,
 				lblcpf, inputCpf, lblcontato, inputContato, lblendereco, inputEndereco, lbldependentes, inputDependentes,
-				lbltiposocio, inputTiposocio,txtpesquisa, lblstatusmensalidade,inputStatusmensalidade);
+				lbltiposocio, inputTiposocio,txtpesquisa, lblstatusmensalidade,inputStatusmensalidade, btnAddAssociate);
 	}
+	
 	@Override
 	public void setAssistence(ComandAssistence a) {
 		// TODO Auto-generated method stub

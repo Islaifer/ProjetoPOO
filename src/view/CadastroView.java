@@ -19,7 +19,7 @@ public CadastroView() {
 	pane = new Pane();
 	
 	Label lblcadastro = new Label ("Cadastro de Usuário");
-	lblcadastro.relocate (250, 30);
+	lblcadastro.relocate (290, 30);
 	lblcadastro.setFont(new Font("Arial",18));
 	Label lbldadosassoc = new Label ("Dados do Associado");
 	lbldadosassoc.relocate (250, 100);
@@ -72,9 +72,16 @@ public CadastroView() {
 		exeComand("Cadastrar");
 	});
 	
+	Button btnVoltar = new Button("Voltar");
+	btnVoltar.relocate(230,30);
+	btnVoltar.setMinHeight(30);
+	btnVoltar.setMinWidth(40);
+	btnVoltar.setOnAction((e)->{
+		exeComand("VoltarCadastro");
+	});
 	
-	
-	pane.getChildren().addAll(lblcadastro, lbldadosassoc, lbldadosend, lblplano, txtnome, txtsobrenome, txtcpf, txtrg, txtend, txttel, txtdata, cbplano, btnCadastrar);
+	pane.getChildren().addAll(lblcadastro, lbldadosassoc, lbldadosend, lblplano, txtnome, txtsobrenome, txtcpf, txtrg, 
+			txtend, txttel, txtdata, cbplano, btnCadastrar, btnVoltar);
 }
 	@Override
 	public void setAssistence(ComandAssistence a) {
