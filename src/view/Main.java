@@ -58,19 +58,19 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 	@Override
 	public void executeCommand(String cmd) {
 		if(cmd.equals("Enter")) {
-			System.out.println("Entrou");
+			targetPane = reservationdashboardview;
+		}else if(cmd.equals("dashboard")) {
+			System.out.println("Dashboard");
+		}else if(cmd.equals("reservation")) {
+			targetPane = reservationdashboardview;
+		}else if(cmd.equals("associated")) {
+			targetPane = associadoview;
+		}else if(cmd.equals("tuition")) {
+			targetPane = subscriptiondashboardview;
 		}else if (cmd.equals("Reservar")) {
 			System.out.println("Reservou");
 		}else if (cmd.equals("Cadastrar")) {
 			System.out.println("Cadastrou");
-		}else if(cmd.equals("dashboard")) {
-			System.out.println("Dashboard");
-		}else if(cmd.equals("reservation")) {
-			System.out.println("reservation");
-		}else if(cmd.equals("associated")) {
-			System.out.println("associated");
-		}else if(cmd.equals("tuition")) {
-			System.out.println("tuition");
 		}
 		context();
 	}
