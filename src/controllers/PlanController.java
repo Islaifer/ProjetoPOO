@@ -21,7 +21,7 @@ public class PlanController {
 			return PlanDao.getById(id);
 		}
 		
-		/*public Plan post(Plan plan) throws Exception {
+		public Plan post(Plan plan) throws Exception {
 			PlanDao.insert(plan);
 			return plan;
 		}
@@ -34,5 +34,5 @@ public class PlanController {
 		
 		public void deleteById(int id) throws Exception {
 			PlanDao.deleteById(id);
-		}*/
+		}
 	}

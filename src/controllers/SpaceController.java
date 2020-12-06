@@ -19,7 +19,7 @@ public class SpaceController {
 		return SpaceDao.getById(id);
 	}
 	
-	/*public Space post(Space space) throws Exception {
+	public Space post(Space space) throws Exception {
 		SpaceDao.insert(space);
 		return space;
 	}
@@ -32,5 +32,5 @@ public class SpaceController {
 	
 	public void deleteById(int id) throws Exception {
 		SpaceDao.deleteById(id);
-	}*/
+	}
 }

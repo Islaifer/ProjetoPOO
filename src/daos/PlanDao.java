@@ -93,7 +93,7 @@ public class PlanDao {
 		}
 	}
 	
-	private static void insert(Plan plan) throws Exception {
+	public static void insert(Plan plan) throws Exception {
 		try {
 			Connection connection = DatabaseConnection.getConnection();
 			PreparedStatement posted = connection.prepareStatement("INSERT INTO plans(name, price)"
@@ -105,6 +105,19 @@ public class PlanDao {
 			
 		} catch (Exception error) {
 			System.out.println("ta aqui?");
+			System.out.println(error);
+		}
+	}
+	
+	public static synchronized void deleteById(int id) throws Exception {
+		try {
+			Connection connection = DatabaseConnection.getConnection();
+			PreparedStatement delete = connection.prepareStatement("DELETE from " + nameTable + " WHERE id = " + id);
+			
+			delete.executeUpdate();
+			
+			connection.close();		
+		} catch (Exception error){
 			System.out.println(error);
 		}
 	}

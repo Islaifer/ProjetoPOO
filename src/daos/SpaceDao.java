@@ -90,7 +90,7 @@ public class SpaceDao {
 		}
 	}
 	
-	private static void insert(Space space) throws Exception {
+	public static void insert(Space space) throws Exception {
 		try {
 			Connection connection = DatabaseConnection.getConnection();
 			PreparedStatement posted = connection.prepareStatement("INSERT INTO " + nameTable + "(name, capacity)"
@@ -102,6 +102,19 @@ public class SpaceDao {
 			
 		} catch (Exception error) {
 			System.out.println("ta aqui?");
+			System.out.println(error);
+		}
+	}
+	
+	public static synchronized void deleteById(int id) throws Exception {
+		try {
+			Connection connection = DatabaseConnection.getConnection();
+			PreparedStatement delete = connection.prepareStatement("DELETE from " + nameTable + " WHERE id = " + id);
+			
+			delete.executeUpdate();
+			
+			connection.close();		
+		} catch (Exception error){
 			System.out.println(error);
 		}
 	}
