@@ -4,6 +4,7 @@ package view;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
 import interfaces.StrategyPane;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -57,9 +58,17 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 		columnQntd.setMaxWidth(150);
 		table.getColumns().addAll(columnDate, columnHour, columnName, columnSpace, columnQntd);
 		
+		//botao
+		Button btnAddReservation = new Button("Adicionar Reserva");
+		btnAddReservation.relocate(650,210);
+		btnAddReservation.setMinHeight(30);
+		btnAddReservation.setMinWidth(30);
+		btnAddReservation.setOnAction((e)->{
+			exeComand("AddReserva");
+		});
 		
 		
-		pane.getChildren().addAll(lbltittle, lblreservation, table);
+		pane.getChildren().addAll(lbltittle, lblreservation, table, btnAddReservation);
 	}
 	
 	

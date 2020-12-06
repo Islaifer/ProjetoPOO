@@ -20,8 +20,8 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		pane = new Pane();
 		
 		//Labels
-		Label lblcadreserva = new Label ("<- Cadastro de Reserva");
-		lblcadreserva.relocate (250, 30);
+		Label lblcadreserva = new Label ("Cadastro de Reserva");
+		lblcadreserva.relocate (290, 30);
 		lblcadreserva.setFont(new Font("Arial",18));
 		Label lblreserva = new Label("Dados da Reserva");
 		lblreserva.relocate(250,100);
@@ -64,8 +64,17 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		btnReservar.setOnAction((e)->{
 			exeComand("Reservar");
 		});
+		
+		Button btnVoltar = new Button("Voltar");
+		btnVoltar.relocate(230,30);
+		btnVoltar.setMinHeight(30);
+		btnVoltar.setMinWidth(40);
+		btnVoltar.setOnAction((e)->{
+			exeComand("VoltarReserva");
+		});
 		//Coloca todos os objetos na tela
-		pane.getChildren().addAll(lblreserva, lblcliente, lblhorario, lblcadreserva, txtrg, txtqtd, txtdata, cbespaco, cbhorarios, btnReservar);
+		pane.getChildren().addAll(lblreserva, lblcliente, lblhorario, lblcadreserva, txtrg, txtqtd, txtdata, 
+				cbespaco, cbhorarios, btnReservar, btnVoltar);
 		
 	}
 	
