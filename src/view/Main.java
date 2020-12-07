@@ -1,5 +1,6 @@
 package view;
 
+import controllers.DataController;
 import interfaces.ComandAssistence;
 import interfaces.StrategyPane;
 import javafx.application.Application;
@@ -19,7 +20,8 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 	private final ReservationDashboardView reservationdashboardview = new ReservationDashboardView();
 	private final SubscriptionDashboardView subscriptiondashboardview = new SubscriptionDashboardView();
 	private final Menu menu = new Menu();
-	private StrategyPane targetPane = cadastroview;
+	private final DataController control = new DataController();
+	private StrategyPane targetPane = mainView;
 	
 	
 	@Override
@@ -68,7 +70,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		}else if(cmd.equals("tuition")) {
 			targetPane = subscriptiondashboardview;
 		}else if (cmd.equals("Reservar")) {
-			System.out.println("Reservou");
+			this.reservasview.reservationToControl(control);
 		}else if (cmd.equals("Cadastrar")) {
 			System.out.println("Cadastrou");
 		}
