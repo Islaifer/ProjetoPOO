@@ -22,8 +22,8 @@ public class SubscriptionService {
 		return SubscriptionDao.getById(id);
 	}
 	
-	public void post(Double amount , User user, SubscriptionStatus status, Date dueDate) throws Exception {
-		Subscription subscription = new Subscription(dueDate, status, user, amount );
+	public void post(User user, SubscriptionStatus status, Date dueDate) throws Exception {
+		Subscription subscription = new Subscription(dueDate, status, user);
 		SubscriptionDao.insert(subscription);
 	}
 	

@@ -134,7 +134,7 @@ public class SubscriptionDao {
 			posted.setInt(1, subscription.getUser().getId());
 			posted.setInt(2, subscription.getStatus().getId());
 			posted.setDate(3, java.sql.Date.valueOf(subscription.getDueDate().toString()));
-			posted.setDouble(4, subscription.getAmount());
+			posted.setDouble(4, subscription.getUser().getPlan().getPrice());
 			// aqui ele executa o método o qual criei acima no banco de dados.
 			posted.executeUpdate();
 		} catch (Exception error) {

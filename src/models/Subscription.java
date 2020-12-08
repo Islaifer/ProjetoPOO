@@ -17,11 +17,10 @@ public class Subscription {
 		this.amount = amount;
 	}
 	
-	public Subscription(Date dueDate, SubscriptionStatus status, User user, double amount) {
+	public Subscription(Date dueDate, SubscriptionStatus status, User user) {
 		this.dueDate = dueDate;
 		this.status = status;
 		this.user = user;
-		this.amount = amount;
 	}
 	
 	public Subscription() {
