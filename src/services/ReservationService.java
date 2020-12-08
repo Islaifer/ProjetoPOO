@@ -28,8 +28,8 @@ public class ReservationService {
 		return ReservationDao.getById(id);
 	}
 	
-	public Reservation post(int rgUser, Date date, String spaceName, int peopleqnt) throws Exception {
-		User user = this.user.getById(rgUser);
+	public Reservation post(int cpfUser, Date date, String spaceName, int peopleqnt) throws Exception {
+		User user = this.user.getById(cpfUser);
 		Space space = this.space.getById(0);
 		if(user.getId() != 0) {
 			if(space.getId() != 0) {

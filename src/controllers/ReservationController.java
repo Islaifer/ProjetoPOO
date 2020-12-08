@@ -20,8 +20,8 @@ public class ReservationController {
 		return this.reservationService.getById(id);
 	}
 	
-	public Reservation post(int rgUser, Date date, String spaceName, int peopleqnt) throws Exception {
-		return reservationService.post(rgUser, date, spaceName, peopleqnt);
+	public Reservation post(int cpfUser, Date date, String spaceName, int peopleqnt) throws Exception {
+		return reservationService.post(cpfUser, date, spaceName, peopleqnt);
 	}
 	
 	public void deleteById(int id) throws Exception {
