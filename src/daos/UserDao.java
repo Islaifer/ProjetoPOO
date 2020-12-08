@@ -27,10 +27,7 @@ public class UserDao {
 					+ "birthdate DATE,"
 					+ "phone_number INT NOT NULL,"
 					+ "address VARCHAR(255) NOT NULL,"
-					+ "address_number VARCHAR(255) NOT NULL,"
-					+ "state VARCHAR(255) NOT NULL,"
-					+ "city VARCHAR(255) NOT NULL,"
-					+ "plan_id INT,"
+					+ "plan_id INT NOT NULL,"
 					+ "PRIMARY KEY(id),"
 					+ "FOREIGN KEY (plan_id) REFERENCES plans(id)"
 					+ ");"
@@ -69,9 +66,6 @@ public class UserDao {
 						result.getDate("birthdate"),
 						result.getInt("phoneNumber"), 
 						result.getString("address"), 
-						result.getString("address_number"), 
-						result.getString("state") , 
-						result.getString("city"),
 						plan
 						); 
 				users.add(user);
@@ -104,9 +98,39 @@ public class UserDao {
 						result.getDate("birthdate"),
 						result.getInt("phoneNumber"), 
 						result.getString("address"), 
-						result.getString("address_number"), 
-						result.getString("state") , 
-						result.getString("city"),
+						plan
+						); 
+				userCatched = user;
+			}
+			connection.close();
+			 
+			return userCatched;
+			
+		} catch (Exception error){
+			System.out.println(error);
+			return null;
+		}
+	}
+	
+	public static synchronized User getByCPF(int cpf) throws Exception {
+		try {
+			Connection connection = DatabaseConnection.getConnection();
+			PreparedStatement statement = connection.prepareStatement("SELECT * from " + nameTable + " WHERE cpf = " + cpf);
+			
+			ResultSet result = statement.executeQuery();
+			
+			User userCatched = new User();
+			
+			while(result.next()) {
+				Plan plan = PlanDao.getById(result.getInt("plan_id"));
+				User user = new User(result.getInt("id"),
+						result.getString("first_name"), 
+						result.getString("last_name"), 
+						result.getInt("rg"),
+						result.getInt("cpf"),
+						result.getDate("birthdate"),
+						result.getInt("phoneNumber"), 
+						result.getString("address"), 
 						plan
 						); 
 				userCatched = user;
@@ -147,9 +171,6 @@ public class UserDao {
 					+ " birthdate,"
 					+ " phone_number,"
 					+ " address,"
-					+ " address_number,"
-					+ " state,"
-					+ " city,"
 					+ " plan_id)"
 					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?)");
 			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
@@ -160,10 +181,7 @@ public class UserDao {
 			posted.setDate(5, java.sql.Date.valueOf(user.getBirthdate().toString()));
 			posted.setInt(6, user.getPhoneNumber());
 			posted.setString(7, user.getAddress());
-			posted.setString(8, user.getAddressNumber());
-			posted.setString(9, user.getState());
-			posted.setString(10, user.getCity());
-			posted.setInt(11, user.getPlan().getId());
+			posted.setInt(8, user.getPlan().getId());
 			// aqui ele executa o método o qual criei acima no banco de dados.
 			posted.executeUpdate();
 		} catch (Exception error) {
@@ -171,5 +189,29 @@ public class UserDao {
 		}
 	}
 	
-	
+	public static void update(User user) throws Exception {
+		try {
+			//pega conexão com o banco de dados
+			Connection connection = DatabaseConnection.getConnection();
+			//PreparedStatement é o metodo na sua tradução prepara a declaração que irá ser introduzida no SQL, no contexto é o método de inserção de dados.
+			PreparedStatement posted = connection.prepareStatement("UPDATE "+ nameTable +" set"
+					+ "	first_name = ?,"
+					+ " last_name = ?,"
+					+ " phone_number = ?,"
+					+ " address = ?,"
+					+ " plan_id = ?"
+					+ " WHERE id = ?");
+			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
+			posted.setString(1, user.getFirstName());
+			posted.setString(2, user.getLastName());
+			posted.setInt(3, user.getPhoneNumber());
+			posted.setString(4, user.getAddress());
+			posted.setInt(5, user.getPlan().getId());
+			posted.setInt(6, user.getId());
+			// aqui ele executa o método o qual criei acima no banco de dados.
+			posted.executeUpdate();
+		} catch (Exception error) {
+			System.out.println(error);
+		}
+	}
 }
