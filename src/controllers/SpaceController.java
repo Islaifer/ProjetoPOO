@@ -2,35 +2,34 @@ package controllers;
 
 import java.util.List;
 
-import daos.SpaceDao;
 import models.Space;
+import services.SpaceService;
 
 
 public class SpaceController {
+	private SpaceService spaceService;
+	
 	public SpaceController() {
-		super();
+		this.spaceService = new SpaceService();
 	}
 	
 	public List<Space> getAll() throws Exception{
-		return SpaceDao.get();
+		return this.spaceService.getAll();
 	}
 	
 	public Space getById(int id) throws Exception {
-		return SpaceDao.getById(id);
+		return this.spaceService.getById(id);
 	}
 	
-	public Space post(Space space) throws Exception {
-		SpaceDao.insert(space);
-		return space;
+	public Space post(String name, int capacity) throws Exception {
+		return this.spaceService.post(name, capacity);
 	}
 	
-	public List<Space> post(Space space, List<Space> list) throws Exception {
-		SpaceDao.insert(space);
-		list.add(space);
-		return list;
+	public List<Space> post(String name, int capacity, List<Space> list) throws Exception {
+		return this.spaceService.post(name, capacity, list);
 	}
 	
 	public void deleteById(int id) throws Exception {
-		SpaceDao.deleteById(id);
+		this.spaceService.deleteById(id);
 	}
 }

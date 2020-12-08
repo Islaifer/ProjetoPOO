@@ -6,7 +6,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-import controllers.DataController;
+import controllers.ReservationController;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
 import interfaces.StrategyPane;
@@ -18,7 +18,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
-
 public class ReservasView implements StrategyPane, ComandProductor {
 	private ComandAssistence a;
 	private Pane pane;
@@ -27,11 +26,12 @@ public class ReservasView implements StrategyPane, ComandProductor {
 	private TextField txtdata;
 	private ChoiceBox <String> cbespaco;
 	private ChoiceBox <String> cbhorarios;
+	private ReservationController reservationController;
 		
 	public ReservasView() {
 		//Programação da tela
 		pane = new Pane();
-		
+		reservationController = new ReservationController();
 		//Labels
 		Label lblcadreserva = new Label ("Cadastro de Reserva");
 		lblcadreserva.relocate (290, 30);
@@ -91,14 +91,14 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		
 	}
 	
-	public void reservationToControl(DataController control) {
+	public void reservationToControl() {
 		try {
 			int rgUser = Integer.parseInt(this.txtrg.getText());
 			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
 			Date date = df.parse(this.txtdata.getText() + " - " + this.cbhorarios.getValue());
 			String spaceName = this.cbhorarios.getValue();
 			int peopleqnt = Integer.parseInt(this.txtqtd.getText());
-			control.addReservation(rgUser, date, spaceName, peopleqnt);
+			this.reservationController.post(rgUser, date, spaceName, peopleqnt);
 			this.txtrg.setText("RG do Associado");
 			this.txtdata.setText("Data da Reserva");
 			this.txtqtd.setText("Quantidade de Pessoas");
