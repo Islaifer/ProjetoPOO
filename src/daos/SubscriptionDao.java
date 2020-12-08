@@ -7,32 +7,29 @@ import java.util.LinkedList;
 import java.util.List;
 
 import config.DatabaseConnection;
-import models.Plan;
+import models.Reservation;
+import models.Space;
+import models.Subscription;
+import models.SubscriptionStatus;
 import models.User;
 
-public class UserDao {
-	private static String nameTable = "users";
+public class SubscriptionDao {
+	private static String nameTable = "subscriptions";
 	
-	public static synchronized void createTableUser() throws Exception {
+	public static synchronized void createTableSubscriptions() throws Exception {
 		try {
 			//pega conexão com o banco de dados
 			Connection connection = DatabaseConnection.getConnection();
 			//PreparedStatement é o metodo na sua tradução prepara a declaração que irá ser introduzida no SQL, no contexto é o método de criação de tabela.
 			PreparedStatement create = connection.prepareStatement("CREATE TABLE IF NOT EXISTS "
 					+ nameTable +"(id INT NOT NULL AUTO_INCREMENT,"
-					+ "first_name VARCHAR(255) NOT NULL,"
-					+ "last_name VARCHAR(255) NOT NULL,"
-					+ "rg INT NOT NULL,"
-					+ "cpf INT NOT NULL,"
-					+ "birthdate DATE,"
-					+ "phone_number INT NOT NULL,"
-					+ "address VARCHAR(255) NOT NULL,"
-					+ "address_number VARCHAR(255) NOT NULL,"
-					+ "state VARCHAR(255) NOT NULL,"
-					+ "city VARCHAR(255) NOT NULL,"
-					+ "plan_id INT,"
+					+ "id_user INT NOT NULL,"
+					+ "id_status INT NOT NULL,"
+					+ "date DATE NOT NULL,"
+					+ "amount DOUBLE NOT NULL,"
 					+ "PRIMARY KEY(id),"
-					+ "FOREIGN KEY (plan_id) REFERENCES plans(id)"
+					+ "FOREIGN KEY (id_user) REFERENCES users(id),"
+					+ "FOREIGN KEY (id_status) REFERENCES subscription_status(id)"
 					+ ");"
 					);
 			// aqui ele executa o método o qual criei acima no banco de dados.
@@ -46,7 +43,7 @@ public class UserDao {
 		}
 	}
 	
-	public static synchronized List<User> get() throws Exception {
+	public static synchronized List<Subscription> getAll() throws Exception {
 		try {
 			Connection connection = DatabaseConnection.getConnection();
 			//MÉTODO PARA BUSCAR TODOS OS ITENS DENTRO DO BANCO DE DADOS DA TABELA
@@ -55,65 +52,53 @@ public class UserDao {
 			//DENTRO DO RESULT ESTARÁ OS DADOS QUE EU QUERO CASO TENHA DADO SUCESSO
 			ResultSet result = statement.executeQuery();
 			
-			List<User> users = new LinkedList<User>();
+			List<Subscription> subscriptions = new LinkedList<Subscription>();
 			
 			//AQUI FARA UM WHILE QUE ENQUANTO EXISTIR "PRÓXIMO" DADO ELE CONTINUARA NO WHILE.
 			while(result.next()) {
-				Plan plan = PlanDao.getById(result.getInt("plan_id"));
 				//CADA GET DESSES AQUI EMBAIXO SÃO OS NOMES DA COLUNA QUE EU QUERO O RESULTADO
-				User user = new User(result.getInt("id"),
-						result.getString("first_name"), 
-						result.getString("last_name"), 
-						result.getInt("rg"),
-						result.getInt("cpf"),
-						result.getDate("birthdate"),
-						result.getInt("phoneNumber"), 
-						result.getString("address"), 
-						result.getString("address_number"), 
-						result.getString("state") , 
-						result.getString("city"),
-						plan
+				User user = UserDao.getById(result.getInt("id_user"));
+				SubscriptionStatus status = SubscriptionStatusDao.getById(result.getInt("id_status"));
+				Subscription subscription = new Subscription(result.getInt("id"),
+						result.getDate("date"),
+						status,
+						user,
+						result.getDouble("amount")
 						); 
-				users.add(user);
+				subscriptions.add(subscription);
 			}
 			connection.close();
 			
-			return users;
+			return subscriptions;
 		} catch (Exception error){
 			System.out.println(error);
 			return null;
 		}
 	}
 	
-	public static synchronized User getById(int id) throws Exception {
+	public static synchronized Subscription getById(int id) throws Exception {
 		try {
 			Connection connection = DatabaseConnection.getConnection();
 			PreparedStatement statement = connection.prepareStatement("SELECT * from " + nameTable + " WHERE id = " + id);
 			
 			ResultSet result = statement.executeQuery();
 			
-			User userCatched = new User();
+			Subscription subscriptionCatched = new Subscription();
 			
 			while(result.next()) {
-				Plan plan = PlanDao.getById(result.getInt("plan_id"));
-				User user = new User(result.getInt("id"),
-						result.getString("first_name"), 
-						result.getString("last_name"), 
-						result.getInt("rg"),
-						result.getInt("cpf"),
-						result.getDate("birthdate"),
-						result.getInt("phoneNumber"), 
-						result.getString("address"), 
-						result.getString("address_number"), 
-						result.getString("state") , 
-						result.getString("city"),
-						plan
-						); 
-				userCatched = user;
+				User user = UserDao.getById(result.getInt("id_user"));
+				SubscriptionStatus status = SubscriptionStatusDao.getById(result.getInt("id_status"));
+				Subscription subscription = new Subscription(result.getInt("id"),
+						result.getDate("date"),
+						status,
+						user,
+						result.getInt("amount")
+						);
+				subscriptionCatched = subscription;
 			}
 			connection.close();
 			 
-			return userCatched;
+			return subscriptionCatched;
 			
 		} catch (Exception error){
 			System.out.println(error);
@@ -134,42 +119,26 @@ public class UserDao {
 		}
 	}
 	
-	public static void insert(User user) throws Exception {
+	public static void insert(Subscription subscription) throws Exception {
 		try {
 			//pega conexão com o banco de dados
 			Connection connection = DatabaseConnection.getConnection();
 			//PreparedStatement é o metodo na sua tradução prepara a declaração que irá ser introduzida no SQL, no contexto é o método de inserção de dados.
 			PreparedStatement posted = connection.prepareStatement("INSERT INTO "+ nameTable +"("
-					+ "	first_name,"
-					+ " last_name,"
-					+ " rg,"
-					+ " cpf,"
-					+ " birthdate,"
-					+ " phone_number,"
-					+ " address,"
-					+ " address_number,"
-					+ " state,"
-					+ " city,"
-					+ " plan_id)"
-					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+					+ "id_user,"
+					+ "id_status,"
+					+ "date DATE,"
+					+ "amount)"
+					+ " VALUES (?,?,?,?)");
 			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
-			posted.setString(1, user.getFirstName());
-			posted.setString(2, user.getLastName());
-			posted.setInt(3, user.getRg());
-			posted.setInt(4, user.getCpf());
-			posted.setDate(5, java.sql.Date.valueOf(user.getBirthdate().toString()));
-			posted.setInt(6, user.getPhoneNumber());
-			posted.setString(7, user.getAddress());
-			posted.setString(8, user.getAddressNumber());
-			posted.setString(9, user.getState());
-			posted.setString(10, user.getCity());
-			posted.setInt(11, user.getPlan().getId());
+			posted.setInt(1, subscription.getUser().getId());
+			posted.setInt(2, subscription.getStatus().getId());
+			posted.setDate(3, java.sql.Date.valueOf(subscription.getDueDate().toString()));
+			posted.setDouble(4, subscription.getAmount());
 			// aqui ele executa o método o qual criei acima no banco de dados.
 			posted.executeUpdate();
 		} catch (Exception error) {
 			System.out.println(error);
 		}
 	}
-	
-	
 }

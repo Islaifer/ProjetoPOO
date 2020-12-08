@@ -1,5 +1,6 @@
 package view;
 
+import config.DatabaseConnection;
 import interfaces.ComandAssistence;
 import interfaces.StrategyPane;
 import javafx.application.Application;
@@ -81,7 +82,8 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		context();
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		DatabaseConnection.createTables();
 		Application.launch(Main.class, args);
 	}
 }
