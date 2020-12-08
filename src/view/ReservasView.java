@@ -105,7 +105,7 @@ public class ReservasView implements StrategyPane, ComandProductor {
 			String spaceName = this.cbhorarios.getValue();
 			int peopleqnt = Integer.parseInt(this.txtqtd.getText());
 			this.reservationController.post(cpfUser, date, spaceName, peopleqnt);
-			this.txtcpf.setText("RG do Associado");
+			this.txtcpf.setText("CPF do Associado");
 			this.txtdata.setText("Data da Reserva");
 			this.txtqtd.setText("Quantidade de Pessoas");
 			this.cbespaco.setValue("");
