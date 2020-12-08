@@ -83,7 +83,7 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		btnVoltar.setMinHeight(30);
 		btnVoltar.setMinWidth(40);
 		btnVoltar.setOnAction((e)->{
-			exeComand("VoltarReserva");
+			exeComand("reservation");
 		});
 		//Coloca todos os objetos na tela
 		pane.getChildren().addAll(lblreserva, lblcliente, lblhorario, lblcadreserva, txtrg, txtqtd, txtdata, 

@@ -77,7 +77,7 @@ public CadastroView() {
 	btnVoltar.setMinHeight(30);
 	btnVoltar.setMinWidth(40);
 	btnVoltar.setOnAction((e)->{
-		exeComand("VoltarCadastro");
+		exeComand("associated");
 	});
 	
 	pane.getChildren().addAll(lblcadastro, lbldadosassoc, lbldadosend, lblplano, txtnome, txtsobrenome, txtcpf, txtrg, 
