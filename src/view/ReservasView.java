@@ -25,13 +25,12 @@ import models.Space;
 public class ReservasView implements StrategyPane, ComandProductor {
 	private ComandAssistence a;
 	private Pane pane;
-	private TextField txtrg;
+	private TextField txtcpf;
 	private TextField txtqtd;
 	private TextField txtdata;
 	private ChoiceBox <String> cbespaco;
 	private ChoiceBox <String> cbhorarios;
 	private ReservationController reservationController;
-	private SpaceController spaceController;
 	
 		
 	public ReservasView() {
@@ -39,7 +38,6 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		this.seedSpace();
 		pane = new Pane();
 		reservationController = new ReservationController();
-		spaceController = new SpaceController();
 		//Labels
 		Label lblcadreserva = new Label ("Cadastro de Reserva");
 		lblcadreserva.relocate (290, 30);
@@ -56,10 +54,10 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		
 		
 		//TextFields
-		txtrg = new TextField ("RG do Associado");
-		txtrg.relocate(250, 230);
-		txtrg.setMinHeight(30);
-		txtrg.setMinWidth(30);
+		txtcpf = new TextField ("CPF do Associado");
+		txtcpf.relocate(250, 230);
+		txtcpf.setMinHeight(30);
+		txtcpf.setMinWidth(30);
 		txtqtd = new TextField ("Quantidade de Pessoas");
 		txtqtd.relocate(500, 230);
 		txtqtd.setMinHeight(30);
@@ -93,7 +91,7 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		});
 		
 		//Coloca todos os objetos na tela
-		pane.getChildren().addAll(lblreserva, lblcliente, lblhorario, lblcadreserva, txtrg, txtqtd, txtdata, 
+		pane.getChildren().addAll(lblreserva, lblcliente, lblhorario, lblcadreserva, txtcpf, txtqtd, txtdata, 
 				cbespaco, cbhorarios, btnReservar, btnVoltar);
 		
 	
@@ -101,13 +99,13 @@ public class ReservasView implements StrategyPane, ComandProductor {
 	
 	public void reservationToControl() {
 		try {
-			int rgUser = Integer.parseInt(this.txtrg.getText());
+			int cpfUser = Integer.parseInt(this.txtcpf.getText());
 			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
 			Date date = df.parse(this.txtdata.getText() + " - " + this.cbhorarios.getValue());
 			String spaceName = this.cbhorarios.getValue();
 			int peopleqnt = Integer.parseInt(this.txtqtd.getText());
-			this.reservationController.post(rgUser, date, spaceName, peopleqnt);
-			this.txtrg.setText("RG do Associado");
+			this.reservationController.post(cpfUser, date, spaceName, peopleqnt);
+			this.txtcpf.setText("RG do Associado");
 			this.txtdata.setText("Data da Reserva");
 			this.txtqtd.setText("Quantidade de Pessoas");
 			this.cbespaco.setValue("");
