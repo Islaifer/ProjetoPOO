@@ -3,6 +3,7 @@ package controllers;
 import java.util.Date;
 import java.util.List;
 
+import models.Plan;
 import models.User;
 import services.UserService;
 
@@ -20,12 +21,8 @@ public class UserController {
 		return this.userService.getById(id);
 	}
 	
-	public User post(String firstName, String lastName, int rg, int cpf, Date birthdate, int phoneNumber, String address, String addressNumber, String state, String city, int planId) throws Exception {
-		return this.userService.post(firstName, lastName, rg, cpf, birthdate, phoneNumber, address, addressNumber, state, city, planId);
-	}
-	
-	public List<User> post(String firstName, String lastName, int rg, int cpf, Date birthdate, int phoneNumber, String address, String addressNumber, String state, String city, int planId, List<User> list) throws Exception {
-		return this.userService.post(firstName, lastName, rg, cpf, birthdate, phoneNumber, address, addressNumber, state, city, planId, list);
+	public void post(String firstName, String lastName, int rg, int cpf, Date birthdate, int phoneNumber, String address, String addressNumber, String state, String city, Plan plan) throws Exception {
+		this.userService.post(firstName, lastName, rg, cpf, birthdate, phoneNumber, address, addressNumber, state, city, plan);
 	}
 	
 	public void deleteById(int id) throws Exception {

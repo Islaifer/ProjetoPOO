@@ -59,6 +59,7 @@ public class UserDao {
 			
 			//AQUI FARA UM WHILE QUE ENQUANTO EXISTIR "PRÓXIMO" DADO ELE CONTINUARA NO WHILE.
 			while(result.next()) {
+				Plan plan = PlanDao.getById(result.getInt("plan_id"));
 				//CADA GET DESSES AQUI EMBAIXO SÃO OS NOMES DA COLUNA QUE EU QUERO O RESULTADO
 				User user = new User(result.getInt("id"),
 						result.getString("first_name"), 
@@ -71,7 +72,7 @@ public class UserDao {
 						result.getString("address_number"), 
 						result.getString("state") , 
 						result.getString("city"),
-						result.getInt("plan_id")
+						plan
 						); 
 				users.add(user);
 			}
@@ -94,6 +95,7 @@ public class UserDao {
 			User userCatched = new User();
 			
 			while(result.next()) {
+				Plan plan = PlanDao.getById(result.getInt("plan_id"));
 				User user = new User(result.getInt("id"),
 						result.getString("first_name"), 
 						result.getString("last_name"), 
@@ -105,7 +107,7 @@ public class UserDao {
 						result.getString("address_number"), 
 						result.getString("state") , 
 						result.getString("city"),
-						result.getInt("plan_id")
+						plan
 						); 
 				userCatched = user;
 			}
@@ -161,7 +163,7 @@ public class UserDao {
 			posted.setString(8, user.getAddressNumber());
 			posted.setString(9, user.getState());
 			posted.setString(10, user.getCity());
-			posted.setInt(11, user.getPlanId());
+			posted.setInt(11, user.getPlan().getId());
 			// aqui ele executa o método o qual criei acima no banco de dados.
 			posted.executeUpdate();
 		} catch (Exception error) {

@@ -15,9 +15,9 @@ public class User {
 	private String addressNumber;
 	private String state;
 	private String city;
-	private int planId;
+	private Plan plan;
 	
-	public User(int id, String firstName, String lastName, int rg, int cpf, Date birthdate, int phoneNumber, String address, String addressNumber, String state, String city, int planId) {
+	public User(int id, String firstName, String lastName, int rg, int cpf, Date birthdate, int phoneNumber, String address, String addressNumber, String state, String city, Plan plan) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -29,7 +29,7 @@ public class User {
 		this.addressNumber = addressNumber;
 		this.state = state;
 		this.city = city;
-		this.planId = planId;
+		this.setPlan(plan);
 	}
 	
 	public User() {
@@ -101,10 +101,12 @@ public class User {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public int getPlanId() {
-		return planId;
+
+	public Plan getPlan() {
+		return plan;
 	}
-	public void setPlanId(int planId) {
-		this.planId = planId;
+
+	public void setPlan(Plan plan) {
+		this.plan = plan;
 	}
 }
