@@ -3,10 +3,13 @@ package view;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import controllers.ReservationController;
+import controllers.SpaceController;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
 import interfaces.StrategyPane;
@@ -17,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import models.Space;
 
 public class ReservasView implements StrategyPane, ComandProductor {
 	private ComandAssistence a;
@@ -27,11 +31,15 @@ public class ReservasView implements StrategyPane, ComandProductor {
 	private ChoiceBox <String> cbespaco;
 	private ChoiceBox <String> cbhorarios;
 	private ReservationController reservationController;
+	private SpaceController spaceController;
+	
 		
 	public ReservasView() {
 		//Programação da tela
+		this.seedSpace();
 		pane = new Pane();
 		reservationController = new ReservationController();
+		spaceController = new SpaceController();
 		//Labels
 		Label lblcadreserva = new Label ("Cadastro de Reserva");
 		lblcadreserva.relocate (290, 30);
@@ -62,12 +70,10 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		txtdata.setMinWidth(30);
 		
 		//Choiceboxes
-		cbespaco = new ChoiceBox <String> ();
-		cbespaco.setItems(FXCollections.observableArrayList("Quadra futsal 1","Quadra futsal 2", "Quadra volei","Churrasqueira Norte", "Churrasqueira Sul"));
-		cbespaco.relocate(250, 130);
 		cbhorarios = new ChoiceBox <String> ();
 		cbhorarios.setItems(FXCollections.observableArrayList("08:00","10:00","12:00","14:00","16:00","18:00","20:00", "Dia inteiro"));
 		cbhorarios.relocate(250, 330);
+		
 		
 		//Botao
 		Button btnReservar = new Button("Reservar");
@@ -85,10 +91,12 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		btnVoltar.setOnAction((e)->{
 			exeComand("reservation");
 		});
+		
 		//Coloca todos os objetos na tela
 		pane.getChildren().addAll(lblreserva, lblcliente, lblhorario, lblcadreserva, txtrg, txtqtd, txtdata, 
 				cbespaco, cbhorarios, btnReservar, btnVoltar);
 		
+	
 	}
 	
 	public void reservationToControl() {
@@ -111,6 +119,22 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro interno!", "ERROR", 0);
 		}
+	}
+		public void seedSpace() {
+			SpaceController spaceController = new SpaceController();
+			try {
+				List<Space> listSpace = spaceController.getAll();
+				List<String> list = new LinkedList<String>();
+				for(Space var : listSpace) {
+					list.add(var.getName());
+				}
+				cbespaco = new ChoiceBox <String> ();
+				cbespaco.setItems(FXCollections.observableArrayList(list));
+				cbespaco.relocate(250, 130);
+			} catch (Exception e) {
+				System.err.println("Deu ruim");
+			}
+		
 	}
 	
 	//Indica que a main executará os comandos
