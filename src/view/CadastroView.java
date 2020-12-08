@@ -27,7 +27,7 @@ public class CadastroView implements StrategyPane, ComandProductor {
 	private TextField txtdata;
 	private TextField txttel;
 	private TextField txtend;
-	private ChoiceBox cbplan; 
+	private ChoiceBox<String> cbplano; 
 	private UserController userController;
 	
 	public CadastroView() {
@@ -48,36 +48,36 @@ public class CadastroView implements StrategyPane, ComandProductor {
 		lblplano.relocate(250, 400);
 		lblplano.setFont(new Font("Arial", 14));
 
-		TextField txtnome = new TextField("Nome");
-		txtnome.relocate(250, 130);
-		txtnome.setMinHeight(30);
-		txtnome.setMinWidth(30);
-		TextField txtsobrenome = new TextField("Sobrenome");
+		txtname = new TextField("Nome");
+		txtname.relocate(250, 130);
+		txtname.setMinHeight(30);
+		txtname.setMinWidth(30);
+		txtsobrenome = new TextField("Sobrenome");
 		txtsobrenome.relocate(500, 130);
 		txtsobrenome.setMinHeight(30);
 		txtsobrenome.setMinWidth(30);
-		TextField txtrg = new TextField("RG");
+		txtrg = new TextField("RG");
 		txtrg.relocate(250, 180);
 		txtrg.setMinHeight(30);
 		txtrg.setMinWidth(30);
-		TextField txtcpf = new TextField("CPF");
+		txtcpf = new TextField("CPF");
 		txtcpf.relocate(500, 180);
 		txtcpf.setMinHeight(30);
 		txtcpf.setMinWidth(30);
-		TextField txtdata = new TextField("Data de Nascimento");
+		txtdata = new TextField("Data de Nascimento");
 		txtdata.relocate(250, 230);
 		txtdata.setMinHeight(30);
 		txtdata.setMinWidth(30);
-		TextField txttel = new TextField("Telefone para contato");
+		txttel = new TextField("Telefone para contato");
 		txttel.relocate(500, 230);
 		txttel.setMinHeight(30);
 		txttel.setMinWidth(30);
-		TextField txtend = new TextField("Endereço");
+		txtend = new TextField("Endereço");
 		txtend.relocate(250, 330);
 		txtend.setMinHeight(30);
 		txtend.setMinWidth(400);
 
-		ChoiceBox<String> cbplano = new ChoiceBox<String>();
+		cbplano = new ChoiceBox<String>();
 		cbplano.setItems(FXCollections.observableArrayList("Simples", "Master", "Blaster"));
 		cbplano.relocate(250, 430);
 
@@ -97,7 +97,7 @@ public class CadastroView implements StrategyPane, ComandProductor {
 		  exeComand("associated");
 	  });
 	
-	  pane.getChildren().addAll(lblcadastro, lbldadosassoc, lbldadosend, lblplano, txtnome, txtsobrenome, txtcpf, txtrg, 
+	  pane.getChildren().addAll(lblcadastro, lbldadosassoc, lbldadosend, lblplano, txtname, txtsobrenome, txtcpf, txtrg, 
 			txtend, txttel, txtdata, cbplano, btnCadastrar, btnVoltar);
 	}
 
