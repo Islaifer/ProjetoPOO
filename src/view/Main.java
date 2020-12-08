@@ -19,7 +19,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 	private final ReservationDashboardView reservationdashboardview = new ReservationDashboardView();
 	private final SubscriptionDashboardView subscriptiondashboardview = new SubscriptionDashboardView();
 	private final Menu menu = new Menu();
-	private StrategyPane targetPane = reservasview;
+	private StrategyPane targetPane = mainView;
 	
 	
 	@Override
@@ -71,6 +71,8 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 			this.reservasview.reservationToControl();
 		}else if (cmd.equals("Cadastrar")) {
 			System.out.println("Cadastrou");
+		}else if(cmd.equals("SearchAssociate")) {
+			System.out.println("Procurou o associadozada");
 		}
 		context();
 	}
