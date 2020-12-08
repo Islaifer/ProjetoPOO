@@ -9,7 +9,6 @@ import daos.SpaceDao;
 import daos.SubscriptionDao;
 import daos.SubscriptionStatusDao;
 import daos.UserDao;
-import models.SubscriptionStatus;
 
 public class DatabaseConnection {
 	public static Connection getConnection() throws Exception {
