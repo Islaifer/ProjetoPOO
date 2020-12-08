@@ -1,38 +1,34 @@
 package controllers;
 
+import java.util.Date;
 import java.util.List;
 
-import daos.PaymentDao;
 import models.Payment;
+import models.User;
+import services.PaymentService;
 
 
 
 public class PaymentController {
-	
+	private PaymentService paymentService;
 	public PaymentController() {
-		super();
+		paymentService = new PaymentService();
 	}
 	
 	public List<Payment> getAll() throws Exception{
-		return PaymentDao.get();
+		return this.paymentService.getAll();
 	}
 	
 	public Payment getById(int id) throws Exception {
-		return PaymentDao.getById(id);
+		return paymentService.getById(id);
 	}
 	
-	public Payment post(Payment payment) throws Exception {
-		PaymentDao.insert(payment);
-		return payment;
-	}
+	public Payment post(Date date, User user, double price) throws Exception {
+		return this.paymentService.post(date,user,price);
+			}
 	
-	public List<Payment> post(Payment payment, List<Payment> list) throws Exception {
-		PaymentDao.insert(payment);
-		list.add(payment);
-		return list;
-	}
-	
+		
 	public void deleteById(int id) throws Exception {
-		PaymentDao.deleteById(id);
+		this.paymentService.deleteById(id);
 	}
 }

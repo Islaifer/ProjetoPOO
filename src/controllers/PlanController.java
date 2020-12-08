@@ -1,38 +1,24 @@
 package controllers;
 
 import java.util.List;
-
-import daos.PlanDao;
 import models.Plan;
+import services.PlanService;
 
 
 
 public class PlanController {
+		private PlanService planService;
 		
 		public PlanController() {
-			super();
+			planService = new PlanService();
 		}
 		
 		public List<Plan> getAll() throws Exception{
-			return PlanDao.get();
+			return this.planService.getAll();
 		}
 		
 		public Plan getById(int id) throws Exception {
-			return PlanDao.getById(id);
+			return this.planService.getById(id);
 		}
 		
-		public Plan post(Plan plan) throws Exception {
-			PlanDao.insert(plan);
-			return plan;
-		}
-		
-		public List<Plan> post(Plan plan, List<Plan> list) throws Exception {
-			PlanDao.insert(plan);
-			list.add(plan);
-			return list;
-		}
-		
-		public void deleteById(int id) throws Exception {
-			PlanDao.deleteById(id);
-		}
 	}
