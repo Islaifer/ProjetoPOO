@@ -73,6 +73,10 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 			System.out.println("Cadastrou");
 		}else if(cmd.equals("SearchAssociate")) {
 			System.out.println("Procurou o associadozada");
+		}else if(cmd.equals("AddReserva")) {
+			targetPane = reservasview;
+		}else if(cmd.equals("AddAssociate")) {
+			targetPane = cadastroview;
 		}
 		context();
 	}
