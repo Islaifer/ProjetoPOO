@@ -4,48 +4,50 @@ import java.util.Date;
 
 public class Subscription {
 	private int id;
-	private Date valid;
-	private String status;
+	private Date dueDate;
+	private SubscriptionStatus status;
 	private User user;
-	private String username;
-	private String userRg;
-	private double valor;
+	private double amount;
 	
-	public Subscription(int id, Date valid, String status, User user, double valor) {
+	public Subscription(int id, Date dueDate, SubscriptionStatus status, User user, double amount) {
 		this.id = id;
-		this.valid = valid;
+		this.dueDate = dueDate;
 		this.status = status;
 		this.user = user;
-		this.valor = valor;
-		this.username = this.user.getFirstName() + " " + this.user.getLastName();
-		this.userRg = "" + this.user.getRg();
+		this.amount = amount;
+	}
+	
+	public Subscription(Date dueDate, SubscriptionStatus status, User user, double amount) {
+		this.dueDate = dueDate;
+		this.status = status;
+		this.user = user;
+		this.amount = amount;
+	}
+	
+	public Subscription() {
 	}
 
 	public int getId() {
 		return id;
 	}
 
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
 
-
-
-	public Date getValid() {
-		return valid;
+	public Date getDueDate() {
+		return dueDate;
 	}
 
-	public void setValid(Date valid) {
-		this.valid = valid;
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
 	}
 
-	public String getStatus() {
+	public SubscriptionStatus  getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(SubscriptionStatus status) {
 		this.status = status;
 	}
 
@@ -57,19 +59,11 @@ public class Subscription {
 		this.user = user;
 	}
 
-	public double getValor() {
-		return valor;
+	public double getAmount() {
+		return amount;
 	}
 
-	public void setValor(double valor) {
-		this.valor = valor;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public String getUserRg() {
-		return userRg;
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 }

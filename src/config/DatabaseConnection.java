@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import daos.PlanDao;
 import daos.ReservationDao;
 import daos.SpaceDao;
+import daos.SubscriptionDao;
 import daos.SubscriptionStatusDao;
 import daos.UserDao;
 import models.SubscriptionStatus;
@@ -34,5 +35,6 @@ public class DatabaseConnection {
 		SpaceDao.createTableSpaces();
 		ReservationDao.createTableReservations();
 		SubscriptionStatusDao.createTablePlans();
+		SubscriptionDao.createTableSubscriptions();
 	}
 }
