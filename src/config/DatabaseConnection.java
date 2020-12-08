@@ -6,7 +6,9 @@ import java.sql.DriverManager;
 import daos.PlanDao;
 import daos.ReservationDao;
 import daos.SpaceDao;
+import daos.SubscriptionStatusDao;
 import daos.UserDao;
+import models.SubscriptionStatus;
 
 public class DatabaseConnection {
 	public static Connection getConnection() throws Exception {
@@ -24,7 +26,6 @@ public class DatabaseConnection {
 		}
 	
 		return null;
-		
 	}
 	
 	public static void createTables() throws Exception {
@@ -32,5 +33,6 @@ public class DatabaseConnection {
 		UserDao.createTableUser();
 		SpaceDao.createTableSpaces();
 		ReservationDao.createTableReservations();
+		SubscriptionStatusDao.createTablePlans();
 	}
 }
