@@ -1,9 +1,12 @@
 package view;
 
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import controllers.PlanController;
 import controllers.UserController;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
@@ -15,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import models.Plan;
 import models.User;
 
 public class CadastroView implements StrategyPane, ComandProductor {
@@ -31,7 +35,8 @@ public class CadastroView implements StrategyPane, ComandProductor {
 	private UserController userController;
 	
 	public CadastroView() {
-
+		
+		this.seedCb();
 		pane = new Pane();
 		userController = new UserController();
 
@@ -77,9 +82,7 @@ public class CadastroView implements StrategyPane, ComandProductor {
 		txtend.setMinHeight(30);
 		txtend.setMinWidth(400);
 
-		cbplano = new ChoiceBox<String>();
-		cbplano.setItems(FXCollections.observableArrayList("Simples", "Master", "Blaster"));
-		cbplano.relocate(250, 430);
+		
 
 		Button btnCadastrar = new Button("Cadastrar");
 		btnCadastrar.relocate(400, 500);
@@ -120,6 +123,25 @@ public class CadastroView implements StrategyPane, ComandProductor {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro interno!", "ERROR", 0);
 		}
+	}
+	
+	public void seedCb() {
+		PlanController planController = new PlanController();
+		try {
+			List<Plan> listPlan = planController.getAll();
+			List<String> list = new LinkedList<String>();
+			for(Plan var : listPlan) {
+				list.add(var.getName());
+			}
+			cbplano = new ChoiceBox<String>();
+			cbplano.setItems(FXCollections.observableArrayList(list));
+			cbplano.relocate(250, 430);
+		} catch (Exception e) {
+			System.err.println("Deu ruim");
+		}
+		/*cbplano = new ChoiceBox<String>();
+		cbplano.setItems(FXCollections.observableArrayList("Simples", "Master", "Blaster"));
+		cbplano.relocate(250, 430);*/
 	}
 
 	@Override

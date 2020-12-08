@@ -1,6 +1,7 @@
 package daos;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.LinkedList;
@@ -20,12 +21,16 @@ public class SpaceDao {
 			Connection connection = DatabaseConnection.getConnection();
 			// PreparedStatement é o metodo na sua tradução prepara a declaração que irá ser
 			// introduzida no SQL, no contexto é o método de criação de tabela.
-			PreparedStatement create = connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + nameTable
-					+ "(id INT NOT NULL AUTO_INCREMENT," + "name VARCHAR(255) NOT NULL,"
-					+ "capacity INT NOT NULL," + "PRIMARY KEY(id))");
-			// aqui ele executa o método o qual criei acima no banco de dados.
-			create.executeUpdate();
-			seedTable();
+			DatabaseMetaData dbm = connection.getMetaData();
+			ResultSet tables = dbm.getTables(null, null, nameTable, null);
+			if(!tables.next()) {
+				PreparedStatement create = connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + nameTable
+						+ "(id INT NOT NULL AUTO_INCREMENT," + "name VARCHAR(255) NOT NULL,"
+						+ "capacity INT NOT NULL," + "PRIMARY KEY(id))");
+				// aqui ele executa o método o qual criei acima no banco de dados.
+				create.executeUpdate();
+				seedTable();
+			}
 			connection.close();
 		} catch (Exception error) {
 			System.out.println(error);
