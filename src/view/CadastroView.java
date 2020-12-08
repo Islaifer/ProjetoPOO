@@ -31,17 +31,17 @@ public class CadastroView implements StrategyPane, ComandProductor {
 	private UserController userController;
 	
 	public CadastroView() {
-	
+
 		pane = new Pane();
 		userController = new UserController();
 
-		Label lblcadastro = new Label("Cadastro de Usuário");
+		Label lblcadastro = new Label("Cadastro de UsuÃ¡rio");
 		lblcadastro.relocate(290, 30);
 		lblcadastro.setFont(new Font("Arial", 18));
 		Label lbldadosassoc = new Label("Dados do Associado");
 		lbldadosassoc.relocate(250, 100);
 		lbldadosassoc.setFont(new Font("Arial", 14));
-		Label lbldadosend = new Label("Cadastro de Endereço");
+		Label lbldadosend = new Label("Cadastro de EndereÃ§o");
 		lbldadosend.relocate(250, 300);
 		lbldadosend.setFont(new Font("Arial", 14));
 		Label lblplano = new Label("Plano");
@@ -72,7 +72,7 @@ public class CadastroView implements StrategyPane, ComandProductor {
 		txttel.relocate(500, 230);
 		txttel.setMinHeight(30);
 		txttel.setMinWidth(30);
-		TextField txtend = new TextField("Endereço");
+		TextField txtend = new TextField("EndereÃ§o");
 		txtend.relocate(250, 330);
 		txtend.setMinHeight(30);
 		txtend.setMinWidth(400);
@@ -90,15 +90,15 @@ public class CadastroView implements StrategyPane, ComandProductor {
 		});
 
 		Button btnVoltar = new Button("Voltar");
-		btnVoltar.relocate(230, 30);
-		btnVoltar.setMinHeight(30);
-		btnVoltar.setMinWidth(40);
-		btnVoltar.setOnAction((e) -> {
-			exeComand("VoltarCadastro");
-		});
-
-		pane.getChildren().addAll(lblcadastro, lbldadosassoc, lbldadosend, lblplano, txtnome, txtsobrenome, txtcpf,
-				txtrg, txtend, txttel, txtdata, cbplano, btnCadastrar, btnVoltar);
+	  btnVoltar.relocate(230,30);
+	  btnVoltar.setMinHeight(30);
+	  btnVoltar.setMinWidth(40);
+	  btnVoltar.setOnAction((e)->{
+		  exeComand("associated");
+	  });
+	
+	  pane.getChildren().addAll(lblcadastro, lbldadosassoc, lbldadosend, lblplano, txtnome, txtsobrenome, txtcpf, txtrg, 
+			txtend, txttel, txtdata, cbplano, btnCadastrar, btnVoltar);
 	}
 
 	public void controlToAssociated() {
