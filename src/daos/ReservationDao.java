@@ -131,7 +131,7 @@ public class ReservationDao {
 			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
 			posted.setInt(1, reservation.getUser().getId());
 			posted.setInt(2, reservation.getSpace().getId());
-			posted.setDate(3, java.sql.Date.valueOf(reservation.getDate().toString()));
+			posted.setDate(3, new java.sql.Date(reservation.getDate().getTime()));
 			posted.setInt(4, reservation.getPeopleqnt());
 			// aqui ele executa o método o qual criei acima no banco de dados.
 			posted.executeUpdate();

@@ -128,7 +128,7 @@ private static String nameTable = "payments";
 					+ " VALUES (?,?,?,?)");
 			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
 			posted.setInt(1, payment.getUser().getId());
-			posted.setDate(2, java.sql.Date.valueOf(payment.getDate().toString()));
+			posted.setDate(2, new java.sql.Date(payment.getDate().getTime()));
 			posted.setDouble(3, payment.getAmount());
 			posted.setInt(4, payment.getSubscription().getId());
 			// aqui ele executa o método o qual criei acima no banco de dados.
