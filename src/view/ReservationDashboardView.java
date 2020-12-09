@@ -1,9 +1,11 @@
 package view;
 
 
+import controllers.ReservationController;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
 import interfaces.StrategyPane;
+import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -16,9 +18,13 @@ import models.Reservation;
 public class ReservationDashboardView implements StrategyPane, ComandProductor{
 	private ComandAssistence a;
 	private Pane pane;
+	private TableView<Reservation> table;
+	private ReservationController reservationController;
 	
 	@SuppressWarnings("unchecked")
 	public ReservationDashboardView() {
+		reservationController = new ReservationController();
+		this.refreshTable();
 		this.pane = new Pane();
 		Label lbltittle = new Label ("Reservas");
 		lbltittle.relocate (250, 30);
@@ -28,8 +34,7 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 		lblreservation.relocate (250, 230);
 		lblreservation.setFont(new Font("Arial",13));
 		
-		TableView<Reservation> table = new TableView<>();
-		//table.setItems(FXCollections.observableArrayList(teste));
+		table = new TableView<>();
 		table.relocate(235, 250);
 		table.setMinWidth(530);
 		table.setMaxWidth(530);
@@ -67,10 +72,28 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 			exeComand("AddReserva");
 		});
 		
+		Button btnEditReservation = new Button("Editar Reserva");
+		btnEditReservation.relocate(655,170);
+		btnEditReservation.setMinHeight(30);
+		btnEditReservation.setMinWidth(100);
+		btnEditReservation.setOnAction((e)->{
+			exeComand("EditReserva");
+		});
 		
-		pane.getChildren().addAll(lbltittle, lblreservation, table, btnAddReservation);
+		pane.getChildren().addAll(lbltittle, lblreservation, table, btnAddReservation, btnEditReservation);
 	}
 	
+	public int reservationSelected() {
+		return table.getSelectionModel().getSelectedItem().getId();
+	}
+	
+	public void refreshTable() {
+		try {
+			table.setItems(FXCollections.observableArrayList(reservationController.getAll()));
+		} catch (Exception e) {
+			System.err.println("Deu ruim");
+		}
+	}
 	
 	@Override
 	public void setAssistence(ComandAssistence a) {
