@@ -63,6 +63,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		}else if(cmd.equals("dashboard")) {
 			System.out.println("Dashboard");
 		}else if(cmd.equals("reservation")) {
+			reservationdashboardview.refreshTable();
 			targetPane = reservationdashboardview;
 		}else if(cmd.equals("associated")) {
 			targetPane = associadoview;

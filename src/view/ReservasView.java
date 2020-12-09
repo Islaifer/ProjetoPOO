@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 
 import controllers.ReservationController;
 import controllers.SpaceController;
-import controllers.UserController;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
 import interfaces.StrategyPane;
@@ -32,14 +31,12 @@ public class ReservasView implements StrategyPane, ComandProductor {
 	private ChoiceBox<String> cbespaco;
 	private ChoiceBox<String> cbhorarios;
 	private ReservationController reservationController;
-	private UserController userController;
 
 	public ReservasView() {
 		// Programação da tela
 		this.seedSpace();
 		pane = new Pane();
 		reservationController = new ReservationController();
-		userController = new UserController();
 		
 		// Labels
 		Label lblcadreserva = new Label("Cadastro de Reserva");
@@ -120,13 +117,12 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		}
 	}
 
-	public void controlToReservation() {
+	public void controlToReservation(int id) {
 		try {
-			
-			Reservation reservation = this.reservationController.getById(0);
+			Reservation reservation = this.reservationController.getById(id);
 			if (reservation != null) {
 				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-				txtcpf.setText("" + userController.getByCPF(0) );
+				txtcpf.setText("" + reservation.getUser().getCpf() );
 				txtdata.setText(df.format(reservation.getDate()));
 				txtqtd.setText("" + reservation.getPeopleqnt());
 				cbespaco.setValue("" + reservation.getSpaceName());
