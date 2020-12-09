@@ -90,6 +90,14 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 			exeComand("pagar");
 		});
 		
+		Button btnGerar = new Button("Gerar mensalidade");
+		btnGerar.relocate(550, 510);
+		btnGerar.setMinHeight(30);
+		btnGerar.setMinWidth(100);
+		btnGerar.setOnAction((e) -> {
+			exeComand("gerar");
+		});
+		
 		Button btnFiltrar = new Button("Filtrar");
 		btnFiltrar.relocate(400, 210);
 		btnFiltrar.setMinHeight(30);
@@ -98,7 +106,7 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 			exeComand("filtrar");
 		});
 		
-		pane.getChildren().addAll(lbltittle, lblsubscription, lblfilteratrasados, lblfilterpendentes, table, txtcpf, btnPagar, btnFiltrar, checkA, checkB);
+		pane.getChildren().addAll(lbltittle, lblsubscription, lblfilteratrasados, btnGerar, lblfilterpendentes, table, txtcpf, btnPagar, btnFiltrar, checkA, checkB);
 	}
 
 	@Override
