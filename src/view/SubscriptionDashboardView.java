@@ -3,6 +3,7 @@ package view;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
 import interfaces.StrategyPane;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -29,11 +30,11 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		lblsubscription.setFont(new Font("Arial", 13));
 		
 		Label lblfilteratrasados = new Label ("Filtrar atrasados");
-		lblfilteratrasados.relocate(550, 230);
+		lblfilteratrasados.relocate(450, 230);
 		lblfilteratrasados.setFont(new Font("Arial", 10));
 		
 		Label lblfilterpendentes = new Label ("Filtrar pendentes");
-		lblfilterpendentes.relocate(650, 230);
+		lblfilterpendentes.relocate(550, 230);
 		lblfilterpendentes.setFont(new Font("Arial", 10));
 		//table
 		TableView<Subscription> table = new TableView<>();
@@ -56,25 +57,33 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		columnName.setCellValueFactory(new PropertyValueFactory<>("username"));
 		columnName.setMinWidth(130);
 		columnName.setMaxWidth(130);
-		TableColumn<Subscription, String> columnRG = new TableColumn<>("RG");
-		columnRG.setCellValueFactory(new PropertyValueFactory<>("userRg"));
-		columnRG.setMinWidth(100);
-		columnRG.setMaxWidth(100);
+		TableColumn<Subscription, String> columnCpf = new TableColumn<>("CPF");
+		columnCpf.setCellValueFactory(new PropertyValueFactory<>("userCpf"));
+		columnCpf.setMinWidth(100);
+		columnCpf.setMaxWidth(100);
 		TableColumn<Subscription, String> columnValor = new TableColumn<>("Valor");
 		columnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 		columnValor.setMinWidth(70);
 		columnValor.setMaxWidth(70);
-		table.getColumns().addAll(columnDate, columnStatus, columnName, columnRG, columnValor);
+		table.getColumns().addAll(columnDate, columnStatus, columnName, columnCpf, columnValor);
 		
 		//campos
 		
-		TextField txtmensalidade = new TextField ("Período da mensalidade");
-		txtmensalidade.relocate(235, 210);
-		txtmensalidade.setMinHeight(30);
-		txtmensalidade.setMinWidth(200);
+		TextField txtcpf = new TextField ("Buscar por CPF");
+		txtcpf.relocate(235, 210);
+		txtcpf.setMinHeight(30);
+		txtcpf.setMinWidth(150);
 		
+		//button
+		Button btnPagar = new Button("Pagar");
+		btnPagar.relocate(680, 210);
+		btnPagar.setMinHeight(30);
+		btnPagar.setMinWidth(40);
+		btnPagar.setOnAction((e) -> {
+			exeComand("pagar");
+		});
 		
-		pane.getChildren().addAll(lbltittle, lblsubscription, lblfilteratrasados, lblfilterpendentes, table, txtmensalidade);
+		pane.getChildren().addAll(lbltittle, lblsubscription, lblfilteratrasados, lblfilterpendentes, table, txtcpf, btnPagar);
 	}
 
 	@Override
