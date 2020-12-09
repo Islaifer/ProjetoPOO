@@ -32,7 +32,7 @@ public class PlanDao {
 			
 		}
 		finally {
-			System.out.println("Function completed");
+			System.out.println("Table " + nameTable + " created");
 		}
 	}
 	

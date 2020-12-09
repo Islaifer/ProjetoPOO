@@ -35,7 +35,7 @@ public class SpaceDao {
 		} catch (Exception error) {
 			System.out.println(error);
 		} finally {
-			System.out.println("Function completed");
+			System.out.println("Table " + nameTable + " created");
 		}
 	}
 	private static void seedTable() throws Exception {

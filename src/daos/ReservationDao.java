@@ -37,7 +37,7 @@ public class ReservationDao {
 			System.out.println(error);
 		}
 		finally {
-			System.out.println("Function completed");
+			System.out.println("Table " + nameTable + " created");
 		}
 	}
 	
