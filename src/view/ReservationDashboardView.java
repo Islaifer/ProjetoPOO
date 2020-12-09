@@ -73,7 +73,7 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 		btnEditReservation.setMinHeight(30);
 		btnEditReservation.setMinWidth(100);
 		btnEditReservation.setOnAction((e)->{
-			exeComand("EditReserva");
+			exeComand("AttReserva");
 		});
 		
 		pane.getChildren().addAll(lbltittle, lblreservation, table, btnAddReservation, btnEditReservation);

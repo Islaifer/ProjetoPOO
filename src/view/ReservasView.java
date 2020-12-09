@@ -30,6 +30,8 @@ public class ReservasView implements StrategyPane, ComandProductor {
 	private TextField txtdata;
 	private ChoiceBox<String> cbespaco;
 	private ReservationController reservationController;
+	private Button btnReservar;
+	private int idReservation;
 
 	public ReservasView() {
 		// Programação da tela
@@ -66,7 +68,7 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		
 
 		// Botao
-		Button btnReservar = new Button("Reservar");
+		btnReservar = new Button("Reservar");
 		btnReservar.relocate(400, 500);
 		btnReservar.setMinHeight(40);
 		btnReservar.setMinWidth(300);
@@ -88,17 +90,28 @@ public class ReservasView implements StrategyPane, ComandProductor {
 
 	}
 
-	public void reservationToControl() {
+	public void reservationToControl(boolean isUpdate) {
 		try {
-			long cpfUser = Long.parseLong(this.txtcpf.getText());
-			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-			Date date = df.parse(this.txtdata.getText());
-			int peopleqnt = Integer.parseInt(this.txtqtd.getText());
-			int idSpace = this.idSpace(cbespaco.getValue());
-			this.reservationController.post(cpfUser, date, idSpace, peopleqnt);
-			this.txtcpf.setText("CPF do Associado");
-			this.txtdata.setText("Data da Reserva");
-			this.txtqtd.setText("Quantidade de Pessoas");
+			if(isUpdate) {
+				long cpfUser = Long.parseLong(this.txtcpf.getText());
+				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+				Date date = df.parse(this.txtdata.getText());
+				int peopleqnt = Integer.parseInt(this.txtqtd.getText());
+				int idSpace = this.idSpace(cbespaco.getValue());
+				this.reservationController.edit(idReservation, cpfUser, date, idSpace, peopleqnt);
+				JOptionPane.showMessageDialog(null, "Atualizacao realizada com sucesso ^-^");
+			}else {
+				long cpfUser = Long.parseLong(this.txtcpf.getText());
+				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+				Date date = df.parse(this.txtdata.getText());
+				int peopleqnt = Integer.parseInt(this.txtqtd.getText());
+				int idSpace = this.idSpace(cbespaco.getValue());
+				this.reservationController.post(cpfUser, date, idSpace, peopleqnt);
+				this.txtcpf.setText("CPF do Associado");
+				this.txtdata.setText("Data da Reserva");
+				this.txtqtd.setText("Quantidade de Pessoas");
+				JOptionPane.showMessageDialog(null, "Reserva realizada com sucesso ^-^");
+			}
 			
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Erro ao digitar rg ou quantidade de pessoas!", "ERROR", 0);
@@ -108,9 +121,24 @@ public class ReservasView implements StrategyPane, ComandProductor {
 			JOptionPane.showMessageDialog(null, "Erro interno!", "ERROR", 0);
 		}
 	}
+	
+	public void refreshButton(boolean isUpdate) {
+		if(isUpdate) {
+			btnReservar.setText("Atualizar Reserva");
+			btnReservar.setOnAction((e) -> {
+				exeComand("updateReservation");
+			});
+		}else {
+			btnReservar.setText("Reservar");
+			btnReservar.setOnAction((e) -> {
+				exeComand("Reservar");
+			});
+		}
+	}
 
 	public void controlToReservation(int id) {
 		try {
+			this.idReservation = id;
 			Reservation reservation = this.reservationController.getById(id);
 			if (reservation != null) {
 				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -118,8 +146,6 @@ public class ReservasView implements StrategyPane, ComandProductor {
 				txtdata.setText(df.format(reservation.getDate()));
 				txtqtd.setText("" + reservation.getPeopleqnt());
 				cbespaco.setValue("" + reservation.getSpaceName());
-				
-
 			}
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Digite apenas os numeros!", "ERROR", 0);

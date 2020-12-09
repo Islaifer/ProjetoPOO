@@ -36,6 +36,7 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 	private TextField txtpesquisa;
 	private Image searchIcon;
 	private ImageView lvSearchIcon;
+	private User user;
 	
 	public GerenciarAssocView () {
 		this.userController = new UserController();
@@ -117,22 +118,30 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 		});
 		
 		Button btnAddAssociate = new Button("Adicionar Associado");
-		btnAddAssociate.relocate(650,40);
+		btnAddAssociate.relocate(650,30);
 		btnAddAssociate.setMinHeight(30);
 		btnAddAssociate.setMinWidth(40);
 		btnAddAssociate.setOnAction((e)->{
 			exeComand("AddAssociate");
 		});
 		
+		Button btnAttAssociate = new Button("Atualizar Associado");
+		btnAttAssociate.relocate(652,80);
+		btnAttAssociate.setMinHeight(30);
+		btnAttAssociate.setMinWidth(40);
+		btnAttAssociate.setOnAction((e)->{
+			exeComand("AttAssociate");
+		});
+		
 		pane.getChildren().addAll(lblgerreserva,lblnome,inputNome,lbldatanasc,inputDatanasc,lblrg, inputRg,
 				lblcpf, inputCpf, lblcontato, inputContato, lblendereco, inputEndereco, btnSearch,
-				lbltiposocio, inputTiposocio,txtpesquisa, lblstatusmensalidade,inputStatusmensalidade, btnAddAssociate);
+				lbltiposocio, inputTiposocio,txtpesquisa, lblstatusmensalidade,inputStatusmensalidade, btnAddAssociate, btnAttAssociate);
 	}
 	
 	public void controlToAssociated() {
 		try {
 			long cpf = Long.parseLong(txtpesquisa.getText());
-			User user = this.userController.getByCPF(cpf);
+			user = this.userController.getByCPF(cpf);
 			if(user != null) {
 				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 				inputNome.setText(user.getFirstName() + " " + user.getLastName());
@@ -148,6 +157,14 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 			JOptionPane.showMessageDialog(null, "Digite apenas os numeros!", "ERROR", 0);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro interno!", "ERROR", 0);
+		}
+	}
+	
+	public int targetAssociated() {
+		if(user != null) {
+			return user.getId();
+		}else {
+			return 0;
 		}
 	}
 	

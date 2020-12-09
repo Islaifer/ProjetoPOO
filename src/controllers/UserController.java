@@ -31,4 +31,8 @@ public class UserController {
 	public void deleteById(int id) throws Exception {
 		this.userService.deleteById(id);
 	}
+	
+	public void edit(int id, String firstName, String lastName, long rg, long cpf, Date birthdate, long phoneNumber, String address, int idPlan) throws Exception {
+		this.userService.edit(id, firstName, lastName, rg, cpf, birthdate, phoneNumber, address, idPlan);
+	}
 }

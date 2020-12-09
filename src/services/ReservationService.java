@@ -33,9 +33,30 @@ public class ReservationService {
 		Space space = this.space.getById(spaceId);
 		if(user.getId() != 0) {
 			if(space.getId() != 0) {
-				if(!existReservationInTheSameDay(date, spaceId)) {
+				if(!existReservationInTheSameDay(0, date, spaceId)) {
 					Reservation reservation = new Reservation(0, user, date, space, peopleqnt);
 					ReservationDao.insert(reservation);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Existe uma reserva agendada no mesmo dia!", "ERROR", 0);
+
+				}
+			}else {
+				JOptionPane.showMessageDialog(null, "Espaço não existe!", "ERROR", 0);
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "Associado não encontrado!", "ERROR", 0);
+		}
+	}
+	
+	public void edit(int id, long cpfUser, Date date, int spaceId, int peopleqnt) throws Exception {
+		User user = this.user.getByCPF(cpfUser);
+		Space space = this.space.getById(spaceId);
+		if(user.getId() != 0) {
+			if(space.getId() != 0) {
+				if(!existReservationInTheSameDay(id, date, spaceId)) {
+					Reservation reservation = new Reservation(id, user, date, space, peopleqnt);
+					ReservationDao.update(reservation);
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Existe uma reserva agendada no mesmo dia!", "ERROR", 0);
@@ -53,12 +74,13 @@ public class ReservationService {
 		ReservationDao.deleteById(id);
 	}
 	
-	private boolean existReservationInTheSameDay(Date date, int spaceId) {
-		Reservation reservation = ReservationDao.getByDateAndByPlace(date, spaceId);
+	private boolean existReservationInTheSameDay(int id, Date date, int spaceId) {
+		Reservation reservation = ReservationDao.getByDateAndByPlace(id, date, spaceId);
 		if(reservation.getId() != 0) {
 			return true;
 		}
 		return false;
 	}
+	
 
 }
