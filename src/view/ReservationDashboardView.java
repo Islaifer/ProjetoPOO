@@ -24,7 +24,6 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 	@SuppressWarnings("unchecked")
 	public ReservationDashboardView() {
 		reservationController = new ReservationController();
-		this.refreshTable();
 		this.pane = new Pane();
 		Label lbltittle = new Label ("Reservas");
 		lbltittle.relocate (250, 30);
@@ -45,23 +44,20 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 		columnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 		columnDate.setMinWidth(110);
 		columnDate.setMaxWidth(110);
-		TableColumn<Reservation, String> columnHour = new TableColumn<>("Hora");
-		columnHour.setCellValueFactory(new PropertyValueFactory<>("date"));
-		columnHour.setMinWidth(70);
-		columnHour.setMaxWidth(70);
 		TableColumn<Reservation, String> columnName = new TableColumn<>("Associado");
 		columnName.setCellValueFactory(new PropertyValueFactory<>("username"));
 		columnName.setMinWidth(130);
 		columnName.setMaxWidth(130);
 		TableColumn<Reservation, String> columnSpace = new TableColumn<>("Espaco");
-		columnSpace.setCellValueFactory(new PropertyValueFactory<>("space"));
-		columnSpace.setMinWidth(70);
-		columnSpace.setMaxWidth(70);
+		columnSpace.setCellValueFactory(new PropertyValueFactory<>("spaceName"));
+		columnSpace.setMinWidth(140);
+		columnSpace.setMaxWidth(140);
 		TableColumn<Reservation, String> columnQntd = new TableColumn<>("Quantidade de pessoas");
 		columnQntd.setCellValueFactory(new PropertyValueFactory<>("peopleqnt"));
 		columnQntd.setMinWidth(150);
 		columnQntd.setMaxWidth(150);
-		table.getColumns().addAll(columnDate, columnHour, columnName, columnSpace, columnQntd);
+		this.refreshTable();
+		table.getColumns().addAll(columnDate, columnName, columnSpace, columnQntd);
 		
 		//botao
 		Button btnAddReservation = new Button("Adicionar Reserva");
@@ -91,7 +87,7 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 		try {
 			table.setItems(FXCollections.observableArrayList(reservationController.getAll()));
 		} catch (Exception e) {
-			System.err.println("Deu ruim");
+			System.err.println(e);
 		}
 	}
 	
