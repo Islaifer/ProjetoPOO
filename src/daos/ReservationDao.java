@@ -141,11 +141,16 @@ public class ReservationDao {
 		}
 	}
 	
-	public static Reservation getByDateAndByPlace(Date date, int spaceId) {
+	public static Reservation getByDateAndByPlace(int id, Date date, int spaceId) {
 		try {
 
 		Connection connection = DatabaseConnection.getConnection();
-		PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + nameTable + " WHERE date = " + "'"+ new java.sql.Date(date.getTime())  + "'" + " AND id_space = " + spaceId + " LIMIT 1");
+		PreparedStatement statement;
+		if(id != 0) {
+			statement = connection.prepareStatement("SELECT * FROM " + nameTable + " WHERE date = " + "'"+ new java.sql.Date(date.getTime())  + "'" + " AND id_space = " + spaceId + " AND id <> " + id + " LIMIT 1");
+		}else {
+			statement = connection.prepareStatement("SELECT * FROM " + nameTable + " WHERE date = " + "'"+ new java.sql.Date(date.getTime())  + "'" + " AND id_space = " + spaceId + " LIMIT 1");
+		}
 		
 		ResultSet result = statement.executeQuery();
 				
@@ -169,6 +174,29 @@ public class ReservationDao {
 		} catch (Exception error){
 			System.out.println(error);
 			return null;
+		}
+	}
+	
+	public static void update(Reservation reservation) throws Exception {
+		try {
+			//pega conexão com o banco de dados
+			Connection connection = DatabaseConnection.getConnection();
+			//PreparedStatement é o metodo na sua tradução prepara a declaração que irá ser introduzida no SQL, no contexto é o método de inserção de dados.
+			PreparedStatement posted = connection.prepareStatement("UPDATE "+ nameTable +" set"
+					+ " id_space = ?,"
+					+ " date = ?,"
+					+ " people_qntd = ?"
+					+ " WHERE id = ?");
+			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
+			posted.setInt(1, reservation.getSpace().getId());
+			posted.setDate(2, new java.sql.Date(reservation.getDate().getTime()));
+			posted.setInt(3, reservation.getPeopleqnt());
+			posted.setInt(4, reservation.getId());
+			// aqui ele executa o método o qual criei acima no banco de dados.
+			posted.executeUpdate();
+			connection.close();
+		} catch (Exception error) {
+			System.out.println(error);
 		}
 	}
 }
