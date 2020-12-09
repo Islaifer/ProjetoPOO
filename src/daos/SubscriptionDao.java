@@ -39,7 +39,7 @@ public class SubscriptionDao {
 			System.out.println(error);
 		}
 		finally {
-			System.out.println("Function completed");
+			System.out.println("Table " + nameTable + " created");
 		}
 	}
 	
@@ -106,6 +106,39 @@ public class SubscriptionDao {
 		}
 	}
 	
+	public static synchronized List<Subscription> filterByStatus(int statusId) throws Exception {
+		try {
+			Connection connection = DatabaseConnection.getConnection();
+			PreparedStatement statement = connection.prepareStatement("SELECT * from " + nameTable + " WHERE id_status = " + statusId + " ORDER BY date ASC");
+			
+			ResultSet result = statement.executeQuery();
+			
+
+			List<Subscription> subscriptions = new LinkedList<Subscription>();
+			
+			//AQUI FARA UM WHILE QUE ENQUANTO EXISTIR "PRÓXIMO" DADO ELE CONTINUARA NO WHILE.
+			while(result.next()) {
+				//CADA GET DESSES AQUI EMBAIXO SÃO OS NOMES DA COLUNA QUE EU QUERO O RESULTADO
+				User user = UserDao.getById(result.getInt("id_user"));
+				SubscriptionStatus status = SubscriptionStatusDao.getById(result.getInt("id_status"));
+				Subscription subscription = new Subscription(result.getInt("id"),
+						result.getDate("date"),
+						status,
+						user,
+						result.getDouble("amount")
+						); 
+				subscriptions.add(subscription);
+			}
+			connection.close();
+			
+			return subscriptions;
+			
+		} catch (Exception error){
+			System.out.println(error);
+			return null;
+		}
+	}
+	
 	public static synchronized void deleteById(int id) throws Exception {
 		try {
 			Connection connection = DatabaseConnection.getConnection();
@@ -134,7 +167,7 @@ public class SubscriptionDao {
 			posted.setInt(1, subscription.getUser().getId());
 			posted.setInt(2, subscription.getStatus().getId());
 			posted.setDate(3, java.sql.Date.valueOf(subscription.getDueDate().toString()));
-			posted.setDouble(4, subscription.getAmount());
+			posted.setDouble(4, subscription.getUser().getPlan().getPrice());
 			// aqui ele executa o método o qual criei acima no banco de dados.
 			posted.executeUpdate();
 		} catch (Exception error) {

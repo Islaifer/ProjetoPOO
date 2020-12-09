@@ -24,8 +24,12 @@ public class SubscriptionController {
 		return this.subscriptionService.getById(id);
 	}
 	
-	public void post(Double amount , User user, SubscriptionStatus status, Date dueDate) throws Exception {
-		this.subscriptionService.post(amount, user, status, dueDate);
+	public List<Subscription> filterByStatus(int statusId) throws Exception {
+		return this.subscriptionService.filterByStatus(statusId);
+	}
+	
+	public void post(User user, SubscriptionStatus status, Date dueDate) throws Exception {
+		this.subscriptionService.post(user, status, dueDate);
 	}
 	
 	public void deleteById(int id) throws Exception {

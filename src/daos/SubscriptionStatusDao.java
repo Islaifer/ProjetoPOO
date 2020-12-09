@@ -28,7 +28,7 @@ public class SubscriptionStatusDao {
 			
 		}
 		finally {
-			System.out.println("Function completed");
+			System.out.println("Table " + nameTable + " created");
 		}
 	}
 	

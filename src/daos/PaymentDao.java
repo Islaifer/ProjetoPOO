@@ -8,6 +8,7 @@ import java.util.List;
 
 import config.DatabaseConnection;
 import models.Payment;
+import models.Subscription;
 import models.User;
 
 public class PaymentDao {
@@ -22,9 +23,11 @@ private static String nameTable = "payments";
 					+ nameTable +"(id INT NOT NULL AUTO_INCREMENT,"
 					+ "id_user INT NOT NULL,"
 					+ "date DATE NOT NULL,"
-					+ "price DOUBLE NOT NULL,"
+					+ "amount DOUBLE NOT NULL,"
+					+ "id_subscription INT NOT NULL,"
 					+ "PRIMARY KEY(id),"
-					+ "FOREIGN KEY (id_user) REFERENCES users(id))");
+					+ "FOREIGN KEY (id_user) REFERENCES users(id),"
+					+ "FOREIGN KEY (id_subscription) REFERENCES subscriptions(id))");
 			// aqui ele executa o método o qual criei acima no banco de dados.
 			create.executeUpdate();
 			connection.close();
@@ -32,7 +35,7 @@ private static String nameTable = "payments";
 			System.out.println(error);
 		}
 		finally {
-			System.out.println("Function completed");
+			System.out.println("Table " + nameTable + " created");
 		}
 	}
 	
@@ -51,10 +54,12 @@ private static String nameTable = "payments";
 			while(result.next()) {
 				//CADA GET DESSES AQUI EMBAIXO SÃO OS NOMES DA COLUNA QUE EU QUERO O RESULTADO
 				User user = UserDao.getById(result.getInt("id_user"));
+				Subscription subscription = SubscriptionDao.getById(result.getInt("id_subscription"));
 				Payment payment = new Payment(result.getInt("id"),
 						result.getDate("date"),
 						user,
-						result.getDouble("price")
+						result.getDouble("amount"),
+						subscription
 						); 
 				payments.add(payment);
 			}
@@ -78,10 +83,12 @@ private static String nameTable = "payments";
 			
 			while(result.next()) {
 				User user = UserDao.getById(result.getInt("id_user"));
+				Subscription subscription = SubscriptionDao.getById(result.getInt("id_subscription"));
 				Payment payment = new Payment (result.getInt("id"),
 						result.getDate("date"),
 						user,
-						result.getDouble("price")
+						result.getDouble("amount"),
+						subscription
 						);
 				paymentCatched = payment;
 			}
@@ -115,13 +122,15 @@ private static String nameTable = "payments";
 			//PreparedStatement é o metodo na sua tradução prepara a declaração que irá ser introduzida no SQL, no contexto é o método de inserção de dados.
 			PreparedStatement posted = connection.prepareStatement("INSERT INTO "+ nameTable +"("
 					+ "id_user,"
-					+ "date DATE,"
-					+ "price)"
-					+ " VALUES (?,?,?)");
+					+ "date,"
+					+ "amount,"
+					+ "id_subscription)"
+					+ " VALUES (?,?,?,?)");
 			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
 			posted.setInt(1, payment.getUser().getId());
 			posted.setDate(2, java.sql.Date.valueOf(payment.getDate().toString()));
-			posted.setDouble(3, payment.getPrice());
+			posted.setDouble(3, payment.getAmount());
+			posted.setInt(4, payment.getSubscription().getId());
 			// aqui ele executa o método o qual criei acima no banco de dados.
 			posted.executeUpdate();
 		} catch (Exception error) {

@@ -22,12 +22,16 @@ public class SubscriptionService {
 		return SubscriptionDao.getById(id);
 	}
 	
-	public void post(Double amount , User user, SubscriptionStatus status, Date dueDate) throws Exception {
-		Subscription subscription = new Subscription(dueDate, status, user, amount );
+	public List<Subscription> filterByStatus(int statusId) throws Exception {
+		return SubscriptionDao.filterByStatus(statusId);
+	}
+	public void post(User user, SubscriptionStatus status, Date dueDate) throws Exception {
+		Subscription subscription = new Subscription(dueDate, status, user);
 		SubscriptionDao.insert(subscription);
 	}
 	
 	public void deleteById(int id) throws Exception {
 		SubscriptionDao.deleteById(id);
 	}
+
 }

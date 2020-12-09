@@ -3,6 +3,7 @@ package config;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import daos.PaymentDao;
 import daos.PlanDao;
 import daos.ReservationDao;
 import daos.SpaceDao;
@@ -35,5 +36,6 @@ public class DatabaseConnection {
 		ReservationDao.createTableReservations();
 		SubscriptionStatusDao.createTablePlans();
 		SubscriptionDao.createTableSubscriptions();
+		PaymentDao.createTablePayments();
 	}
 }

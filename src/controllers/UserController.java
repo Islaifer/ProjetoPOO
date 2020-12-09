@@ -21,6 +21,10 @@ public class UserController {
 		return this.userService.getById(id);
 	}
 	
+	public User getByCPF(int cpf) throws Exception {
+		return this.userService.getByCPF(cpf);
+	}
+	
 	public void post(String firstName, String lastName, int rg, int cpf, Date birthdate, int phoneNumber, String address, String addressNumber, String state, String city, Plan plan) throws Exception {
 		this.userService.post(firstName, lastName, rg, cpf, birthdate, phoneNumber, address, addressNumber, state, city, plan);
 	}

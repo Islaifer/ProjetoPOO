@@ -20,8 +20,12 @@ public class UserService {
 		return UserDao.getById(id);
 	}
 	
+	public User getByCPF(int cpf) throws Exception {
+		return UserDao.getByCPF(cpf);
+	}
+	
 	public void post(String firstName, String lastName, int rg, int cpf, Date birthdate, int phoneNumber, String address, String addressNumber, String state, String city, Plan plan) throws Exception {
-		User user = new User(0, firstName, lastName, rg, cpf, birthdate, phoneNumber, address, addressNumber, state, city, plan);
+		User user = new User(firstName, lastName, rg, cpf, birthdate, phoneNumber, address, plan);
 		UserDao.insert(user);
 	}
 
