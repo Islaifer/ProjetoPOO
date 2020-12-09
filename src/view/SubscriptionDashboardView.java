@@ -4,6 +4,7 @@ import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
 import interfaces.StrategyPane;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -16,6 +17,7 @@ import models.Subscription;
 public class SubscriptionDashboardView implements StrategyPane, ComandProductor {
 	private ComandAssistence a;
 	private Pane pane;
+	private CheckBox checkA;
 
 	@SuppressWarnings("unchecked")
 	public SubscriptionDashboardView() {
@@ -32,6 +34,8 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		Label lblfilteratrasados = new Label ("Filtrar atrasados");
 		lblfilteratrasados.relocate(450, 230);
 		lblfilteratrasados.setFont(new Font("Arial", 10));
+		checkA = new CheckBox();
+		checkA.relocate(530, 228);
 		
 		Label lblfilterpendentes = new Label ("Filtrar pendentes");
 		lblfilterpendentes.relocate(550, 230);
@@ -83,7 +87,7 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 			exeComand("pagar");
 		});
 		
-		pane.getChildren().addAll(lbltittle, lblsubscription, lblfilteratrasados, lblfilterpendentes, table, txtcpf, btnPagar);
+		pane.getChildren().addAll(lbltittle, lblsubscription, lblfilteratrasados, lblfilterpendentes, table, txtcpf, btnPagar, checkA);
 	}
 
 	@Override
