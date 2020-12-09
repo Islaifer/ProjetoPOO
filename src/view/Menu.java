@@ -86,8 +86,21 @@ public class Menu implements StrategyPane, ComandProductor {
 		tuition.setOnMouseClicked((e) -> {
 			exeComand("tuition");
 		});
+		Label spaces = new Label("Gerenciar Espacos");
+		spaces.setFont(new Font("Arial", 16));
+		spaces.relocate(35, 350);
+		spaces.setTextFill(Color.BLACK);
+		spaces.setOnMouseEntered((e) -> {
+			spaces.setTextFill(Color.BLUE);
+		});
+		spaces.setOnMouseExited((e) -> {
+			spaces.setTextFill(Color.BLACK);
+		});
+		spaces.setOnMouseClicked((e) -> {
+			exeComand("tuition");
+		});
 		
-		pane.getChildren().addAll(bckgMenu, reservation, dashboard, tuition, associated, lv);
+		pane.getChildren().addAll(bckgMenu, reservation, dashboard, tuition, associated, spaces, lv);
 	}
 
 	@Override
