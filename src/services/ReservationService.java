@@ -28,25 +28,37 @@ public class ReservationService {
 		return ReservationDao.getById(id);
 	}
 	
-	public Reservation post(int cpfUser, Date date, String spaceName, int peopleqnt) throws Exception {
-		User user = this.user.getById(cpfUser);
-		Space space = this.space.getById(0);
+	public void post(long cpfUser, Date date, int spaceId, int peopleqnt) throws Exception {
+		User user = this.user.getByCPF(cpfUser);
+		Space space = this.space.getById(spaceId);
 		if(user.getId() != 0) {
 			if(space.getId() != 0) {
-				Reservation reservation = new Reservation(0, user, date, space, peopleqnt);
-				ReservationDao.insert(reservation);
-				return reservation;
+				if(!existReservationInTheSameDay(date, spaceId)) {
+					Reservation reservation = new Reservation(0, user, date, space, peopleqnt);
+					ReservationDao.insert(reservation);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Existe uma reserva agendada no mesmo dia!", "ERROR", 0);
+
+				}
 			}else {
 				JOptionPane.showMessageDialog(null, "Espaço não existe!", "ERROR", 0);
 			}
 		}else {
 			JOptionPane.showMessageDialog(null, "Associado não encontrado!", "ERROR", 0);
 		}
-		return null;
 	}
 	
 	public void deleteById(int id) throws Exception {
 		ReservationDao.deleteById(id);
+	}
+	
+	private boolean existReservationInTheSameDay(Date date, int spaceId) {
+		Reservation reservation = ReservationDao.getByDateAndByPlace(date, spaceId);
+		if(reservation.getId() != 0) {
+			return true;
+		}
+		return false;
 	}
 
 }

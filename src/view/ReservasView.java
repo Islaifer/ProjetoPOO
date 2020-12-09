@@ -100,12 +100,12 @@ public class ReservasView implements StrategyPane, ComandProductor {
 
 	public void reservationToControl() {
 		try {
-			int cpfUser = Integer.parseInt(this.txtcpf.getText());
+			long cpfUser = Long.parseLong(this.txtcpf.getText());
 			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
 			Date date = df.parse(this.txtdata.getText() + " - " + this.cbhorarios.getValue());
 			String spaceName = this.cbhorarios.getValue();
 			int peopleqnt = Integer.parseInt(this.txtqtd.getText());
-			this.reservationController.post(cpfUser, date, spaceName, peopleqnt);
+			this.reservationController.post(cpfUser, date, 1, peopleqnt);
 			this.txtcpf.setText("CPF do Associado");
 			this.txtdata.setText("Data da Reserva");
 			this.txtqtd.setText("Quantidade de Pessoas");
