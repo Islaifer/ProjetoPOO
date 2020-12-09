@@ -9,14 +9,12 @@ public class Reservation {
 	private String username;
 	private Date date;
 	private String datef;
-	private String hour;
 	private Space space;
 	private String spaceName;
 	private int peopleqnt;
 	
 	public Reservation(int id, User user, Date date, Space space, int peopleqnt) {
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		SimpleDateFormat hf = new SimpleDateFormat("HH:mm");
 		this.id = id;
 		this.user = user;
 		this.date = date;
@@ -25,7 +23,7 @@ public class Reservation {
 		this.username = user.getFirstName() + " " + user.getLastName();
 		this.spaceName = this.space.getName();
 		this.datef = df.format(this.date);
-		this.hour = hf.format(this.date);
+		
 	}
 	
 	public Reservation() {
@@ -48,10 +46,7 @@ public class Reservation {
 		return datef;
 	}
 
-	public String getHour() {
-		return hour;
-	}
-
+	
 	public String getUsername() {
 		return username;
 	}
