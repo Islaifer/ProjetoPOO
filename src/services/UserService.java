@@ -3,6 +3,7 @@ package services;
 import java.util.Date;
 import java.util.List;
 
+import daos.PlanDao;
 import daos.UserDao;
 import models.Plan;
 import models.User;
@@ -24,7 +25,8 @@ public class UserService {
 		return UserDao.getByCPF(cpf);
 	}
 	
-	public void post(String firstName, String lastName, int rg, int cpf, Date birthdate, int phoneNumber, String address, String addressNumber, String state, String city, Plan plan) throws Exception {
+	public void post(String firstName, String lastName, int rg, int cpf, Date birthdate, int phoneNumber, String address, int idPlan) throws Exception {
+		Plan plan = PlanDao.getById(idPlan);
 		User user = new User(firstName, lastName, rg, cpf, birthdate, phoneNumber, address, plan);
 		UserDao.insert(user);
 	}

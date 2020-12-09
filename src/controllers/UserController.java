@@ -3,7 +3,6 @@ package controllers;
 import java.util.Date;
 import java.util.List;
 
-import models.Plan;
 import models.User;
 import services.UserService;
 
@@ -25,8 +24,8 @@ public class UserController {
 		return this.userService.getByCPF(cpf);
 	}
 	
-	public void post(String firstName, String lastName, int rg, int cpf, Date birthdate, int phoneNumber, String address, String addressNumber, String state, String city, Plan plan) throws Exception {
-		this.userService.post(firstName, lastName, rg, cpf, birthdate, phoneNumber, address, addressNumber, state, city, plan);
+	public void post(String firstName, String lastName, int rg, int cpf, Date birthdate, int phoneNumber, String address, int idPlan) throws Exception {
+		this.userService.post(firstName, lastName, rg, cpf, birthdate, phoneNumber, address, idPlan);
 	}
 	
 	public void deleteById(int id) throws Exception {

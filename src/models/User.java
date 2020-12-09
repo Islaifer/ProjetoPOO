@@ -12,9 +12,6 @@ public class User {
 	private Date birthdate;
 	private int phoneNumber;
 	private String address;
-	private String addressNumber;
-	private String state;
-	private String city;
 	private Plan plan;
 	
 	public User(String firstName, String lastName, int rg, int cpf, Date birthdate, int phoneNumber, String address, Plan plan) {
@@ -90,24 +87,6 @@ public class User {
 	}
 	public void setAddress(String address) {
 		this.address = address;
-	}
-	public String getAddressNumber() {
-		return addressNumber;
-	}
-	public void setAddressNumber(String addressNumber) {
-		this.addressNumber = addressNumber;
-	}
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
 	}
 
 	public Plan getPlan() {
