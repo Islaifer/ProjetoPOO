@@ -106,7 +106,6 @@ public class SpaceDao {
 			connection.close();
 			
 		} catch (Exception error) {
-			System.out.println("ta aqui?");
 			System.out.println(error);
 		}
 	}
