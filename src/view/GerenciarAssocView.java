@@ -140,7 +140,7 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 				inputRg.setText(this.formRg(user.getRg()));
 				inputCpf.setText(this.formCpf(user.getCpf()));;
 				inputContato.setText(this.formPhoneNumber(user.getPhoneNumber()));
-				inputEndereco.setText(user.getAddress() + ", nº" + user.getAddressNumber());
+				inputEndereco.setText(user.getAddress());
 				inputTiposocio.setText("Colocar plan");
 				inputStatusmensalidade.setText("Colocar Mensalidade");
 			}

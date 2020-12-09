@@ -1,6 +1,8 @@
 package view;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,13 +42,13 @@ public class CadastroView implements StrategyPane, ComandProductor {
 		pane = new Pane();
 		userController = new UserController();
 
-		Label lblcadastro = new Label("Cadastro de Usuário");
+		Label lblcadastro = new Label("Cadastro de Usuario");
 		lblcadastro.relocate(290, 30);
 		lblcadastro.setFont(new Font("Arial", 18));
 		Label lbldadosassoc = new Label("Dados do Associado");
 		lbldadosassoc.relocate(250, 100);
 		lbldadosassoc.setFont(new Font("Arial", 14));
-		Label lbldadosend = new Label("Cadastro de Endereço");
+		Label lbldadosend = new Label("Cadastro de Endereco");
 		lbldadosend.relocate(250, 300);
 		lbldadosend.setFont(new Font("Arial", 14));
 		Label lblplano = new Label("Plano");
@@ -77,7 +79,7 @@ public class CadastroView implements StrategyPane, ComandProductor {
 		txttel.relocate(500, 230);
 		txttel.setMinHeight(30);
 		txttel.setMinWidth(30);
-		txtend = new TextField("Endereço");
+		txtend = new TextField("Endereco");
 		txtend.relocate(250, 330);
 		txtend.setMinHeight(30);
 		txtend.setMinWidth(400);
@@ -125,6 +127,50 @@ public class CadastroView implements StrategyPane, ComandProductor {
 		}
 	}
 	
+	public void associatedToControl() {
+		try {
+			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			String firstName = txtname.getText();
+			String lastName = txtsobrenome.getText();
+			int rg = Integer.parseInt(txtrg.getText());
+			int cpf = Integer.parseInt(txtcpf.getText());
+			Date birthday = df.parse(txtdata.getText());
+			int tel = Integer.parseInt(txttel.getText());
+			String address = txtend.getText();
+			int idPlan = idPlane(cbplano.getValue());
+			userController.post(firstName, lastName, rg, cpf, birthday, tel, address, idPlan);
+			txtname.setText("Nome");
+			txtsobrenome.setText("Sobrenome");
+			txtrg.setText("RG");
+			txtcpf.setText("CPF");
+			txtdata.setText("Data de Nascimento");
+			txttel.setText("Telefone para contato");
+			txtend.setText("Endereco");
+			JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso ^-^");
+		}catch(NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Digite apenas numeros no rg e cpf!", "ERROR", 0);
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null, "Data inv�lida!", "ERROR", 0);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro interno!", "ERROR", 0);
+		}
+	}
+	
+	private int idPlane(String plan) {
+		PlanController planController = new PlanController();
+		try {
+			List<Plan> listPlan = planController.getAll();
+			for(Plan var : listPlan) {
+				if(plan.equals(var.getName())) {
+					return var.getId();
+				}
+			}
+			return 0;
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+	
 	public void seedCb() {
 		PlanController planController = new PlanController();
 		try {
@@ -139,9 +185,6 @@ public class CadastroView implements StrategyPane, ComandProductor {
 		} catch (Exception e) {
 			System.err.println("Deu ruim");
 		}
-		/*cbplano = new ChoiceBox<String>();
-		cbplano.setItems(FXCollections.observableArrayList("Simples", "Master", "Blaster"));
-		cbplano.relocate(250, 430);*/
 	}
 
 	@Override

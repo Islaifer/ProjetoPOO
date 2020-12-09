@@ -71,7 +71,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		}else if (cmd.equals("Reservar")) {
 			this.reservasview.reservationToControl();
 		}else if (cmd.equals("Cadastrar")) {
-			System.out.println("Cadastrou");
+			this.cadastroview.associatedToControl();
 		}else if(cmd.equals("SearchAssociate")) {
 			System.out.println("Procurou o associadozada");
 		}else if(cmd.equals("AddReserva")) {

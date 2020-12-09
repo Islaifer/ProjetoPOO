@@ -172,13 +172,13 @@ public class UserDao {
 					+ " phone_number,"
 					+ " address,"
 					+ " plan_id)"
-					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+					+ " VALUES (?,?,?,?,?,?,?,?)");
 			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
 			posted.setString(1, user.getFirstName());
 			posted.setString(2, user.getLastName());
 			posted.setInt(3, user.getRg());
 			posted.setInt(4, user.getCpf());
-			posted.setDate(5, java.sql.Date.valueOf(user.getBirthdate().toString()));
+			posted.setDate(5, new java.sql.Date(user.getBirthdate().getTime()));
 			posted.setInt(6, user.getPhoneNumber());
 			posted.setString(7, user.getAddress());
 			posted.setInt(8, user.getPlan().getId());
