@@ -131,8 +131,8 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 	
 	public void controlToAssociated() {
 		try {
-			int cpf = Integer.parseInt(txtpesquisa.getText());
-			User user = this.userController.getById(cpf);
+			long cpf = Long.parseLong(txtpesquisa.getText());
+			User user = this.userController.getByCPF(cpf);
 			if(user != null) {
 				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 				inputNome.setText(user.getFirstName() + " " + user.getLastName());
@@ -141,7 +141,7 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 				inputCpf.setText(this.formCpf(user.getCpf()));;
 				inputContato.setText(this.formPhoneNumber(user.getPhoneNumber()));
 				inputEndereco.setText(user.getAddress());
-				inputTiposocio.setText("Colocar plan");
+				inputTiposocio.setText(user.getPlan().getName());
 				inputStatusmensalidade.setText("Colocar Mensalidade");
 			}
 		}catch (NumberFormatException e) {
@@ -168,25 +168,33 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 		return pane;
 	}
 	
-	private String formCpf(int cpf) {
-		String aux = "" + cpf;
-		char [] vet = aux.toCharArray();
-		return vet[0] + vet[1] + "." + vet[2] + vet[3] + vet[4] + "." + vet[5] + vet[6] + vet[7] + "-" + vet[8];
+	private String formCpf(long cpf) {
+		String aux = Long.toString(cpf);
+		char [] vet = aux.toCharArray();	
+		if(vet.length == 11) {
+			return aux.substring(0, 3) + "." + aux.substring(3, 6) + "." + aux.substring(6, 9) + "-" + aux.substring(9, 11);
+		}else {
+			return 0 + aux.substring(0, 2) + "." + aux.substring(2, 5) + "." + aux.substring(5, 8) + "-" + aux.substring(8, 10);
+		}
 	}
 	
-	private String formRg(int rg) {
+	private String formRg(long rg) {
 		String aux = "" + rg;
 		char [] vet = aux.toCharArray();
-		return vet[0] + vet[1] + vet[2] + "." + vet[3] + vet[4] + vet[5] + "." + vet[6] + vet[7] + vet[8] + "-" + vet[9];
+		if(vet.length == 9) {
+			return aux.substring(0, 2) + "." + aux.substring(2, 5) + "." + aux.substring(5, 8) + "-" + aux.substring(8);
+		}else {
+			return 0 + aux.substring(0) + "." + aux.substring(1, 4) + "." + aux.substring(4, 7) + "-" + aux.substring(7);
+		}
 	}
 	
-	private String formPhoneNumber(int phoneNumber) {
+	private String formPhoneNumber(long phoneNumber) {
 		String aux = "" + phoneNumber;
 		char [] vet = aux.toCharArray();
 		if(vet.length == 10) {
-			return "(" + vet[0] + vet[1] + ") " + vet[2] + vet[3] + vet[4] + vet[5] + "-" + vet[6] + vet[7] + vet[8]  + vet[9];
+			return "(" + aux.substring(0, 2) + ") " + aux.substring(2, 6) + "-" + aux.substring(6, 10);
 		}else {
-			return "(" + vet[0] + vet[1] + ") " + vet[2] + vet[3] + vet[4] + vet[5] + vet[6] + "-" + vet[7] + vet[8]  + vet[9] + vet[10];
+			return "(" + aux.substring(0, 2) + ") " + aux.substring(2, 7) + "-" + aux.substring(6, 11);
 		}
 	}
 	

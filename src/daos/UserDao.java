@@ -22,10 +22,10 @@ public class UserDao {
 					+ nameTable +"(id INT NOT NULL AUTO_INCREMENT,"
 					+ "first_name VARCHAR(255) NOT NULL,"
 					+ "last_name VARCHAR(255) NOT NULL,"
-					+ "rg INT NOT NULL,"
-					+ "cpf INT NOT NULL,"
+					+ "rg BIGINT NOT NULL,"
+					+ "cpf BIGINT NOT NULL,"
 					+ "birthdate DATE,"
-					+ "phone_number INT NOT NULL,"
+					+ "phone_number BIGINT NOT NULL,"
 					+ "address VARCHAR(255) NOT NULL,"
 					+ "plan_id INT NOT NULL,"
 					+ "PRIMARY KEY(id),"
@@ -61,10 +61,10 @@ public class UserDao {
 				User user = new User(result.getInt("id"),
 						result.getString("first_name"), 
 						result.getString("last_name"), 
-						result.getInt("rg"),
-						result.getInt("cpf"),
+						result.getLong("rg"),
+						result.getLong("cpf"),
 						result.getDate("birthdate"),
-						result.getInt("phoneNumber"), 
+						result.getLong("phone_number"), 
 						result.getString("address"), 
 						plan
 						); 
@@ -93,10 +93,10 @@ public class UserDao {
 				User user = new User(result.getInt("id"),
 						result.getString("first_name"), 
 						result.getString("last_name"), 
-						result.getInt("rg"),
-						result.getInt("cpf"),
+						result.getLong("rg"),
+						result.getLong("cpf"),
 						result.getDate("birthdate"),
-						result.getInt("phoneNumber"), 
+						result.getLong("phone_number"), 
 						result.getString("address"), 
 						plan
 						); 
@@ -112,7 +112,7 @@ public class UserDao {
 		}
 	}
 	
-	public static synchronized User getByCPF(int cpf) throws Exception {
+	public static synchronized User getByCPF(long cpf) throws Exception {
 		try {
 			Connection connection = DatabaseConnection.getConnection();
 			PreparedStatement statement = connection.prepareStatement("SELECT * from " + nameTable + " WHERE cpf = " + cpf);
@@ -126,10 +126,10 @@ public class UserDao {
 				User user = new User(result.getInt("id"),
 						result.getString("first_name"), 
 						result.getString("last_name"), 
-						result.getInt("rg"),
-						result.getInt("cpf"),
+						result.getLong("rg"),
+						result.getLong("cpf"),
 						result.getDate("birthdate"),
-						result.getInt("phoneNumber"), 
+						result.getLong("phone_number"), 
 						result.getString("address"), 
 						plan
 						); 
@@ -176,10 +176,10 @@ public class UserDao {
 			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
 			posted.setString(1, user.getFirstName());
 			posted.setString(2, user.getLastName());
-			posted.setInt(3, user.getRg());
-			posted.setInt(4, user.getCpf());
+			posted.setLong(3, user.getRg());
+			posted.setLong(4, user.getCpf());
 			posted.setDate(5, new java.sql.Date(user.getBirthdate().getTime()));
-			posted.setInt(6, user.getPhoneNumber());
+			posted.setLong(6, user.getPhoneNumber());
 			posted.setString(7, user.getAddress());
 			posted.setInt(8, user.getPlan().getId());
 			// aqui ele executa o método o qual criei acima no banco de dados.
@@ -204,7 +204,7 @@ public class UserDao {
 			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
 			posted.setString(1, user.getFirstName());
 			posted.setString(2, user.getLastName());
-			posted.setInt(3, user.getPhoneNumber());
+			posted.setLong(3, user.getPhoneNumber());
 			posted.setString(4, user.getAddress());
 			posted.setInt(5, user.getPlan().getId());
 			posted.setInt(6, user.getId());

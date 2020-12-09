@@ -132,10 +132,10 @@ public class CadastroView implements StrategyPane, ComandProductor {
 			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			String firstName = txtname.getText();
 			String lastName = txtsobrenome.getText();
-			int rg = Integer.parseInt(txtrg.getText());
-			int cpf = Integer.parseInt(txtcpf.getText());
+			long rg = Long.parseLong(txtrg.getText());
+			long cpf = Long.parseLong(txtcpf.getText());
 			Date birthday = df.parse(txtdata.getText());
-			int tel = Integer.parseInt(txttel.getText());
+			long tel = Long.parseLong(txttel.getText());
 			String address = txtend.getText();
 			int idPlan = idPlane(cbplano.getValue());
 			userController.post(firstName, lastName, rg, cpf, birthday, tel, address, idPlan);
