@@ -18,6 +18,7 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 	private ComandAssistence a;
 	private Pane pane;
 	private CheckBox checkA;
+	private CheckBox checkB;
 
 	@SuppressWarnings("unchecked")
 	public SubscriptionDashboardView() {
@@ -32,14 +33,16 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		lblsubscription.setFont(new Font("Arial", 13));
 		
 		Label lblfilteratrasados = new Label ("Filtrar atrasados");
-		lblfilteratrasados.relocate(450, 230);
+		lblfilteratrasados.relocate(550, 230);
 		lblfilteratrasados.setFont(new Font("Arial", 10));
 		checkA = new CheckBox();
-		checkA.relocate(530, 228);
+		checkA.relocate(630, 228);
 		
 		Label lblfilterpendentes = new Label ("Filtrar pendentes");
-		lblfilterpendentes.relocate(550, 230);
+		lblfilterpendentes.relocate(650, 230);
 		lblfilterpendentes.setFont(new Font("Arial", 10));
+		checkB = new CheckBox();
+		checkB.relocate(730, 228);
 		//table
 		TableView<Subscription> table = new TableView<>();
 		// table.setItems(FXCollections.observableArrayList(teste));
@@ -80,14 +83,22 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		
 		//button
 		Button btnPagar = new Button("Pagar");
-		btnPagar.relocate(680, 210);
+		btnPagar.relocate(680, 510);
 		btnPagar.setMinHeight(30);
-		btnPagar.setMinWidth(40);
+		btnPagar.setMinWidth(80);
 		btnPagar.setOnAction((e) -> {
 			exeComand("pagar");
 		});
 		
-		pane.getChildren().addAll(lbltittle, lblsubscription, lblfilteratrasados, lblfilterpendentes, table, txtcpf, btnPagar, checkA);
+		Button btnFiltrar = new Button("Filtrar");
+		btnFiltrar.relocate(400, 210);
+		btnFiltrar.setMinHeight(30);
+		btnFiltrar.setMinWidth(50);
+		btnFiltrar.setOnAction((e) -> {
+			exeComand("filtrar");
+		});
+		
+		pane.getChildren().addAll(lbltittle, lblsubscription, lblfilteratrasados, lblfilterpendentes, table, txtcpf, btnPagar, btnFiltrar, checkA, checkB);
 	}
 
 	@Override
