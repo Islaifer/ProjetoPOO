@@ -7,14 +7,14 @@ public class User {
 	private int id;
 	private String firstName;
 	private String lastName;
-	private int rg;
-	private int cpf;
+	private long rg;
+	private long cpf;
 	private Date birthdate;
-	private int phoneNumber;
+	private long phoneNumber;
 	private String address;
 	private Plan plan;
 	
-	public User(String firstName, String lastName, int rg, int cpf, Date birthdate, int phoneNumber, String address, Plan plan) {
+	public User(String firstName, String lastName, long rg, long cpf, Date birthdate, long phoneNumber, String address, Plan plan) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.rg = rg;
@@ -25,7 +25,7 @@ public class User {
 		this.setPlan(plan);
 	}
 	
-	public User(int id, String firstName, String lastName, int rg, int cpf, Date birthdate, int phoneNumber, String address, Plan plan) {
+	public User(int id, String firstName, String lastName, long rg, long cpf, Date birthdate, long phoneNumber, String address, Plan plan) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -58,13 +58,13 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public int getRg() {
+	public long getRg() {
 		return rg;
 	}
 	public void setRg(int rg) {
 		this.rg = rg;
 	}
-	public int getCpf() {
+	public long getCpf() {
 		return cpf;
 	}
 	public void setCpf(int cpf) {
@@ -76,7 +76,7 @@ public class User {
 	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
 	}
-	public int getPhoneNumber() {
+	public long getPhoneNumber() {
 		return phoneNumber;
 	}
 	public void setPhoneNumber(int phoneNumber) {
