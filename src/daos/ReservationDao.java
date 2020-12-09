@@ -3,6 +3,7 @@ package daos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -125,7 +126,7 @@ public class ReservationDao {
 			PreparedStatement posted = connection.prepareStatement("INSERT INTO "+ nameTable +"("
 					+ "id_user,"
 					+ "id_space,"
-					+ "date DATE,"
+					+ "date,"
 					+ "people_qntd)"
 					+ " VALUES (?,?,?,?)");
 			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
@@ -137,6 +138,37 @@ public class ReservationDao {
 			posted.executeUpdate();
 		} catch (Exception error) {
 			System.out.println(error);
+		}
+	}
+	
+	public static Reservation getByDateAndByPlace(Date date, int spaceId) {
+		try {
+
+		Connection connection = DatabaseConnection.getConnection();
+		PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + nameTable + " WHERE date = " + "'"+ new java.sql.Date(date.getTime())  + "'" + " AND id_space = " + spaceId + " LIMIT 1");
+		
+		ResultSet result = statement.executeQuery();
+				
+		Reservation reservationCatched = new Reservation();
+		
+		while(result.next()) {
+			User user = UserDao.getById(result.getInt("id_user"));
+			Space space = SpaceDao.getById(result.getInt("id_space"));
+			Reservation reservation = new Reservation(result.getInt("id"),
+					user,
+					result.getDate("date"),
+					space,
+					result.getInt("people_qntd")
+					);
+			reservationCatched = reservation;
+		}
+		connection.close();
+		
+		return reservationCatched;
+		
+		} catch (Exception error){
+			System.out.println(error);
+			return null;
 		}
 	}
 }
