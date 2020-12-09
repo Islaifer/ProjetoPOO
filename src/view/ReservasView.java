@@ -29,7 +29,6 @@ public class ReservasView implements StrategyPane, ComandProductor {
 	private TextField txtqtd;
 	private TextField txtdata;
 	private ChoiceBox<String> cbespaco;
-	private ChoiceBox<String> cbhorarios;
 	private ReservationController reservationController;
 
 	public ReservasView() {
@@ -40,7 +39,7 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		
 		// Labels
 		Label lblcadreserva = new Label("Cadastro de Reserva");
-		lblcadreserva.relocate(290, 30);
+		lblcadreserva.relocate(250, 30);
 		lblcadreserva.setFont(new Font("Arial", 18));
 		Label lblreserva = new Label("Dados da Reserva");
 		lblreserva.relocate(250, 100);
@@ -48,9 +47,7 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		Label lblcliente = new Label("Dados do Cliente");
 		lblcliente.relocate(250, 200);
 		lblcliente.setFont(new Font("Arial", 14));
-		Label lblhorario = new Label("Hora da Reserva");
-		lblhorario.relocate(250, 300);
-		lblhorario.setFont(new Font("Arial", 14));
+		
 
 		// TextFields
 		txtcpf = new TextField("CPF do Associado");
@@ -66,11 +63,7 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		txtdata.setMinHeight(30);
 		txtdata.setMinWidth(30);
 
-		// Choiceboxes
-		cbhorarios = new ChoiceBox<String>();
-		cbhorarios.setItems(FXCollections.observableArrayList("08:00", "10:00", "12:00", "14:00", "16:00", "18:00",
-				"20:00", "Dia inteiro"));
-		cbhorarios.relocate(250, 330);
+		
 
 		// Botao
 		Button btnReservar = new Button("Reservar");
@@ -82,16 +75,16 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		});
 
 		Button btnVoltar = new Button("Voltar");
-		btnVoltar.relocate(230, 30);
-		btnVoltar.setMinHeight(30);
-		btnVoltar.setMinWidth(40);
+		btnVoltar.relocate(250, 500);
+		btnVoltar.setMinHeight(40);
+		btnVoltar.setMinWidth(90);
 		btnVoltar.setOnAction((e) -> {
 			exeComand("reservation");
 		});
 
 		// Coloca todos os objetos na tela
-		pane.getChildren().addAll(lblreserva, lblcliente, lblhorario, lblcadreserva, txtcpf, txtqtd, txtdata, cbespaco,
-				cbhorarios, btnReservar, btnVoltar);
+		pane.getChildren().addAll(lblreserva, lblcliente, lblcadreserva, txtcpf, txtqtd, txtdata, cbespaco,
+				btnReservar, btnVoltar);
 
 	}
 
@@ -99,15 +92,14 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		try {
 			long cpfUser = Long.parseLong(this.txtcpf.getText());
 			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
-			Date date = df.parse(this.txtdata.getText() + " - " + this.cbhorarios.getValue());
-			String spaceName = this.cbhorarios.getValue();
+			Date date = df.parse(this.txtdata.getText());
 			int peopleqnt = Integer.parseInt(this.txtqtd.getText());
 			this.reservationController.post(cpfUser, date, 1, peopleqnt);
 			this.txtcpf.setText("CPF do Associado");
 			this.txtdata.setText("Data da Reserva");
 			this.txtqtd.setText("Quantidade de Pessoas");
 			this.cbespaco.setValue("");
-			this.cbhorarios.setValue("");
+			
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Erro ao digitar rg ou quantidade de pessoas!", "ERROR", 0);
 		} catch (ParseException e) {
@@ -126,7 +118,7 @@ public class ReservasView implements StrategyPane, ComandProductor {
 				txtdata.setText(df.format(reservation.getDate()));
 				txtqtd.setText("" + reservation.getPeopleqnt());
 				cbespaco.setValue("" + reservation.getSpaceName());
-				cbhorarios.setValue(reservation.getHour());
+				
 
 			}
 		} catch (NumberFormatException e) {
