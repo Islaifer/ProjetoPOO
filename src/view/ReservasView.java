@@ -91,14 +91,14 @@ public class ReservasView implements StrategyPane, ComandProductor {
 	public void reservationToControl() {
 		try {
 			long cpfUser = Long.parseLong(this.txtcpf.getText());
-			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
+			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			Date date = df.parse(this.txtdata.getText());
 			int peopleqnt = Integer.parseInt(this.txtqtd.getText());
-			this.reservationController.post(cpfUser, date, 1, peopleqnt);
+			int idSpace = this.idSpace(cbespaco.getValue());
+			this.reservationController.post(cpfUser, date, idSpace, peopleqnt);
 			this.txtcpf.setText("CPF do Associado");
 			this.txtdata.setText("Data da Reserva");
 			this.txtqtd.setText("Quantidade de Pessoas");
-			this.cbespaco.setValue("");
 			
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Erro ao digitar rg ou quantidade de pessoas!", "ERROR", 0);
@@ -125,6 +125,21 @@ public class ReservasView implements StrategyPane, ComandProductor {
 			JOptionPane.showMessageDialog(null, "Digite apenas os numeros!", "ERROR", 0);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro interno!", "ERROR", 0);
+		}
+	}
+	
+	private int idSpace(String space) {
+		SpaceController spaceController = new SpaceController();
+		try {
+			List<Space> listSpace = spaceController.getAll();
+			for(Space var : listSpace) {
+				if(space.equals(var.getName())) {
+					return var.getId();
+				}
+			}
+			return 0;
+		} catch (Exception e) {
+			return 0;
 		}
 	}
 
