@@ -97,7 +97,7 @@ public class Menu implements StrategyPane, ComandProductor {
 			spaces.setTextFill(Color.BLACK);
 		});
 		spaces.setOnMouseClicked((e) -> {
-			exeComand("tuition");
+			exeComand("spaces");
 		});
 		
 		pane.getChildren().addAll(bckgMenu, reservation, dashboard, tuition, associated, spaces, lv);

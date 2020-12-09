@@ -71,6 +71,8 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 			targetPane = associadoview;
 		}else if(cmd.equals("tuition")) {
 			targetPane = subscriptiondashboardview;
+		}else if(cmd.equals("spaces")) {
+			targetPane = spacedashboardview;
 		}else if (cmd.equals("Reservar")) {
 			this.reservasview.reservationToControl();
 		}else if (cmd.equals("Cadastrar")) {

@@ -17,11 +17,10 @@ public class SpaceDashboardView implements StrategyPane, ComandProductor {
 	private TableView<Space> table;
 	private SpaceController spaceController;
 
+	@SuppressWarnings("unchecked")
 	public SpaceDashboardView() {
-
-		this.refreshTable();
 		this.pane = new Pane();
-
+		spaceController = new SpaceController();
 		table = new TableView<>();
 		table.relocate(235, 250);
 		table.setMinWidth(530);
@@ -30,11 +29,11 @@ public class SpaceDashboardView implements StrategyPane, ComandProductor {
 
 		// colunas
 		TableColumn<Space, String> columnSpace = new TableColumn<>("Espaco");
-		columnSpace.setCellValueFactory(new PropertyValueFactory<>("space"));
+		columnSpace.setCellValueFactory(new PropertyValueFactory<>("name"));
 		columnSpace.setMinWidth(110);
 		columnSpace.setMaxWidth(110);
 		TableColumn<Space, String> columnQtd = new TableColumn<>("Capacidade");
-		columnQtd.setCellValueFactory(new PropertyValueFactory<>("peopleqtd"));
+		columnQtd.setCellValueFactory(new PropertyValueFactory<>("capacity"));
 		columnQtd.setMinWidth(110);
 		columnQtd.setMaxWidth(110);
 		TableColumn<Space, String> columnDisp = new TableColumn<>("Disponibilidade");
@@ -42,6 +41,7 @@ public class SpaceDashboardView implements StrategyPane, ComandProductor {
 		columnDisp.setMinWidth(110);
 		columnDisp.setMaxWidth(110);
 		table.getColumns().addAll(columnSpace, columnDisp, columnQtd);
+		this.refreshTable();
 
 		pane.getChildren().addAll(table);
 	}
@@ -54,7 +54,7 @@ public class SpaceDashboardView implements StrategyPane, ComandProductor {
 		try {
 			table.setItems(FXCollections.observableArrayList(spaceController.getAll()));
 		} catch (Exception e) {
-			System.err.println("Deu ruim");
+			System.err.println(e);
 		}
 	}
 
