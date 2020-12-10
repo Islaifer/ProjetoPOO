@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import daos.PaymentDao;
+import daos.SubscriptionDao;
 import models.Payment;
+import models.Subscription;
 import models.User;
 
 public class PaymentService {
@@ -22,9 +24,9 @@ public class PaymentService {
 		return PaymentDao.getById(id);
 	}
 
-	public Payment post(Date date, User user, double price) throws Exception {
-		Payment payment = new Payment ();
-		PaymentDao.insert(payment);
+	public Payment post(Subscription subscription) throws Exception {
+		Payment payment = new Payment(subscription);
+		SubscriptionDao.updateStatus(subscription, 3);
 		return payment;
 
 	}
