@@ -153,25 +153,26 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		List<Subscription> filteredTable = table.getItems();
 		if (isPending && isOverdue) {
 			filteredTable = filteredTable.stream().filter(
-					subscription -> subscription.getStatus().getId() == 2 || subscription.getStatus().getId() == 1)
+					subscription -> (subscription.getStatus().getId() == 2 || subscription.getStatus().getId() == 1) && subscription.getUser().getCpf() == Long.parseLong(cpf))
 					.collect(Collectors.toList());
 			table.setItems(FXCollections.observableArrayList(filteredTable));
 		} else if (isPending) {
-			filteredTable = filteredTable.stream().filter(subscription -> subscription.getStatus().getId() == 2)
+			filteredTable = filteredTable.stream().filter(subscription -> subscription.getStatus().getId() == 2 && subscription.getUser().getCpf() == Long.parseLong(cpf))
 					.collect(Collectors.toList());
 			table.setItems(FXCollections.observableArrayList(filteredTable));
 		} else if (isOverdue) {
-			filteredTable = filteredTable.stream().filter(subscription -> subscription.getStatus().getId() == 1)
+			filteredTable = filteredTable.stream().filter(subscription -> subscription.getStatus().getId() == 1 && subscription.getUser().getCpf() == Long.parseLong(cpf))
 					.collect(Collectors.toList());
 			table.setItems(FXCollections.observableArrayList(filteredTable));
 		} else {
-			refreshTable();
+			filteredTable = filteredTable.stream().filter(subscription -> subscription.getUser().getCpf() == Long.parseLong(cpf))
+					.collect(Collectors.toList());
+			table.setItems(FXCollections.observableArrayList(filteredTable));
 		}
 	}
 
 	private boolean checkIfIsValidCpf(String cpf) {
 		try {
-			int cpfFormated = Integer.parseInt(cpf);
 			if (cpf.length() == 11) {
 				return true;
 			}
