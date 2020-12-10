@@ -179,6 +179,25 @@ public class SubscriptionDao {
 		}
 	}
 	
+	public static void updateStatus(Subscription subscription, int statusId) throws Exception {
+		try {
+			//pega conexão com o banco de dados
+			Connection connection = DatabaseConnection.getConnection();
+			//PreparedStatement é o metodo na sua tradução prepara a declaração que irá ser introduzida no SQL, no contexto é o método de inserção de dados.
+			PreparedStatement posted = connection.prepareStatement("UPDATE "+ nameTable +" set"
+					+ "	id_status = ?,"
+					+ " WHERE id = ?");
+			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
+			posted.setInt(1, statusId);
+			posted.setInt(2, subscription.getId());
+			// aqui ele executa o método o qual criei acima no banco de dados.
+			posted.executeUpdate();
+			connection.close();
+		} catch (Exception error) {
+			System.out.println(error);
+		}
+	}
+	
 	public static synchronized Subscription checkIfUserHasSubscriptionOnMonth(Date initialMonth, Date finalMonth, int userId) throws Exception {
 		try {
 			Connection connection = DatabaseConnection.getConnection();
