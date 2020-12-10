@@ -98,6 +98,8 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		}else if(cmd.equals("updateReservation")) {
 			this.reservasview.reservationToControl(true);
 			this.reservationdashboardview.refreshTable();
+		}else if(cmd.equals("BuscarSpace")) {
+			targetPane = spacedashboardview;
 		}
 		context();
 	}
