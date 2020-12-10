@@ -58,7 +58,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		
 	}
 	
-	@Override
+@Override
 	public void executeCommand(String cmd) {
 		if(cmd.equals("Enter")) {
 			targetPane = reservationdashboardview;
@@ -99,6 +99,8 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		}else if(cmd.equals("updateReservation")) {
 			this.reservasview.reservationToControl(true);
 			this.reservationdashboardview.refreshTable();
+		}else if(cmd.equals("BuscarSpace")) {
+			targetPane = spacedashboardview;
 		}
 		context();
 	}

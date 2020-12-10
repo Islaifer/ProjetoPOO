@@ -8,9 +8,11 @@ import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
 import interfaces.StrategyPane;
 import javafx.collections.FXCollections;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
@@ -32,7 +34,7 @@ public class SpaceDashboardView implements StrategyPane, ComandProductor {
 		lbltittle.setFont(new Font("Arial",18));
 		
 		Label lblspace = new Label ("Espaços");
-		lblspace.relocate (250, 230);
+		lblspace.relocate (250, 180);
 		lblspace.setFont(new Font("Arial",13));
 		
 		table = new TableView<>();
@@ -56,8 +58,23 @@ public class SpaceDashboardView implements StrategyPane, ComandProductor {
 		columnDisp.setMaxWidth(175);
 		table.getColumns().addAll(columnSpace, columnQtd, columnDisp);
 		this.refreshTable();
+		
+		//field
+		TextField buscarData = new TextField ("Buscar por Data");
+		buscarData.relocate(235, 210);
+		buscarData.setMinHeight(30);
+		buscarData.setMinWidth(150);
+		
+		//button
+		Button btnBuscar = new Button("Buscar");
+		btnBuscar.relocate(400, 210);
+		btnBuscar.setMinHeight(30);
+		btnBuscar.setMinWidth(50);
+		btnBuscar.setOnAction((e) -> {
+			exeComand("SearchSpace");
+		});
 
-		pane.getChildren().addAll(table, lbltittle, lblspace);
+		pane.getChildren().addAll(table, lbltittle, lblspace, btnBuscar, buscarData);
 	}
 
 	public int spaceSelected() {
