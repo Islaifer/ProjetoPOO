@@ -21,6 +21,10 @@ public class SubscriptionService {
 		return SubscriptionDao.getAll();
 	}
 	
+	public List<Subscription> getByUserId(int id) throws Exception{
+		return SubscriptionDao.getByUserId(id);
+	}
+	
 	public Subscription getById(int id) throws Exception {
 		return SubscriptionDao.getById(id);
 	}

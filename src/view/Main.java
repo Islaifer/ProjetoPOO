@@ -73,6 +73,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 			targetPane = reservationdashboardview;
 		}else if(cmd.equals("associated")) {
 			targetPane = associadoview;
+			this.associadoview.refreshTable();
 		}else if(cmd.equals("tuition")) {
 			this.subscriptiondashboardview.refreshTable();
 			targetPane = subscriptiondashboardview;
@@ -85,6 +86,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 			this.cadastroview.associatedToControl(false);
 		}else if(cmd.equals("SearchAssociate")) {
 			this.associadoview.controlToAssociated();
+			this.associadoview.refreshTable();
 		}else if(cmd.equals("AddReserva")) {
 			this.reservasview.refreshButton(false);
 			targetPane = reservasview;
@@ -113,6 +115,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 			this.spacedashboardview.filterDate();
 		}else if(cmd.equals("DeleteAssociate")) {
 			this.associadoview.delete();
+			this.associadoview.refreshTable();
 		}
 		context();
 	}

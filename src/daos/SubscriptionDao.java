@@ -106,6 +106,39 @@ public class SubscriptionDao {
 		}
 	}
 	
+	public static synchronized List<Subscription> getByUserId(int id) throws Exception {
+		try {
+			Connection connection = DatabaseConnection.getConnection();
+			//MÉTODO PARA BUSCAR TODOS OS ITENS DENTRO DO BANCO DE DADOS DA TABELA
+			PreparedStatement statement = connection.prepareStatement("SELECT * from " + nameTable + " WHERE id_user = " + id);
+			
+			//DENTRO DO RESULT ESTARÁ OS DADOS QUE EU QUERO CASO TENHA DADO SUCESSO
+			ResultSet result = statement.executeQuery();
+			
+			List<Subscription> subscriptions = new LinkedList<Subscription>();
+			
+			//AQUI FARA UM WHILE QUE ENQUANTO EXISTIR "PRÓXIMO" DADO ELE CONTINUARA NO WHILE.
+			while(result.next()) {
+				//CADA GET DESSES AQUI EMBAIXO SÃO OS NOMES DA COLUNA QUE EU QUERO O RESULTADO
+				User user = UserDao.getById(result.getInt("id_user"));
+				SubscriptionStatus status = SubscriptionStatusDao.getById(result.getInt("id_status"));
+				Subscription subscription = new Subscription(result.getInt("id"),
+						result.getDate("date"),
+						status,
+						user,
+						result.getDouble("amount")
+						); 
+				subscriptions.add(subscription);
+			}
+			connection.close();
+			
+			return subscriptions;
+		} catch (Exception error){
+			System.out.println(error);
+			return null;
+		}
+	}
+	
 	public static synchronized List<Subscription> filterByStatus(int statusId) throws Exception {
 		try {
 			Connection connection = DatabaseConnection.getConnection();

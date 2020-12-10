@@ -103,6 +103,39 @@ private static String nameTable = "payments";
 		}
 	}
 	
+	public static synchronized List<Payment> getByUserId(int id) throws Exception {
+		try {
+			Connection connection = DatabaseConnection.getConnection();
+			//MÉTODO PARA BUSCAR TODOS OS ITENS DENTRO DO BANCO DE DADOS DA TABELA
+			PreparedStatement statement = connection.prepareStatement("SELECT * from " + nameTable + " WHERE id_user = " + id);
+			
+			//DENTRO DO RESULT ESTARÁ OS DADOS QUE EU QUERO CASO TENHA DADO SUCESSO
+			ResultSet result = statement.executeQuery();
+			
+			List<Payment> payments = new LinkedList<Payment>();
+			
+			//AQUI FARA UM WHILE QUE ENQUANTO EXISTIR "PRÓXIMO" DADO ELE CONTINUARA NO WHILE.
+			while(result.next()) {
+				//CADA GET DESSES AQUI EMBAIXO SÃO OS NOMES DA COLUNA QUE EU QUERO O RESULTADO
+				User user = UserDao.getById(result.getInt("id_user"));
+				Subscription subscription = SubscriptionDao.getById(result.getInt("id_subscription"));
+				Payment payment = new Payment(result.getInt("id"),
+						result.getDate("date"),
+						user,
+						result.getDouble("amount"),
+						subscription
+						); 
+				payments.add(payment);
+			}
+			connection.close();
+			
+			return payments;
+		} catch (Exception error){
+			System.out.println(error);
+			return null;
+		}
+	}
+	
 	public static synchronized void deleteById(int id) throws Exception {
 		try {
 			Connection connection = DatabaseConnection.getConnection();
