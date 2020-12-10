@@ -180,6 +180,25 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 			System.err.println(e);
 		}
 	}
+	public void delete() {
+        try {
+            int delete = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja deleter este usuario?");
+            if(delete == 0) {
+                userController.deleteById(user.getId());
+                JOptionPane.showMessageDialog(null, "Usuario deletado com sucesso!");
+                inputNome.setText("");
+                inputDatanasc.setText("");
+                inputRg.setText("");
+                inputCpf.setText("");;
+                inputContato.setText("");
+                inputEndereco.setText("");
+                inputTiposocio.setText("");
+                inputStatusmensalidade.setText("");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro interno!", "ERROR", 0);
+        }
+    }
 	
 	public void controlToAssociated() {
 		try {
