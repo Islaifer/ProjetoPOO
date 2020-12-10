@@ -65,6 +65,8 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		if(cmd.equals("Enter")) {
 			targetPane = dashboardview;
 		}else if(cmd.equals("dashboard")) {
+			this.dashboardview.refreshTableA();
+			this.dashboardview.refreshTableB();
 			targetPane = dashboardview;
 		}else if(cmd.equals("reservation")) {
 			reservationdashboardview.refreshTable();

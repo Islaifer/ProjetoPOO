@@ -46,6 +46,7 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 	private PaymentController paymentController;
 	private TableView <Payment> table;
 	
+	@SuppressWarnings("unchecked")
 	public GerenciarAssocView () {
 		this.userController = new UserController();
 		paymentController = new PaymentController();
@@ -149,6 +150,14 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 			exeComand("AttAssociate");
 		});
 		
+		Button btnDelete = new Button("Deletar");
+		btnDelete.relocate(680,560);
+		btnDelete.setMinHeight(30);
+		btnDelete.setMinWidth(40);
+		btnDelete.setOnAction((e)->{
+			exeComand("DeleteAssociate");
+		});
+		
 		Label lblpayments = new Label ("Histórico de Pagamentos");
 		lblpayments.relocate(250, 320);
 		lblpayments.setFont(Font.font("Arial", 14));
@@ -170,7 +179,7 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 	
 		pane.getChildren().addAll(lblgerreserva,lblnome,inputNome,lbldatanasc,inputDatanasc,lblrg, inputRg,
 				lblcpf, inputCpf, lblcontato, inputContato, lblendereco, inputEndereco, btnSearch,lblpayments,
-				lbltiposocio, inputTiposocio,txtpesquisa, lblstatusmensalidade,inputStatusmensalidade, btnAddAssociate, btnAttAssociate,table);
+				lbltiposocio, inputTiposocio,txtpesquisa, lblstatusmensalidade,inputStatusmensalidade, btnAddAssociate,btnDelete, btnAttAssociate,table);
 	}
 	
 	public void refreshTable() {
