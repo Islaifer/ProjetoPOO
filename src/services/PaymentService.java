@@ -1,7 +1,8 @@
 package services;
 
-import java.util.Date;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import daos.PaymentDao;
 import daos.SubscriptionDao;
@@ -24,11 +25,15 @@ public class PaymentService {
 		return PaymentDao.getById(id);
 	}
 
-	public Payment post(Subscription subscription) throws Exception {
+	public void post(Subscription subscription) throws Exception {
 		Payment payment = new Payment(subscription);
-		SubscriptionDao.updateStatus(subscription, 3);
-		return payment;
-
+		if(subscription.getStatus().getId() != 3) {
+			PaymentDao.insert(payment);
+			SubscriptionDao.updateStatus(subscription, 3);
+		} else {
+			JOptionPane.showMessageDialog(null, "Mensalidade já paga!", "ERROR", 0);
+		}
+		
 	}
 
 	public void deleteById(int id) throws Exception {

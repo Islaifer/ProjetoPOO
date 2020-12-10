@@ -24,9 +24,9 @@ public class PaymentController {
 		return paymentService.getById(id);
 	}
 	
-	public Payment post(Subscription subscription) throws Exception {
-		return this.paymentService.post(subscription);
-			}
+	public void post(Subscription subscription) throws Exception {
+		this.paymentService.post(subscription);
+	}
 	
 		
 	public void deleteById(int id) throws Exception {
