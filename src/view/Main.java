@@ -83,6 +83,8 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 			targetPane = reservasview;
 		}else if(cmd.equals("AddAssociate")) {
 			targetPane = cadastroview;
+		}else if(cmd.equals("BuscarSpace")) {
+			targetPane = spacedashboardview;
 		}
 		context();
 	}

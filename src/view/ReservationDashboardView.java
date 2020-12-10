@@ -82,6 +82,9 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 	public int reservationSelected() {
 		return table.getSelectionModel().getSelectedItem().getId();
 	}
+	public void reservationDelete(int id) {
+		
+	}
 	
 	public void refreshTable() {
 		try {
