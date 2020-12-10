@@ -118,7 +118,7 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 		});
 		
 		Button btnAddAssociate = new Button("Adicionar Associado");
-		btnAddAssociate.relocate(650,30);
+		btnAddAssociate.relocate(650,10);
 		btnAddAssociate.setMinHeight(30);
 		btnAddAssociate.setMinWidth(40);
 		btnAddAssociate.setOnAction((e)->{
@@ -126,16 +126,24 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 		});
 		
 		Button btnAttAssociate = new Button("Atualizar Associado");
-		btnAttAssociate.relocate(652,80);
+		btnAttAssociate.relocate(652,60);
 		btnAttAssociate.setMinHeight(30);
 		btnAttAssociate.setMinWidth(40);
 		btnAttAssociate.setOnAction((e)->{
 			exeComand("AttAssociate");
 		});
 		
+		Button btnDelete = new Button("Apagar Associado");
+		btnDelete.relocate(655,110);
+		btnDelete.setMinHeight(30);
+		btnDelete.setMinWidth(40);
+		btnDelete.setOnAction((e)->{
+			exeComand("DeleteAssociate");
+		});
+		
 		pane.getChildren().addAll(lblgerreserva,lblnome,inputNome,lbldatanasc,inputDatanasc,lblrg, inputRg,
 				lblcpf, inputCpf, lblcontato, inputContato, lblendereco, inputEndereco, btnSearch,
-				lbltiposocio, inputTiposocio,txtpesquisa, lblstatusmensalidade,inputStatusmensalidade, btnAddAssociate, btnAttAssociate);
+				lbltiposocio, inputTiposocio,txtpesquisa, lblstatusmensalidade,inputStatusmensalidade, btnAddAssociate, btnAttAssociate, btnDelete);
 	}
 	
 	public void controlToAssociated() {
@@ -151,7 +159,7 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 				inputContato.setText(this.formPhoneNumber(user.getPhoneNumber()));
 				inputEndereco.setText(user.getAddress());
 				inputTiposocio.setText(user.getPlan().getName());
-				inputStatusmensalidade.setText("Colocar Mensalidade");
+				inputStatusmensalidade.setText("");
 			}
 		}catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Digite apenas os numeros!", "ERROR", 0);
@@ -165,6 +173,26 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 			return user.getId();
 		}else {
 			return 0;
+		}
+	}
+	
+	public void delete() {
+		try {
+			int delete = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja deleter este usuario?");
+			if(delete == 0) {
+				userController.deleteById(user.getId());
+				JOptionPane.showMessageDialog(null, "Usuario deletado com sucesso!");
+				inputNome.setText("");
+				inputDatanasc.setText("");
+				inputRg.setText("");
+				inputCpf.setText("");;
+				inputContato.setText("");
+				inputEndereco.setText("");
+				inputTiposocio.setText("");
+				inputStatusmensalidade.setText("");
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro interno!", "ERROR", 0);
 		}
 	}
 	

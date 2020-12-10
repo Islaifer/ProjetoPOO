@@ -1,8 +1,11 @@
 package services;
 
+import java.util.Date;
 import java.util.List;
 
+import daos.ReservationDao;
 import daos.SpaceDao;
+import models.Reservation;
 import models.Space;
 
 public class SpaceService {
@@ -33,5 +36,10 @@ public class SpaceService {
 	
 	public void deleteById(int id) throws Exception {
 		SpaceDao.deleteById(id);
+	}
+	
+	public boolean disp(int id, Date date) throws Exception {
+		Reservation reservation = ReservationDao.getByDateAndByPlace(0, date, id);
+		return reservation.getId() == 0;
 	}
 }

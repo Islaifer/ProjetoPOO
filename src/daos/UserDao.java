@@ -148,8 +148,14 @@ public class UserDao {
 	public static synchronized void deleteById(int id) throws Exception {
 		try {
 			Connection connection = DatabaseConnection.getConnection();
+			PreparedStatement deleteR = connection.prepareStatement("DELETE FROM reservations WHERE id_user = " + id);
+			PreparedStatement deleteP = connection.prepareStatement("DELETE FROM payments WHERE id_user = " + id);
+			PreparedStatement deleteS = connection.prepareStatement("DELETE FROM subscriptions WHERE id_user = " + id); 
 			PreparedStatement delete = connection.prepareStatement("DELETE from " + nameTable + " WHERE id = " + id);
 			
+			deleteR.executeUpdate();
+			deleteP.executeUpdate();
+			deleteS.executeUpdate();
 			delete.executeUpdate();
 			
 			connection.close();		

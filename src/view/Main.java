@@ -20,6 +20,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 	private final ReservationDashboardView reservationdashboardview = new ReservationDashboardView();
 	private final SubscriptionDashboardView subscriptiondashboardview = new SubscriptionDashboardView();
 	private final SpaceDashboardView spacedashboardview = new SpaceDashboardView ();
+	private final DashboardView dashboardview = new DashboardView();
 	private final Menu menu = new Menu();
 	private StrategyPane targetPane = mainView;
 	
@@ -36,6 +37,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		reservationdashboardview.setAssistence(this);
 		subscriptiondashboardview.setAssistence(this);
 		spacedashboardview.setAssistence(this);
+		dashboardview.setAssistence(this);
 		menu.setAssistence(this);
 		
 		context();
@@ -58,21 +60,23 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		
 	}
 	
-	@Override
+@Override
 	public void executeCommand(String cmd) {
 		if(cmd.equals("Enter")) {
-			targetPane = reservationdashboardview;
+			targetPane = dashboardview;
 		}else if(cmd.equals("dashboard")) {
-			System.out.println("Dashboard");
+			targetPane = dashboardview;
 		}else if(cmd.equals("reservation")) {
 			reservationdashboardview.refreshTable();
 			targetPane = reservationdashboardview;
 		}else if(cmd.equals("associated")) {
 			targetPane = associadoview;
 		}else if(cmd.equals("tuition")) {
+			this.subscriptiondashboardview.refreshTable();
 			targetPane = subscriptiondashboardview;
 		}else if(cmd.equals("spaces")) {
 			targetPane = spacedashboardview;
+			spacedashboardview.refreshTable();
 		}else if (cmd.equals("Reservar")) {
 			this.reservasview.reservationToControl(false);
 		}else if (cmd.equals("Cadastrar")) {
@@ -98,6 +102,15 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		}else if(cmd.equals("updateReservation")) {
 			this.reservasview.reservationToControl(true);
 			this.reservationdashboardview.refreshTable();
+		}else if(cmd.equals("BuscarSpace")) {
+			targetPane = spacedashboardview;
+		}else if(cmd.equals("GerarMensalidades")) {
+			this.subscriptiondashboardview.generateSubscriptions();
+			this.subscriptiondashboardview.refreshTable();
+		}else if(cmd.equals("SearchSpace")) {
+			this.spacedashboardview.filterDate();
+		}else if(cmd.equals("DeleteAssociate")) {
+			this.associadoview.delete();
 		}
 		context();
 	}
@@ -106,4 +119,5 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		DatabaseConnection.createTables();
 		Application.launch(Main.class, args);
 	}
+	
 }
