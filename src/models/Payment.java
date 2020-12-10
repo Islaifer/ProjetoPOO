@@ -16,10 +16,7 @@ public class Payment {
 		this.id = id;
 	}
 	
-	public Payment(Date date, User user, double price, Subscription subscription) {
-		this.date = date;
-		this.user = user;
-		this.amount = price;
+	public Payment(Subscription subscription) {
 		this.subscription = subscription;
 	}
 	

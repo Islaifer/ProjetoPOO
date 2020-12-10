@@ -3,6 +3,7 @@ package daos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -117,6 +118,7 @@ private static String nameTable = "payments";
 	
 	public static void insert(Payment payment) throws Exception {
 		try {
+			Date currentDate = new Date();
 			//pega conexão com o banco de dados
 			Connection connection = DatabaseConnection.getConnection();
 			//PreparedStatement é o metodo na sua tradução prepara a declaração que irá ser introduzida no SQL, no contexto é o método de inserção de dados.
@@ -127,9 +129,9 @@ private static String nameTable = "payments";
 					+ "id_subscription)"
 					+ " VALUES (?,?,?,?)");
 			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
-			posted.setInt(1, payment.getUser().getId());
-			posted.setDate(2, new java.sql.Date(payment.getDate().getTime()));
-			posted.setDouble(3, payment.getAmount());
+			posted.setInt(1, payment.getSubscription().getUser().getId());
+			posted.setDate(2, new java.sql.Date(currentDate.getTime()));
+			posted.setDouble(3, payment.getSubscription().getAmount());
 			posted.setInt(4, payment.getSubscription().getId());
 			// aqui ele executa o método o qual criei acima no banco de dados.
 			posted.executeUpdate();

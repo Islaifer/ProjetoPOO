@@ -1,5 +1,6 @@
 package view;
 
+import controllers.PaymentController;
 import controllers.SubscriptionController;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
@@ -22,11 +23,13 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 	private CheckBox checkA;
 	private CheckBox checkB;
 	private SubscriptionController subscriptionController;
+	private PaymentController paymentController;
+
 	private TableView<Subscription> table;
 	@SuppressWarnings("unchecked")
 	public SubscriptionDashboardView() {
 		this.subscriptionController = new SubscriptionController();
-
+		this.paymentController = new PaymentController();
 		this.pane = new Pane();
 		// labels
 		Label lbltittle = new Label("Mensalidades");
@@ -91,7 +94,7 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		btnPagar.setMinHeight(30);
 		btnPagar.setMinWidth(80);
 		btnPagar.setOnAction((e) -> {
-			generateSubscriptions();
+			payTheSubscription();
 		});
 		
 		Button btnGerar = new Button("Gerar mensalidade");
@@ -119,6 +122,18 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void payTheSubscription() {
+		Subscription subscription;
+		try {
+			subscription = subscriptionController.getById(table.getSelectionModel().getSelectedItem().getId());
+			paymentController.post(subscription);
+			refreshTable();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void refreshTable() {

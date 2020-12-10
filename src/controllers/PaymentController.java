@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import models.Payment;
+import models.Subscription;
 import models.User;
 import services.PaymentService;
 
@@ -23,9 +24,9 @@ public class PaymentController {
 		return paymentService.getById(id);
 	}
 	
-	public Payment post(Date date, User user, double price) throws Exception {
-		return this.paymentService.post(date,user,price);
-			}
+	public void post(Subscription subscription) throws Exception {
+		this.paymentService.post(subscription);
+	}
 	
 		
 	public void deleteById(int id) throws Exception {
