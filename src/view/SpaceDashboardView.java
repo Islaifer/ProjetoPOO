@@ -1,7 +1,11 @@
 package view;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import controllers.SpaceController;
 import interfaces.ComandAssistence;
@@ -23,9 +27,12 @@ public class SpaceDashboardView implements StrategyPane, ComandProductor {
 	private Pane pane;
 	private TableView<Space> table;
 	private SpaceController spaceController;
+	private Date date;
+	private TextField buscarData;
 
 	@SuppressWarnings("unchecked")
 	public SpaceDashboardView() {
+		date = new Date();
 		this.pane = new Pane();
 		spaceController = new SpaceController();
 		
@@ -60,7 +67,7 @@ public class SpaceDashboardView implements StrategyPane, ComandProductor {
 		this.refreshTable();
 		
 		//field
-		TextField buscarData = new TextField ("Buscar por Data");
+		buscarData = new TextField ("Buscar por Data");
 		buscarData.relocate(235, 210);
 		buscarData.setMinHeight(30);
 		buscarData.setMinWidth(150);
@@ -80,6 +87,17 @@ public class SpaceDashboardView implements StrategyPane, ComandProductor {
 	public int spaceSelected() {
 		return table.getSelectionModel().getSelectedItem().getId();
 	}
+	
+	public void filterDate() {
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			this.date = df.parse(this.buscarData.getText());
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null, "Digite a data corretamente!", "ERROR", 0);
+		}finally {
+			refreshTable();
+		}
+	}
 
 	public void refreshTable() {
 		try {
@@ -94,7 +112,7 @@ public class SpaceDashboardView implements StrategyPane, ComandProductor {
 	private void disp(List<Space> list) {
 		try {
 			for(Space var : list) {
-				if(spaceController.disp(var.getId(), new Date())) {
+				if(spaceController.disp(var.getId(), this.date)) {
 					var.setDisp("Sim");
 				}else {
 					var.setDisp("Nao");
