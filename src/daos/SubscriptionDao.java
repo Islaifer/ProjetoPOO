@@ -185,7 +185,7 @@ public class SubscriptionDao {
 			Connection connection = DatabaseConnection.getConnection();
 			//PreparedStatement é o metodo na sua tradução prepara a declaração que irá ser introduzida no SQL, no contexto é o método de inserção de dados.
 			PreparedStatement posted = connection.prepareStatement("UPDATE "+ nameTable +" set"
-					+ "	id_status = ?,"
+					+ "	id_status = ?"
 					+ " WHERE id = ?");
 			// para cada interrogação respectiva estou preenchendo de acordo com as informações abaixo.
 			posted.setInt(1, statusId);
