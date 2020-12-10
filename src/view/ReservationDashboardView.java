@@ -1,6 +1,8 @@
 package view;
 
 
+import javax.swing.JOptionPane;
+
 import controllers.ReservationController;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
@@ -61,7 +63,7 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 		
 		//botao
 		Button btnAddReservation = new Button("Adicionar Reserva");
-		btnAddReservation.relocate(520,210);
+		btnAddReservation.relocate(405,210);
 		btnAddReservation.setMinHeight(30);
 		btnAddReservation.setMinWidth(30);
 		btnAddReservation.setOnAction((e)->{
@@ -69,21 +71,37 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 		});
 		
 		Button btnEditReservation = new Button("Editar Reserva");
-		btnEditReservation.relocate(655,210);
+		btnEditReservation.relocate(540,210);
 		btnEditReservation.setMinHeight(30);
 		btnEditReservation.setMinWidth(100);
 		btnEditReservation.setOnAction((e)->{
 			exeComand("AttReserva");
 		});
 		
-		pane.getChildren().addAll(lbltittle, lblreservation, table, btnAddReservation, btnEditReservation);
+		Button btnDelete = new Button("Deletar Reserva");
+		btnDelete.relocate(665,210);
+		btnDelete.setMinHeight(30);
+		btnDelete.setMinWidth(100);
+		btnDelete.setOnAction((e)->{
+			exeComand("DeleteReserva");
+		});
+		
+		pane.getChildren().addAll(lbltittle, lblreservation, table, btnAddReservation, btnEditReservation, btnDelete);
 	}
 	
 	public int reservationSelected() {
 		return table.getSelectionModel().getSelectedItem().getId();
 	}
+	
 	public void reservationDelete(int id) {
-		
+		try {
+			int delete = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja deleter esta usuario?");
+            if(delete == 0) {
+            	reservationController.deleteById(id);
+            }
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Não pode apagar reserva faltando um dia!", "ERROR", 0);
+		}
 	}
   
 	public void refreshTable() {

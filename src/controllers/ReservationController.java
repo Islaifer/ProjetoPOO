@@ -29,6 +29,6 @@ public class ReservationController {
 	}
 	
 	public void deleteById(int id) throws Exception {
-		this.reservationService.deleteById(id);;
+		this.reservationService.deleteById(id);
 	}
 }

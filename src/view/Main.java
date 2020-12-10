@@ -116,6 +116,9 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		}else if(cmd.equals("DeleteAssociate")) {
 			this.associadoview.delete();
 			this.associadoview.refreshTable();
+		}else if(cmd.equals("DeleteReserva")) {
+			this.reservationdashboardview.reservationDelete(this.reservationdashboardview.reservationSelected());
+			this.reservationdashboardview.refreshTable();
 		}
 		context();
 	}
