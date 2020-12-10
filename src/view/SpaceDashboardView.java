@@ -1,5 +1,8 @@
 package view;
 
+import java.util.Date;
+import java.util.List;
+
 import controllers.SpaceController;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
@@ -48,10 +51,10 @@ public class SpaceDashboardView implements StrategyPane, ComandProductor {
 		columnQtd.setMinWidth(175);
 		columnQtd.setMaxWidth(175);
 		TableColumn<Space, String> columnDisp = new TableColumn<>("Disponibilidade");
-		columnDisp.setCellValueFactory(new PropertyValueFactory<>(""));
+		columnDisp.setCellValueFactory(new PropertyValueFactory<>("disp"));
 		columnDisp.setMinWidth(175);
 		columnDisp.setMaxWidth(175);
-		table.getColumns().addAll(columnSpace, columnDisp, columnQtd);
+		table.getColumns().addAll(columnSpace, columnQtd, columnDisp);
 		this.refreshTable();
 
 		pane.getChildren().addAll(table, lbltittle, lblspace);
@@ -63,9 +66,25 @@ public class SpaceDashboardView implements StrategyPane, ComandProductor {
 
 	public void refreshTable() {
 		try {
-			table.setItems(FXCollections.observableArrayList(spaceController.getAll()));
+			List<Space> list = spaceController.getAll();
+			disp(list);
+			table.setItems(FXCollections.observableArrayList(list));
 		} catch (Exception e) {
 			System.err.println(e);
+		}
+	}
+	
+	private void disp(List<Space> list) {
+		try {
+			for(Space var : list) {
+				if(spaceController.disp(var.getId(), new Date())) {
+					var.setDisp("Sim");
+				}else {
+					var.setDisp("Nao");
+				}		
+			}
+		} catch (Exception e) {
+			System.err.println("Deu ruim");
 		}
 	}
 
