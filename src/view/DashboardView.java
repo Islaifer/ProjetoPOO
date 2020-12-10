@@ -74,7 +74,7 @@ public class DashboardView implements StrategyPane, ComandProductor {
 		tableA.getColumns().addAll(columnDate, columnName, columnSpace, columnQntd);
 		
 		TableColumn<User, String> columnUsername = new TableColumn<>("Associado");
-		columnUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
+		columnUsername.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 		columnUsername.setMinWidth(110);
 		columnUsername.setMaxWidth(110);
 		TableColumn<User, String> columnCpf = new TableColumn<>("CPF");
