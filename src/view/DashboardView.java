@@ -30,13 +30,13 @@ public class DashboardView implements StrategyPane, ComandProductor {
 		userController = new UserController();
 		pane = new Pane();
 			
-		tableA = new TableView();
+		tableA = new TableView<>();
 		tableA.relocate(235,100);
 		tableA.setMinWidth(500);
 		tableA.setMaxWidth(500);
 		tableA.setMaxHeight(200);
 		
-		tableB = new TableView();
+		tableB = new TableView<>();
 		tableB.relocate(235,350);
 		tableB.setMinWidth(500);
 		tableB.setMaxWidth(500);
