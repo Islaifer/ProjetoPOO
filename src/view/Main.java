@@ -107,6 +107,8 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 			this.subscriptiondashboardview.refreshTable();
 		}else if(cmd.equals("SearchSpace")) {
 			this.spacedashboardview.filterDate();
+		}else if(cmd.equals("DeleteAssociate")) {
+			this.associadoview.delete();
 		}
 		context();
 	}
