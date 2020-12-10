@@ -1,5 +1,8 @@
 package view;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import controllers.PaymentController;
 import controllers.SubscriptionController;
 import interfaces.ComandAssistence;
@@ -26,6 +29,7 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 	private PaymentController paymentController;
 
 	private TableView<Subscription> table;
+
 	@SuppressWarnings("unchecked")
 	public SubscriptionDashboardView() {
 		this.subscriptionController = new SubscriptionController();
@@ -39,19 +43,19 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		Label lblsubscription = new Label("Mensalidades");
 		lblsubscription.relocate(235, 180);
 		lblsubscription.setFont(new Font("Arial", 14));
-		
-		Label lblfilteratrasados = new Label ("Filtrar atrasados");
+
+		Label lblfilteratrasados = new Label("Filtrar atrasados");
 		lblfilteratrasados.relocate(550, 230);
 		lblfilteratrasados.setFont(new Font("Arial", 10));
 		checkA = new CheckBox();
 		checkA.relocate(630, 228);
-		
-		Label lblfilterpendentes = new Label ("Filtrar pendentes");
+
+		Label lblfilterpendentes = new Label("Filtrar pendentes");
 		lblfilterpendentes.relocate(650, 230);
 		lblfilterpendentes.setFont(new Font("Arial", 10));
 		checkB = new CheckBox();
 		checkB.relocate(730, 228);
-		//table
+		// table
 		table = new TableView<>();
 		table.relocate(235, 250);
 		table.setMinWidth(530);
@@ -81,14 +85,14 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		columnValor.setMaxWidth(70);
 		table.getColumns().addAll(columnDate, columnStatus, columnName, columnCpf, columnValor);
 		refreshTable();
-		//campos
-		
-		TextField txtcpf = new TextField ("Buscar por CPF");
+		// campos
+
+		TextField txtcpf = new TextField("Buscar por CPF");
 		txtcpf.relocate(235, 210);
 		txtcpf.setMinHeight(30);
 		txtcpf.setMinWidth(150);
-		
-		//button
+
+		// button
 		Button btnPagar = new Button("Pagar");
 		btnPagar.relocate(680, 510);
 		btnPagar.setMinHeight(30);
@@ -96,7 +100,7 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		btnPagar.setOnAction((e) -> {
 			payTheSubscription();
 		});
-		
+
 		Button btnGerar = new Button("Gerar mensalidade");
 		btnGerar.relocate(550, 510);
 		btnGerar.setMinHeight(30);
@@ -104,26 +108,87 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		btnGerar.setOnAction((e) -> {
 			exeComand("GerarMensalidades");
 		});
-		
+
 		Button btnFiltrar = new Button("Filtrar");
 		btnFiltrar.relocate(400, 210);
 		btnFiltrar.setMinHeight(30);
 		btnFiltrar.setMinWidth(50);
 		btnFiltrar.setOnAction((e) -> {
-			exeComand("filtrar");
+			if (checkIfIsValidCpf(txtcpf.getText())) {
+				runFilterWithCpf(checkA.isSelected(), checkB.isSelected(), txtcpf.getText());
+			}else {
+				runFilter(checkA.isSelected(), checkB.isSelected());
+				System.out.println("tá aqui");
+			}
 		});
-		
-		pane.getChildren().addAll(lbltittle, lblsubscription, lblfilteratrasados, btnGerar, lblfilterpendentes, table, txtcpf, btnPagar, btnFiltrar, checkA, checkB);
+
+		pane.getChildren().addAll(lbltittle, lblsubscription, lblfilteratrasados, btnGerar, lblfilterpendentes, table,
+				txtcpf, btnPagar, btnFiltrar, checkA, checkB);
 	}
 
-	public void generateSubscriptions(){
+	private void runFilter(boolean isOverdue, boolean isPending) {
+		refreshTable();
+		List<Subscription> filteredTable = table.getItems();
+		if (isPending && isOverdue) {
+			filteredTable = filteredTable.stream().filter(
+					subscription -> subscription.getStatus().getId() == 2 || subscription.getStatus().getId() == 1)
+					.collect(Collectors.toList());
+			table.setItems(FXCollections.observableArrayList(filteredTable));
+		} else if (isPending) {
+			filteredTable = filteredTable.stream().filter(subscription -> subscription.getStatus().getId() == 2)
+					.collect(Collectors.toList());
+			table.setItems(FXCollections.observableArrayList(filteredTable));
+		} else if (isOverdue) {
+			filteredTable = filteredTable.stream().filter(subscription -> subscription.getStatus().getId() == 1)
+					.collect(Collectors.toList());
+			table.setItems(FXCollections.observableArrayList(filteredTable));
+		} else {
+			refreshTable();
+		}
+
+	}
+
+	private void runFilterWithCpf(boolean isOverdue, boolean isPending, String cpf) {
+		refreshTable();
+		List<Subscription> filteredTable = table.getItems();
+		if (isPending && isOverdue) {
+			filteredTable = filteredTable.stream().filter(
+					subscription -> subscription.getStatus().getId() == 2 || subscription.getStatus().getId() == 1)
+					.collect(Collectors.toList());
+			table.setItems(FXCollections.observableArrayList(filteredTable));
+		} else if (isPending) {
+			filteredTable = filteredTable.stream().filter(subscription -> subscription.getStatus().getId() == 2)
+					.collect(Collectors.toList());
+			table.setItems(FXCollections.observableArrayList(filteredTable));
+		} else if (isOverdue) {
+			filteredTable = filteredTable.stream().filter(subscription -> subscription.getStatus().getId() == 1)
+					.collect(Collectors.toList());
+			table.setItems(FXCollections.observableArrayList(filteredTable));
+		} else {
+			refreshTable();
+		}
+	}
+
+	private boolean checkIfIsValidCpf(String cpf) {
+		try {
+			int cpfFormated = Integer.parseInt(cpf);
+			if (cpf.length() == 11) {
+				return true;
+			}
+			return false;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public void generateSubscriptions() {
 		try {
 			this.subscriptionController.post();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void payTheSubscription() {
 		Subscription subscription;
 		try {
@@ -133,9 +198,9 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public void refreshTable() {
 		try {
 			table.setItems(FXCollections.observableArrayList(subscriptionController.getAll()));
@@ -143,7 +208,7 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 			System.err.println("Deu ruim");
 		}
 	}
-	
+
 	@Override
 	public void setAssistence(ComandAssistence a) {
 		this.a = a;
