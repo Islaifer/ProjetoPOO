@@ -70,8 +70,12 @@ public class ReservationService {
 		}
 	}
 	
-	public void deleteById(int id) throws Exception {
-		ReservationDao.deleteById(id);
+	public void deleteById(int id) throws Exception {	
+		if(!ReservationDao.getById(id).getDate().before(new Date())) {
+			ReservationDao.deleteById(id);
+		}else {
+			throw new Exception("Erro ao persistir objeto.");
+		}
 	}
 	
 	private boolean existReservationInTheSameDay(int id, Date date, int spaceId) {
