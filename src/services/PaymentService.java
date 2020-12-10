@@ -8,17 +8,19 @@ import daos.PaymentDao;
 import daos.SubscriptionDao;
 import models.Payment;
 import models.Subscription;
-import models.User;
 
 public class PaymentService {
-	private User user;
 
 	public PaymentService() {
-		this.user = new User();
+		
 	}
 
 	public List<Payment> getAll() throws Exception {
 		return PaymentDao.get();
+	}
+	
+	public List<Payment> getByUserId(int id) throws Exception {
+		return PaymentDao.getByUserId(id);
 	}
 
 	public Payment getById(int id) throws Exception {

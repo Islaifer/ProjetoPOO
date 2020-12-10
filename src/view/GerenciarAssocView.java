@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import controllers.PaymentController;
+import controllers.SubscriptionController;
 import controllers.UserController;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
@@ -25,6 +27,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import models.Payment;
+import models.Subscription;
 import models.User;
 
 public class GerenciarAssocView implements StrategyPane, ComandProductor{
@@ -43,6 +46,8 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 	private Image searchIcon;
 	private ImageView lvSearchIcon;
 	private User user;
+	private List<Subscription> subscriptions;
+	private SubscriptionController subscriptionController;
 	private PaymentController paymentController;
 	private TableView <Payment> table;
 	
@@ -50,7 +55,7 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 	public GerenciarAssocView () {
 		this.userController = new UserController();
 		paymentController = new PaymentController();
-		pane = new Pane();
+		subscriptionController = new SubscriptionController();
 		pane = new Pane();
 		
 		table = new TableView<>();
@@ -167,11 +172,11 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 		columnDate.setMinWidth(150);
 		columnDate.setMaxWidth(150);
 		TableColumn<Payment, String> columnName = new TableColumn<>("Associado");
-		columnName.setCellValueFactory(new PropertyValueFactory<>("user"));
+		columnName.setCellValueFactory(new PropertyValueFactory<>("username"));
 		columnName.setMinWidth(180);
 		columnName.setMaxWidth(180);
 		TableColumn<Payment, String> columnPrice = new TableColumn<>("Valor");
-		columnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+		columnPrice.setCellValueFactory(new PropertyValueFactory<>("amount"));
 		columnPrice.setMinWidth(180);
 		columnPrice.setMaxWidth(180);
 		this.refreshTable();
@@ -184,11 +189,40 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 	
 	public void refreshTable() {
 		try {
-			table.setItems(FXCollections.observableArrayList(paymentController.getAll()));
-					} catch (Exception e) {
+			if(user != null) {
+				table.setItems(FXCollections.observableArrayList(paymentController.getByUserId(user.getId())));
+			}else {
+				table.setItems(FXCollections.observableArrayList());
+			}
+		} catch (Exception e) {
 			System.err.println(e);
 		}
 	}
+	
+	public String status() {
+		try {
+			if(user != null) {
+				subscriptions = subscriptionController.getByUserId(user.getId());
+				for(Subscription var : subscriptions) {
+					if(var.getStatus().getId() == 1) {
+						return "Atrasado";
+					}
+				}
+				for(Subscription var : subscriptions) {
+					if(var.getStatus().getId() == 2) {
+						return "Pendente";
+					}
+				}
+				return "Pago";
+			}else {
+				return "";
+			}
+		} catch (Exception e) {
+			System.err.println(e);
+			return "";
+		}
+	}
+	
 	public void delete() {
         try {
             int delete = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja deleter este usuario?");
@@ -222,7 +256,7 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 				inputContato.setText(this.formPhoneNumber(user.getPhoneNumber()));
 				inputEndereco.setText(user.getAddress());
 				inputTiposocio.setText(user.getPlan().getName());
-				inputStatusmensalidade.setText("Colocar Mensalidade");
+				inputStatusmensalidade.setText(status());
 			}
 		}catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Digite apenas os numeros!", "ERROR", 0);

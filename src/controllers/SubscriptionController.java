@@ -17,6 +17,10 @@ public class SubscriptionController {
 		return this.subscriptionService.getAll();
 	}
 	
+	public List<Subscription> getByUserId(int id) throws Exception{
+		return this.subscriptionService.getByUserId(id);
+	}
+	
 	public Subscription getById(int id) throws Exception {
 		return this.subscriptionService.getById(id);
 	}

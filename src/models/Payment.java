@@ -6,6 +6,7 @@ public class Payment {
 	private int id;
 	private Date date;
 	private User user;
+	private String username;
 	private double amount;
 	private Subscription subscription;
 
@@ -14,8 +15,13 @@ public class Payment {
 		this.user = user;
 		this.amount = price;
 		this.id = id;
+		this.username = this.user.getFirstName() + " " + this.user.getLastName();
 	}
-	
+
+	public String getUsername() {
+		return username;
+	}
+
 	public Payment(Subscription subscription) {
 		this.subscription = subscription;
 	}

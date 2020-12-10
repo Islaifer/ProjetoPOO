@@ -1,11 +1,9 @@
 package controllers;
 
-import java.util.Date;
 import java.util.List;
 
 import models.Payment;
 import models.Subscription;
-import models.User;
 import services.PaymentService;
 
 
@@ -18,6 +16,10 @@ public class PaymentController {
 	
 	public List<Payment> getAll() throws Exception{
 		return this.paymentService.getAll();
+	}
+	
+	public List<Payment> getByUserId(int id) throws Exception{
+		return this.paymentService.getByUserId(id);
 	}
 	
 	public Payment getById(int id) throws Exception {
