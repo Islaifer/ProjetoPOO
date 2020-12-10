@@ -73,7 +73,7 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 		btnEditReservation.setMinHeight(30);
 		btnEditReservation.setMinWidth(100);
 		btnEditReservation.setOnAction((e)->{
-			exeComand("EditReserva");
+			exeComand("AttReserva");
 		});
 		
 		pane.getChildren().addAll(lbltittle, lblreservation, table, btnAddReservation, btnEditReservation);
@@ -85,7 +85,7 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 	public void reservationDelete(int id) {
 		
 	}
-	
+  
 	public void refreshTable() {
 		try {
 			table.setItems(FXCollections.observableArrayList(reservationController.getAll()));
@@ -110,3 +110,4 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 	}
 	
 }
+

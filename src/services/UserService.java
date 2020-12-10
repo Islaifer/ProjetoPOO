@@ -35,4 +35,10 @@ public class UserService {
 	public void deleteById(int id) throws Exception {
 		UserDao.deleteById(id);
 	}
+	
+	public void edit(int id,String firstName, String lastName, long rg, long cpf, Date birthdate, long phoneNumber, String address, int idPlan) throws Exception {
+		Plan plan = PlanDao.getById(idPlan);
+		User user = new User(id, firstName, lastName, rg, cpf, birthdate, phoneNumber, address, plan);
+		UserDao.update(user);
+	}
 }

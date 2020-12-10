@@ -34,7 +34,9 @@ public class CadastroView implements StrategyPane, ComandProductor {
 	private TextField txttel;
 	private TextField txtend;
 	private ChoiceBox<String> cbplano; 
+	private Button btnCadastrar;
 	private UserController userController;
+	private int idUser;
 	
 	public CadastroView() {
 		
@@ -86,7 +88,7 @@ public class CadastroView implements StrategyPane, ComandProductor {
 
 		
 
-		Button btnCadastrar = new Button("Cadastrar");
+		btnCadastrar = new Button("Cadastrar");
 		btnCadastrar.relocate(400, 500);
 		btnCadastrar.setMinHeight(40);
 		btnCadastrar.setMinWidth(300);
@@ -106,19 +108,20 @@ public class CadastroView implements StrategyPane, ComandProductor {
 			txtend, txttel, txtdata, cbplano, btnCadastrar, btnVoltar);
 	}
 
-	public void controlToAssociated() {
+	public void controlToAssociated(int id) {
 		try {
-			
-			User user = this.userController.getById(0);
+			this.idUser = id;
+			User user = this.userController.getById(id);
 			if (user != null) {
 				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-				txtname.setText(user.getFirstName() + " " + user.getLastName());
+				txtname.setText(user.getFirstName());
+				txtsobrenome.setText(user.getLastName());
 				txtdata.setText(df.format(user.getBirthdate()));
 				txtrg.setText(""+ user.getRg());
 				txtcpf.setText("" +user.getCpf());
 				txttel.setText("" +user.getPhoneNumber());
 				txtend.setText("" +user.getAddress());
-				
+				cbplano.setValue(user.getPlan().getName());
 			}
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Digite apenas os numeros!", "ERROR", 0);
@@ -127,32 +130,60 @@ public class CadastroView implements StrategyPane, ComandProductor {
 		}
 	}
 	
-	public void associatedToControl() {
+	public void associatedToControl(boolean isUpdate) {
 		try {
-			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-			String firstName = txtname.getText();
-			String lastName = txtsobrenome.getText();
-			long rg = Long.parseLong(txtrg.getText());
-			long cpf = Long.parseLong(txtcpf.getText());
-			Date birthday = df.parse(txtdata.getText());
-			long tel = Long.parseLong(txttel.getText());
-			String address = txtend.getText();
-			int idPlan = idPlane(cbplano.getValue());
-			userController.post(firstName, lastName, rg, cpf, birthday, tel, address, idPlan);
-			txtname.setText("Nome");
-			txtsobrenome.setText("Sobrenome");
-			txtrg.setText("RG");
-			txtcpf.setText("CPF");
-			txtdata.setText("Data de Nascimento");
-			txttel.setText("Telefone para contato");
-			txtend.setText("Endereco");
-			JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso ^-^");
+			if(isUpdate) {
+				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+				String firstName = txtname.getText();
+				String lastName = txtsobrenome.getText();
+				long rg = Long.parseLong(txtrg.getText());
+				long cpf = Long.parseLong(txtcpf.getText());
+				Date birthday = df.parse(txtdata.getText());
+				long tel = Long.parseLong(txttel.getText());
+				String address = txtend.getText();
+				int idPlan = idPlane(cbplano.getValue());
+				userController.edit(idUser, firstName, lastName, rg, cpf, birthday, tel, address, idPlan);
+				JOptionPane.showMessageDialog(null, "Atualizacao realizada com sucesso ^-^");
+			}else {
+				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+				String firstName = txtname.getText();
+				String lastName = txtsobrenome.getText();
+				long rg = Long.parseLong(txtrg.getText());
+				long cpf = Long.parseLong(txtcpf.getText());
+				Date birthday = df.parse(txtdata.getText());
+				long tel = Long.parseLong(txttel.getText());
+				String address = txtend.getText();
+				int idPlan = idPlane(cbplano.getValue());
+				userController.post(firstName, lastName, rg, cpf, birthday, tel, address, idPlan);
+				txtname.setText("Nome");
+				txtsobrenome.setText("Sobrenome");
+				txtrg.setText("RG");
+				txtcpf.setText("CPF");
+				txtdata.setText("Data de Nascimento");
+				txttel.setText("Telefone para contato");
+				txtend.setText("Endereco");
+				JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso ^-^");
+			}
 		}catch(NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Digite apenas numeros no rg e cpf!", "ERROR", 0);
 		} catch (ParseException e) {
 			JOptionPane.showMessageDialog(null, "Data inválida!", "ERROR", 0);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro interno!", "ERROR", 0);
+		}
+	}
+	
+	public void refreshButton(boolean isUpdate) {
+		if(isUpdate) {
+			btnCadastrar.setText("Atualizar Cadastro");
+			btnCadastrar.setOnAction((e) -> {
+				exeComand("updateUser");
+			});
+		}else {
+			btnCadastrar.setText("Cadastrar");
+			btnCadastrar.setOnAction((e) -> {
+				exeComand("Reservar");
+			});
 		}
 	}
 	

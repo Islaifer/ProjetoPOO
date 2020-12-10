@@ -210,6 +210,7 @@ public class UserDao {
 			posted.setInt(6, user.getId());
 			// aqui ele executa o método o qual criei acima no banco de dados.
 			posted.executeUpdate();
+			connection.close();
 		} catch (Exception error) {
 			System.out.println(error);
 		}

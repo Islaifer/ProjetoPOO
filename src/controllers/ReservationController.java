@@ -24,6 +24,10 @@ public class ReservationController {
 		reservationService.post(cpfUser, date, spaceId, peopleqnt);
 	}
 	
+	public void edit(int id, long cpfUser, Date date, int spaceId, int peopleqnt) throws Exception {
+		reservationService.edit(id, cpfUser, date, spaceId, peopleqnt);
+	}
+	
 	public void deleteById(int id) throws Exception {
 		this.reservationService.deleteById(id);;
 	}

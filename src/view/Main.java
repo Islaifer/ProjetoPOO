@@ -74,15 +74,30 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		}else if(cmd.equals("spaces")) {
 			targetPane = spacedashboardview;
 		}else if (cmd.equals("Reservar")) {
-			this.reservasview.reservationToControl();
+			this.reservasview.reservationToControl(false);
 		}else if (cmd.equals("Cadastrar")) {
-			this.cadastroview.associatedToControl();
+			this.cadastroview.associatedToControl(false);
 		}else if(cmd.equals("SearchAssociate")) {
 			this.associadoview.controlToAssociated();
 		}else if(cmd.equals("AddReserva")) {
+			this.reservasview.refreshButton(false);
+			targetPane = reservasview;
+		}else if(cmd.equals("AttReserva")){
+			this.reservasview.refreshButton(true);
+			this.reservasview.controlToReservation(this.reservationdashboardview.reservationSelected());
 			targetPane = reservasview;
 		}else if(cmd.equals("AddAssociate")) {
 			targetPane = cadastroview;
+		}else if(cmd.equals("updateUser")) {
+			this.cadastroview.associatedToControl(true);
+			this.associadoview.controlToAssociated();
+		}else if(cmd.equals("AttAssociate")) {
+			this.cadastroview.refreshButton(true);
+			this.cadastroview.controlToAssociated(this.associadoview.targetAssociated());
+			targetPane = cadastroview;
+		}else if(cmd.equals("updateReservation")) {
+			this.reservasview.reservationToControl(true);
+			this.reservationdashboardview.refreshTable();
 		}else if(cmd.equals("BuscarSpace")) {
 			targetPane = spacedashboardview;
 		}
