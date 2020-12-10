@@ -20,6 +20,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 	private final ReservationDashboardView reservationdashboardview = new ReservationDashboardView();
 	private final SubscriptionDashboardView subscriptiondashboardview = new SubscriptionDashboardView();
 	private final SpaceDashboardView spacedashboardview = new SpaceDashboardView ();
+	private final DashboardView dashboardview = new DashboardView();
 	private final Menu menu = new Menu();
 	private StrategyPane targetPane = mainView;
 	
@@ -36,6 +37,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		reservationdashboardview.setAssistence(this);
 		subscriptiondashboardview.setAssistence(this);
 		spacedashboardview.setAssistence(this);
+		dashboardview.setAssistence(this);
 		menu.setAssistence(this);
 		
 		context();
@@ -63,7 +65,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		if(cmd.equals("Enter")) {
 			targetPane = reservationdashboardview;
 		}else if(cmd.equals("dashboard")) {
-			System.out.println("Dashboard");
+			targetPane = dashboardview;
 		}else if(cmd.equals("reservation")) {
 			reservationdashboardview.refreshTable();
 			targetPane = reservationdashboardview;
