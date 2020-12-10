@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import models.Space;
@@ -31,5 +32,9 @@ public class SpaceController {
 	
 	public void deleteById(int id) throws Exception {
 		this.spaceService.deleteById(id);
+	}
+	
+	public boolean disp(int id, Date date) throws Exception {
+		return this.spaceService.disp(id, date);
 	}
 }
