@@ -119,4 +119,5 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		DatabaseConnection.createTables();
 		Application.launch(Main.class, args);
 	}
+	
 }

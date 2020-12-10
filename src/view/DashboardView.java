@@ -98,6 +98,7 @@ public class DashboardView implements StrategyPane, ComandProductor {
 			System.err.println(e);
 		}
 	}
+	
 	public void refreshTableB() {
 		try {
 			tableB.setItems(FXCollections.observableArrayList(userController.getAll()));
