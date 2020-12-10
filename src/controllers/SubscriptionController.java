@@ -1,11 +1,8 @@
 package controllers;
 
-import java.util.Date;
 import java.util.List;
 
 import models.Subscription;
-import models.SubscriptionStatus;
-import models.User;
 import services.SubscriptionService;
 
 
@@ -28,8 +25,8 @@ public class SubscriptionController {
 		return this.subscriptionService.filterByStatus(statusId);
 	}
 	
-	public void post(User user, SubscriptionStatus status, Date dueDate) throws Exception {
-		this.subscriptionService.post(user, status, dueDate);
+	public void post() throws Exception {
+		this.subscriptionService.post();
 	}
 	
 	public void deleteById(int id) throws Exception {
