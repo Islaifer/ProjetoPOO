@@ -1,5 +1,6 @@
 package view;
 
+import controllers.SubscriptionController;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
 import interfaces.StrategyPane;
@@ -19,9 +20,11 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 	private Pane pane;
 	private CheckBox checkA;
 	private CheckBox checkB;
-
+	private SubscriptionController subscriptionController;
 	@SuppressWarnings("unchecked")
 	public SubscriptionDashboardView() {
+		this.subscriptionController = new SubscriptionController();
+
 		this.pane = new Pane();
 		// labels
 		Label lbltittle = new Label("Mensalidades");
@@ -87,7 +90,7 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		btnPagar.setMinHeight(30);
 		btnPagar.setMinWidth(80);
 		btnPagar.setOnAction((e) -> {
-			exeComand("pagar");
+			generateSubscriptions();
 		});
 		
 		Button btnGerar = new Button("Gerar mensalidade");
@@ -95,7 +98,7 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		btnGerar.setMinHeight(30);
 		btnGerar.setMinWidth(100);
 		btnGerar.setOnAction((e) -> {
-			exeComand("gerar");
+			generateSubscriptions();
 		});
 		
 		Button btnFiltrar = new Button("Filtrar");
@@ -109,6 +112,13 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		pane.getChildren().addAll(lbltittle, lblsubscription, lblfilteratrasados, btnGerar, lblfilterpendentes, table, txtcpf, btnPagar, btnFiltrar, checkA, checkB);
 	}
 
+	private void generateSubscriptions(){
+		try {
+			this.subscriptionController.post();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	@Override
 	public void setAssistence(ComandAssistence a) {
 		this.a = a;

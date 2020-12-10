@@ -17,8 +17,7 @@ public class Subscription {
 		this.amount = amount;
 	}
 	
-	public Subscription(Date dueDate, SubscriptionStatus status, User user) {
-		this.dueDate = dueDate;
+	public Subscription(SubscriptionStatus status, User user) {
 		this.status = status;
 		this.user = user;
 	}
