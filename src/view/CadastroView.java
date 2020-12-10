@@ -45,8 +45,8 @@ public class CadastroView implements StrategyPane, ComandProductor {
 		userController = new UserController();
 
 		Label lblcadastro = new Label("Cadastro de Usuario");
-		lblcadastro.relocate(290, 30);
-		lblcadastro.setFont(new Font("Arial", 18));
+		lblcadastro.relocate(250, 30);
+		lblcadastro.setFont(new Font("Arial", 20));
 		Label lbldadosassoc = new Label("Dados do Associado");
 		lbldadosassoc.relocate(250, 100);
 		lbldadosassoc.setFont(new Font("Arial", 14));
@@ -89,17 +89,17 @@ public class CadastroView implements StrategyPane, ComandProductor {
 		
 
 		btnCadastrar = new Button("Cadastrar");
-		btnCadastrar.relocate(400, 500);
+		btnCadastrar.relocate(500, 500);
 		btnCadastrar.setMinHeight(40);
-		btnCadastrar.setMinWidth(300);
+		btnCadastrar.setMinWidth(200);
 		btnCadastrar.setOnAction((e) -> {
 			exeComand("Cadastrar");
 		});
 
 		Button btnVoltar = new Button("Voltar");
-	  btnVoltar.relocate(230,30);
-	  btnVoltar.setMinHeight(30);
-	  btnVoltar.setMinWidth(40);
+	  btnVoltar.relocate(270,500);
+	  btnVoltar.setMinHeight(40);
+	  btnVoltar.setMinWidth(100);
 	  btnVoltar.setOnAction((e)->{
 		  exeComand("associated");
 	  });

@@ -7,18 +7,24 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.JOptionPane;
 
+import controllers.PaymentController;
 import controllers.UserController;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
 import interfaces.StrategyPane;
+import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import models.Payment;
 import models.User;
 
 public class GerenciarAssocView implements StrategyPane, ComandProductor{
@@ -37,11 +43,21 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 	private Image searchIcon;
 	private ImageView lvSearchIcon;
 	private User user;
+	private PaymentController paymentController;
+	private TableView <Payment> table;
 	
 	public GerenciarAssocView () {
 		this.userController = new UserController();
+		paymentController = new PaymentController();
 		pane = new Pane();
 		pane = new Pane();
+		
+		table = new TableView<>();
+		table.relocate(235,350);
+		table.setMinWidth(500);
+		table.setMaxWidth(500);
+		table.setMaxHeight(200);
+		
 		try {
 			searchIcon = new Image(new FileInputStream(new File("").getAbsolutePath() + "/images/search.png"), 20, 20, false, false);
 		} catch (FileNotFoundException e) {
@@ -106,44 +122,63 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 		txtpesquisa = new TextField ("Buscar pelo CPF");
 		txtpesquisa.relocate(250, 60);
 		txtpesquisa.setMinHeight(30);
-		txtpesquisa.setMinWidth(300);
+		txtpesquisa.setMinWidth(100);
 		//botao
 		Button btnSearch = new Button();
 		btnSearch.setGraphic(lvSearchIcon);
-		btnSearch.relocate(560, 60);
+		btnSearch.relocate(420, 60);
 		btnSearch.setMaxHeight(20);
 		btnSearch.setMaxWidth(20);
 		btnSearch.setOnAction((e)->{
 			exeComand("SearchAssociate");
 		});
 		
-		Button btnAddAssociate = new Button("Adicionar Associado");
-		btnAddAssociate.relocate(650,10);
+		Button btnAddAssociate = new Button("Novo Associado");
+		btnAddAssociate.relocate(550,30);
 		btnAddAssociate.setMinHeight(30);
 		btnAddAssociate.setMinWidth(40);
 		btnAddAssociate.setOnAction((e)->{
 			exeComand("AddAssociate");
 		});
 		
-		Button btnAttAssociate = new Button("Atualizar Associado");
-		btnAttAssociate.relocate(652,60);
+		Button btnAttAssociate = new Button("Atualizar");
+		btnAttAssociate.relocate(680,30);
 		btnAttAssociate.setMinHeight(30);
 		btnAttAssociate.setMinWidth(40);
 		btnAttAssociate.setOnAction((e)->{
 			exeComand("AttAssociate");
 		});
 		
-		Button btnDelete = new Button("Apagar Associado");
-		btnDelete.relocate(655,110);
-		btnDelete.setMinHeight(30);
-		btnDelete.setMinWidth(40);
-		btnDelete.setOnAction((e)->{
-			exeComand("DeleteAssociate");
-		});
+		Label lblpayments = new Label ("Histórico de Pagamentos");
+		lblpayments.relocate(250, 320);
+		lblpayments.setFont(Font.font("Arial", 14));
 		
+		TableColumn<Payment, String> columnDate = new TableColumn<>("Data");
+		columnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+		columnDate.setMinWidth(150);
+		columnDate.setMaxWidth(150);
+		TableColumn<Payment, String> columnName = new TableColumn<>("Associado");
+		columnName.setCellValueFactory(new PropertyValueFactory<>("user"));
+		columnName.setMinWidth(180);
+		columnName.setMaxWidth(180);
+		TableColumn<Payment, String> columnPrice = new TableColumn<>("Valor");
+		columnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+		columnPrice.setMinWidth(180);
+		columnPrice.setMaxWidth(180);
+		this.refreshTable();
+		table.getColumns().addAll(columnDate, columnName, columnPrice);
+	
 		pane.getChildren().addAll(lblgerreserva,lblnome,inputNome,lbldatanasc,inputDatanasc,lblrg, inputRg,
-				lblcpf, inputCpf, lblcontato, inputContato, lblendereco, inputEndereco, btnSearch,
-				lbltiposocio, inputTiposocio,txtpesquisa, lblstatusmensalidade,inputStatusmensalidade, btnAddAssociate, btnAttAssociate, btnDelete);
+				lblcpf, inputCpf, lblcontato, inputContato, lblendereco, inputEndereco, btnSearch,lblpayments,
+				lbltiposocio, inputTiposocio,txtpesquisa, lblstatusmensalidade,inputStatusmensalidade, btnAddAssociate, btnAttAssociate,table);
+	}
+	
+	public void refreshTable() {
+		try {
+			table.setItems(FXCollections.observableArrayList(paymentController.getAll()));
+					} catch (Exception e) {
+			System.err.println(e);
+		}
 	}
 	
 	public void controlToAssociated() {
@@ -159,7 +194,7 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 				inputContato.setText(this.formPhoneNumber(user.getPhoneNumber()));
 				inputEndereco.setText(user.getAddress());
 				inputTiposocio.setText(user.getPlan().getName());
-				inputStatusmensalidade.setText("");
+				inputStatusmensalidade.setText("Colocar Mensalidade");
 			}
 		}catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Digite apenas os numeros!", "ERROR", 0);
@@ -173,26 +208,6 @@ public class GerenciarAssocView implements StrategyPane, ComandProductor{
 			return user.getId();
 		}else {
 			return 0;
-		}
-	}
-	
-	public void delete() {
-		try {
-			int delete = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja deleter este usuario?");
-			if(delete == 0) {
-				userController.deleteById(user.getId());
-				JOptionPane.showMessageDialog(null, "Usuario deletado com sucesso!");
-				inputNome.setText("");
-				inputDatanasc.setText("");
-				inputRg.setText("");
-				inputCpf.setText("");;
-				inputContato.setText("");
-				inputEndereco.setText("");
-				inputTiposocio.setText("");
-				inputStatusmensalidade.setText("");
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Erro interno!", "ERROR", 0);
 		}
 	}
 	

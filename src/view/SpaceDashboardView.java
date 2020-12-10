@@ -38,11 +38,11 @@ public class SpaceDashboardView implements StrategyPane, ComandProductor {
 		
 		Label lbltittle = new Label ("Espaços");
 		lbltittle.relocate (250, 30);
-		lbltittle.setFont(new Font("Arial",18));
+		lbltittle.setFont(new Font("Arial",20));
 		
 		Label lblspace = new Label ("Espaços");
 		lblspace.relocate (250, 180);
-		lblspace.setFont(new Font("Arial",13));
+		lblspace.setFont(new Font("Arial",14));
 		
 		table = new TableView<>();
 		table.relocate(235, 250);

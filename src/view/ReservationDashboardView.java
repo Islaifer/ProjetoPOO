@@ -27,11 +27,11 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 		this.pane = new Pane();
 		Label lbltittle = new Label ("Reservas");
 		lbltittle.relocate (250, 30);
-		lbltittle.setFont(new Font("Arial",18));
+		lbltittle.setFont(new Font("Arial",20));
 		
 		Label lblreservation = new Label ("Reservas");
 		lblreservation.relocate (250, 230);
-		lblreservation.setFont(new Font("Arial",13));
+		lblreservation.setFont(new Font("Arial",14));
 		
 		table = new TableView<>();
 		table.relocate(235, 250);
@@ -61,7 +61,7 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 		
 		//botao
 		Button btnAddReservation = new Button("Adicionar Reserva");
-		btnAddReservation.relocate(650,210);
+		btnAddReservation.relocate(520,210);
 		btnAddReservation.setMinHeight(30);
 		btnAddReservation.setMinWidth(30);
 		btnAddReservation.setOnAction((e)->{
@@ -69,7 +69,7 @@ public class ReservationDashboardView implements StrategyPane, ComandProductor{
 		});
 		
 		Button btnEditReservation = new Button("Editar Reserva");
-		btnEditReservation.relocate(655,170);
+		btnEditReservation.relocate(655,210);
 		btnEditReservation.setMinHeight(30);
 		btnEditReservation.setMinWidth(100);
 		btnEditReservation.setOnAction((e)->{

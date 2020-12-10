@@ -31,11 +31,11 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		// labels
 		Label lbltittle = new Label("Mensalidades");
 		lbltittle.relocate(235, 30);
-		lbltittle.setFont(new Font("Arial", 18));
+		lbltittle.setFont(new Font("Arial", 20));
 
 		Label lblsubscription = new Label("Mensalidades");
 		lblsubscription.relocate(235, 180);
-		lblsubscription.setFont(new Font("Arial", 13));
+		lblsubscription.setFont(new Font("Arial", 14));
 		
 		Label lblfilteratrasados = new Label ("Filtrar atrasados");
 		lblfilteratrasados.relocate(550, 230);
