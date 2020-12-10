@@ -4,6 +4,7 @@ import controllers.SubscriptionController;
 import interfaces.ComandAssistence;
 import interfaces.ComandProductor;
 import interfaces.StrategyPane;
+import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -21,6 +22,7 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 	private CheckBox checkA;
 	private CheckBox checkB;
 	private SubscriptionController subscriptionController;
+	private TableView<Subscription> table;
 	@SuppressWarnings("unchecked")
 	public SubscriptionDashboardView() {
 		this.subscriptionController = new SubscriptionController();
@@ -47,8 +49,7 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		checkB = new CheckBox();
 		checkB.relocate(730, 228);
 		//table
-		TableView<Subscription> table = new TableView<>();
-		// table.setItems(FXCollections.observableArrayList(teste));
+		table = new TableView<>();
 		table.relocate(235, 250);
 		table.setMinWidth(530);
 		table.setMaxWidth(530);
@@ -56,11 +57,11 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 
 		// colunas
 		TableColumn<Subscription, String> columnDate = new TableColumn<>("Data do vencimento");
-		columnDate.setCellValueFactory(new PropertyValueFactory<>("valid"));
+		columnDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
 		columnDate.setMinWidth(150);
 		columnDate.setMaxWidth(150);
 		TableColumn<Subscription, String> columnStatus = new TableColumn<>("Status");
-		columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+		columnStatus.setCellValueFactory(new PropertyValueFactory<>("statusName"));
 		columnStatus.setMinWidth(80);
 		columnStatus.setMaxWidth(80);
 		TableColumn<Subscription, String> columnName = new TableColumn<>("Associado");
@@ -68,15 +69,15 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		columnName.setMinWidth(130);
 		columnName.setMaxWidth(130);
 		TableColumn<Subscription, String> columnCpf = new TableColumn<>("CPF");
-		columnCpf.setCellValueFactory(new PropertyValueFactory<>("userCpf"));
+		columnCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
 		columnCpf.setMinWidth(100);
 		columnCpf.setMaxWidth(100);
 		TableColumn<Subscription, String> columnValor = new TableColumn<>("Valor");
-		columnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+		columnValor.setCellValueFactory(new PropertyValueFactory<>("amount"));
 		columnValor.setMinWidth(70);
 		columnValor.setMaxWidth(70);
 		table.getColumns().addAll(columnDate, columnStatus, columnName, columnCpf, columnValor);
-		
+		refreshTable();
 		//campos
 		
 		TextField txtcpf = new TextField ("Buscar por CPF");
@@ -98,7 +99,7 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		btnGerar.setMinHeight(30);
 		btnGerar.setMinWidth(100);
 		btnGerar.setOnAction((e) -> {
-			generateSubscriptions();
+			exeComand("GerarMensalidades");
 		});
 		
 		Button btnFiltrar = new Button("Filtrar");
@@ -112,13 +113,22 @@ public class SubscriptionDashboardView implements StrategyPane, ComandProductor 
 		pane.getChildren().addAll(lbltittle, lblsubscription, lblfilteratrasados, btnGerar, lblfilterpendentes, table, txtcpf, btnPagar, btnFiltrar, checkA, checkB);
 	}
 
-	private void generateSubscriptions(){
+	public void generateSubscriptions(){
 		try {
 			this.subscriptionController.post();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public void refreshTable() {
+		try {
+			table.setItems(FXCollections.observableArrayList(subscriptionController.getAll()));
+		} catch (Exception e) {
+			System.err.println("Deu ruim");
+		}
+	}
+	
 	@Override
 	public void setAssistence(ComandAssistence a) {
 		this.a = a;

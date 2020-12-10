@@ -70,6 +70,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		}else if(cmd.equals("associated")) {
 			targetPane = associadoview;
 		}else if(cmd.equals("tuition")) {
+			this.subscriptiondashboardview.refreshTable();
 			targetPane = subscriptiondashboardview;
 		}else if(cmd.equals("spaces")) {
 			targetPane = spacedashboardview;
@@ -101,6 +102,9 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 			this.reservationdashboardview.refreshTable();
 		}else if(cmd.equals("BuscarSpace")) {
 			targetPane = spacedashboardview;
+		}else if(cmd.equals("GerarMensalidades")) {
+			this.subscriptiondashboardview.generateSubscriptions();
+			this.subscriptiondashboardview.refreshTable();
 		}
 		context();
 	}
