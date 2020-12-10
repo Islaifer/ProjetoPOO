@@ -42,7 +42,7 @@ public class ReservasView implements StrategyPane, ComandProductor {
 		// Labels
 		Label lblcadreserva = new Label("Cadastro de Reserva");
 		lblcadreserva.relocate(250, 30);
-		lblcadreserva.setFont(new Font("Arial", 18));
+		lblcadreserva.setFont(new Font("Arial", 20));
 		Label lblreserva = new Label("Dados da Reserva");
 		lblreserva.relocate(250, 100);
 		lblreserva.setFont(new Font("Arial", 14));

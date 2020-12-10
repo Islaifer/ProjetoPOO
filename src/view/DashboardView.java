@@ -42,6 +42,10 @@ public class DashboardView implements StrategyPane, ComandProductor {
 		tableB.setMaxWidth(500);
 		tableB.setMaxHeight(200);
 		
+		Label lbltittle = new Label ("Dashboard");
+		lbltittle.relocate (250, 30);
+		lbltittle.setFont(new Font("Arial", 20));
+		
 		Label lblreservation = new Label ("Reservas do dia");
 		lblreservation.relocate (250, 70);
 		lblreservation.setFont(Font.font("Arial", FontWeight.BOLD, 14));
@@ -52,20 +56,20 @@ public class DashboardView implements StrategyPane, ComandProductor {
 		
 		TableColumn<Reservation, String> columnDate = new TableColumn<>("Data");
 		columnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-		columnDate.setMinWidth(110);
-		columnDate.setMaxWidth(110);
+		columnDate.setMinWidth(90);
+		columnDate.setMaxWidth(90);
 		TableColumn<Reservation, String> columnName = new TableColumn<>("Associado");
 		columnName.setCellValueFactory(new PropertyValueFactory<>("username"));
-		columnName.setMinWidth(130);
-		columnName.setMaxWidth(130);
+		columnName.setMinWidth(120);
+		columnName.setMaxWidth(120);
 		TableColumn<Reservation, String> columnSpace = new TableColumn<>("Espaco");
 		columnSpace.setCellValueFactory(new PropertyValueFactory<>("spaceName"));
-		columnSpace.setMinWidth(130);
-		columnSpace.setMaxWidth(130);
+		columnSpace.setMinWidth(120);
+		columnSpace.setMaxWidth(120);
 		TableColumn<Reservation, String> columnQntd = new TableColumn<>("Quantidade de pessoas");
 		columnQntd.setCellValueFactory(new PropertyValueFactory<>("peopleqnt"));
-		columnQntd.setMinWidth(120);
-		columnQntd.setMaxWidth(120);
+		columnQntd.setMinWidth(180);
+		columnQntd.setMaxWidth(180);
 		this.refreshTableA();
 		tableA.getColumns().addAll(columnDate, columnName, columnSpace, columnQntd);
 		
@@ -88,7 +92,7 @@ public class DashboardView implements StrategyPane, ComandProductor {
 		this.refreshTableB();
 		tableB.getColumns().addAll(columnUsername, columnCpf, columnBirth, columnAddress);
 		
-		pane.getChildren().addAll(tableA, tableB, lblusers, lblreservation);
+		pane.getChildren().addAll(tableA, tableB, lblusers, lblreservation,lbltittle);
 	}
 	
 	public void refreshTableA() {
