@@ -105,6 +105,8 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 		}else if(cmd.equals("GerarMensalidades")) {
 			this.subscriptiondashboardview.generateSubscriptions();
 			this.subscriptiondashboardview.refreshTable();
+		}else if(cmd.equals("SearchSpace")) {
+			this.spacedashboardview.filterDate();
 		}
 		context();
 	}
