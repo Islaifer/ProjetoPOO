@@ -63,7 +63,7 @@ public class Main extends Application implements EventHandler<ActionEvent>,
 @Override
 	public void executeCommand(String cmd) {
 		if(cmd.equals("Enter")) {
-			targetPane = reservationdashboardview;
+			targetPane = dashboardview;
 		}else if(cmd.equals("dashboard")) {
 			targetPane = dashboardview;
 		}else if(cmd.equals("reservation")) {

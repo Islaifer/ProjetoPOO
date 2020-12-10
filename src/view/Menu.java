@@ -14,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class Menu implements StrategyPane, ComandProductor {
 	private Pane pane;
@@ -23,19 +24,19 @@ public class Menu implements StrategyPane, ComandProductor {
 	public Menu() {
 		pane = new Pane();
 		try {
-			logo = new Image(new FileInputStream(new File("").getAbsolutePath() + "/images/logo.png"), 160, 100, false, false);
+			logo = new Image(new FileInputStream(new File("").getAbsolutePath() + "/images/logo.png"), 160, 150, false, false);
 		} catch (FileNotFoundException e) {
 			System.err.println(new File("").getAbsolutePath() + "/images/logo.png not found");
 		}
 		lv = new ImageView(logo);
-		lv.relocate(20, 25);
+		lv.relocate(20, 0);
 		// Menu
 		Rectangle bckgMenu = new Rectangle();
 		bckgMenu.setWidth(200);
 		bckgMenu.setHeight(600);
 		bckgMenu.setFill(Color.valueOf("#DFDFDF"));
 		Label dashboard = new Label("Dashboard");
-		dashboard.setFont(new Font("Arial", 16));
+		dashboard.setFont(Font.font("Arial",FontWeight.BOLD,16));
 		dashboard.relocate(60, 150);
 		dashboard.setTextFill(Color.BLACK);
 		dashboard.setOnMouseEntered((e) -> {
@@ -48,7 +49,7 @@ public class Menu implements StrategyPane, ComandProductor {
 			exeComand("dashboard");
 		});
 		Label reservation = new Label("Reserva");
-		reservation.setFont(new Font("Arial", 16));
+		reservation.setFont(Font.font("Arial",FontWeight.BOLD,16));
 		reservation.relocate(68, 200);
 		reservation.setTextFill(Color.BLACK);
 		reservation.setOnMouseEntered((e) -> {
@@ -61,7 +62,7 @@ public class Menu implements StrategyPane, ComandProductor {
 			exeComand("reservation");
 		});
 		Label associated = new Label("Gerenciar Associados");
-		associated.setFont(new Font("Arial", 16));
+		associated.setFont(Font.font("Arial",FontWeight.BOLD,16));
 		associated.relocate(20, 250);
 		associated.setTextFill(Color.BLACK);
 		associated.setOnMouseEntered((e) -> {
@@ -74,7 +75,7 @@ public class Menu implements StrategyPane, ComandProductor {
 			exeComand("associated");
 		});
 		Label tuition = new Label("Gerenciar Mensalidades");
-		tuition.setFont(new Font("Arial", 16));
+		tuition.setFont(Font.font("Arial",FontWeight.BOLD,16));
 		tuition.relocate(15, 300);
 		tuition.setTextFill(Color.BLACK);
 		tuition.setOnMouseEntered((e) -> {
@@ -87,7 +88,7 @@ public class Menu implements StrategyPane, ComandProductor {
 			exeComand("tuition");
 		});
 		Label spaces = new Label("Gerenciar Espacos");
-		spaces.setFont(new Font("Arial", 16));
+		spaces.setFont(Font.font("Arial",FontWeight.BOLD,16));
 		spaces.relocate(35, 350);
 		spaces.setTextFill(Color.BLACK);
 		spaces.setOnMouseEntered((e) -> {
